@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,900;1,9..40,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-neutral-900 text-neutral-100 antialiased;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-neutral-800;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-neutral-600 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-neutral-500;
+  }
+
+  input[type='range'] {
+    @apply h-1.5 rounded-full cursor-pointer;
+    background: theme('colors.neutral.600');
+  }
+  input[type='range']::-webkit-slider-thumb {
+    @apply w-4 h-4 rounded-full bg-amber-400 border-2 border-neutral-900 shadow-lg;
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+  }
+  input[type='range']::-moz-range-thumb {
+    @apply w-4 h-4 rounded-full bg-amber-400 border-2 border-neutral-900 shadow-lg;
+    cursor: pointer;
+    border: none;
+  }
+}

@@ -1,0 +1,6307 @@
+{
+  "Ambattur - 2 - (Near Rakki Cenimas)": {
+    "POCO": {
+      "POCO C71 4GB 64GB Power Black": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 3.5,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 3.5,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.9
+      }
+    },
+    "Vivo": {
+      "Vivo Y19 5G 4GB 128GB Titanium Silver": {
+        "mean_daily": 0.05,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.95,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 1.83,
+          "4": 0.0,
+          "5": 1.83,
+          "6": 3.38
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.61
+      },
+      "Vivo Y19e 4G 4GB 64GB Titanium Silver": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 3.38,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 3.38
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.32
+      },
+      "Vivo Y31 Pro 8GB 128GB Dreamy White": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 3.42,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 3.42,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.36
+      },
+      "Vivo Y400 5G 8GB 128GB Glam White": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 3.5,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 3.5,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.71
+      }
+    },
+    "Xiaomi": {
+      "Redmi A5 3GB 64GB Just Black": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 6.86,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.89
+      },
+      "Redmi Note 14 5G 8GB 128GB Mystique White": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 3.29,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 3.54
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.74
+      },
+      "Redmi Note 14 5G 8GB 256GB Titan Black": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 3.5,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 3.5
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.57
+      }
+    }
+  },
+  "Anna Nagar - 1 - (Near Thirumangalam Metro Station)": {
+    "Apple": {
+      "Apple iPhone 16e 128GB Black": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 1.71,
+          "3": 0.0,
+          "4": 1.85,
+          "5": 3.43,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.82
+      },
+      "Apple iPhone 16e 128GB White": {
+        "mean_daily": 0.06,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.94,
+        "dow_multipliers": {
+          "0": 2.24,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 1.2,
+          "5": 1.2,
+          "6": 2.4
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.0
+      },
+      "Iphone 17 256GB Black": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 1.72,
+          "2": 1.72,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 3.43,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.0
+      },
+      "Iphone 17 256GB Lavender": {
+        "mean_daily": 0.06,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.94,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 1.48,
+          "4": 1.48,
+          "5": 1.37,
+          "6": 2.74
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.12
+      },
+      "Iphone 17 256GB Mist Blue": {
+        "mean_daily": 0.07,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.93,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.98,
+          "2": 0.98,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 2.94,
+          "6": 1.96
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.72
+      },
+      "Iphone 17 256GB Sage": {
+        "mean_daily": 0.09,
+        "mean_nonzero_daily": 1.14,
+        "zero_day_ratio": 0.92,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.82,
+          "3": 0.0,
+          "4": 1.77,
+          "5": 3.54,
+          "6": 0.88
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.68
+      },
+      "Iphone 17 256GB White": {
+        "mean_daily": 0.1,
+        "mean_nonzero_daily": 1.11,
+        "zero_day_ratio": 0.91,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.69,
+          "2": 2.75,
+          "3": 0.0,
+          "4": 0.74,
+          "5": 1.37,
+          "6": 1.37
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.39
+      },
+      "Iphone 17 Pro 256GB Cosmic Orange": {
+        "mean_daily": 0.06,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.94,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 2.21,
+          "2": 1.11,
+          "3": 1.19,
+          "4": 0.0,
+          "5": 1.19,
+          "6": 1.19
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.83
+      },
+      "Iphone 17 Pro 256GB Deep Blue": {
+        "mean_daily": 0.07,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.93,
+        "dow_multipliers": {
+          "0": 0.96,
+          "1": 0.96,
+          "2": 0.0,
+          "3": 2.06,
+          "4": 1.03,
+          "5": 1.03,
+          "6": 1.03
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.68
+      },
+      "Iphone 17 Pro 256GB Silver": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 6.83,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.36
+      },
+      "Iphone 17 Pro 512GB Cosmic Orange": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 3.5,
+          "4": 3.5,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.71
+      },
+      "Iphone 17 Pro 512GB Deep Blue": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 2.22,
+          "2": 0.0,
+          "3": 2.38,
+          "4": 0.0,
+          "5": 2.38,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.71
+      },
+      "Iphone 17 Pro Max 256GB Cosmic orange": {
+        "mean_daily": 0.08,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.92,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 1.93,
+          "2": 1.93,
+          "3": 1.05,
+          "4": 1.05,
+          "5": 0.0,
+          "6": 0.97
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.42
+      },
+      "Iphone 17 Pro Max 256GB Deep Blue": {
+        "mean_daily": 0.05,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.95,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 2.8,
+          "4": 2.8,
+          "5": 1.4,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.33
+      },
+      "Iphone 17 Pro Max 256GB Silver": {
+        "mean_daily": 0.05,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.95,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 3.42,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 1.71,
+          "6": 1.71
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.44
+      },
+      "Iphone 17 Pro Max 512GB Cosmic orange": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 1.75,
+          "1": 1.75,
+          "2": 1.75,
+          "3": 1.75,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.87
+      },
+      "Iphone 17 Pro Max 512GB Deep Blue": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 1.75,
+          "2": 1.75,
+          "3": 1.75,
+          "4": 1.75,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.87
+      },
+      "iPhone 15 128GB Black": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 4.48,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 2.24
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.9
+      },
+      "iPhone 15 128GB Pink": {
+        "mean_daily": 0.06,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.94,
+        "dow_multipliers": {
+          "0": 1.13,
+          "1": 1.13,
+          "2": 1.13,
+          "3": 1.22,
+          "4": 1.22,
+          "5": 0.0,
+          "6": 1.13
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.87
+      },
+      "iPhone 15 256GB Black": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 2.38,
+          "1": 2.22,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 2.38
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.71
+      },
+      "iPhone 15 256GB Blue": {
+        "mean_daily": 0.09,
+        "mean_nonzero_daily": 1.25,
+        "zero_day_ratio": 0.93,
+        "dow_multipliers": {
+          "0": 2.9,
+          "1": 1.29,
+          "2": 1.29,
+          "3": 1.45,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.94
+      },
+      "iPhone 16 128GB Black": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 3.22,
+          "2": 0.0,
+          "3": 3.62,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.34
+      },
+      "iPhone 16 128GB Teal": {
+        "mean_daily": 0.07,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.93,
+        "dow_multipliers": {
+          "0": 1.17,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 2.33,
+          "4": 0.0,
+          "5": 2.33,
+          "6": 1.17
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.63
+      },
+      "iPhone 16 128GB Ultramarine": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 3.58,
+          "1": 1.66,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 1.79
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.74
+      },
+      "iPhone 16 128GB White": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 6.85,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.63
+      }
+    },
+    "Google": {
+      "Google Pixel 10 Pro 16GB 256GB MoonStone": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 3.27,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 3.54,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.48
+      },
+      "Google Pixel 10 Pro XL 16GB 256GB Jade": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 2.24,
+          "1": 2.24,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 2.4
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.74
+      },
+      "Google Pixel 9A 8GB 256GB Iris": {
+        "mean_daily": 0.1,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.9,
+        "dow_multipliers": {
+          "0": 2.42,
+          "1": 2.15,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 1.21,
+          "5": 0.0,
+          "6": 1.21
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 2.97
+      },
+      "Google Pixel 9A 8GB 256GB Obsidian": {
+        "mean_daily": 0.12,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.88,
+        "dow_multipliers": {
+          "0": 1.37,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 1.64,
+          "4": 1.37,
+          "5": 1.37,
+          "6": 1.37
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 2.72
+      },
+      "Google Pixel 9A 8GB 256GB Porcelain": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 1.79,
+          "1": 1.66,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 1.79,
+          "5": 0.0,
+          "6": 1.79
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.74
+      }
+    },
+    "Nothing": {
+      "Nothing CMF Phone 2 PRO 8GB 256GB White": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 3.25,
+          "2": 0.0,
+          "3": 3.61,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.66
+      },
+      "Nothing Phone (3a) 8GB 128GB Black": {
+        "mean_daily": 0.06,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.94,
+        "dow_multipliers": {
+          "0": 1.35,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 1.47,
+          "4": 1.47,
+          "5": 1.47,
+          "6": 1.35
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.1
+      },
+      "Nothing Phone (3a) 8GB 256GB Black": {
+        "mean_daily": 0.06,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.94,
+        "dow_multipliers": {
+          "0": 1.44,
+          "1": 2.63,
+          "2": 1.32,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 1.44
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.87
+      },
+      "Nothing Phone (3a) Pro 8GB 128GB Black": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 3.86,
+          "5": 3.38,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.15
+      },
+      "Nothing Phone (3a) Pro 8GB 256GB Black": {
+        "mean_daily": 0.07,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.93,
+        "dow_multipliers": {
+          "0": 1.14,
+          "1": 1.14,
+          "2": 0.0,
+          "3": 1.24,
+          "4": 0.0,
+          "5": 2.28,
+          "6": 1.14
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.74
+      },
+      "Nothing Phone (3a) Pro 8GB 256GB Grey": {
+        "mean_daily": 0.08,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.92,
+        "dow_multipliers": {
+          "0": 1.75,
+          "1": 0.0,
+          "2": 0.88,
+          "3": 1.75,
+          "4": 1.75,
+          "5": 0.0,
+          "6": 0.88
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.37
+      }
+    },
+    "OnePlus": {
+      "OnePlus 13R 5G 12GB 256GB Astral Trail": {
+        "mean_daily": 0.1,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.9,
+        "dow_multipliers": {
+          "0": 2.33,
+          "1": 0.0,
+          "2": 2.33,
+          "3": 1.17,
+          "4": 1.17,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.11
+      },
+      "OnePlus 13R 5G 12GB 256GB Nebula Noir": {
+        "mean_daily": 0.09,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.91,
+        "dow_multipliers": {
+          "0": 0.79,
+          "1": 0.74,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.79,
+          "5": 1.59,
+          "6": 3.17
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.2
+      },
+      "OnePlus 13s 12GB 256GB Black Velvet": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 3.58,
+          "1": 3.31,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.52
+      },
+      "OnePlus 13s 12GB 256GB Pink Satin": {
+        "mean_daily": 0.08,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.92,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 2.06,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 2.47,
+          "5": 2.47,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.41
+      },
+      "OnePlus 13s 12GB 512GB Green Silk": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 1.68,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 1.81,
+          "4": 1.81,
+          "5": 0.0,
+          "6": 1.81
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.77
+      },
+      "OnePlus Nord 5 12GB 256GB Dry Ice": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 2.36,
+          "2": 2.2,
+          "3": 2.36,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.69
+      },
+      "OnePlus Nord 5 12GB 256GB Phantom Gray": {
+        "mean_daily": 0.11,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.89,
+        "dow_multipliers": {
+          "0": 1.58,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 1.9,
+          "4": 1.9,
+          "5": 0.0,
+          "6": 1.9
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 2.95
+      },
+      "OnePlus Nord 5 12GB 512GB Phantom Gray": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 3.43,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 3.43,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.89
+      },
+      "OnePlus Nord 5 8GB 256GB Dry Ice": {
+        "mean_daily": 0.09,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.91,
+        "dow_multipliers": {
+          "0": 0.76,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.81,
+          "4": 0.81,
+          "5": 2.43,
+          "6": 2.27
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.23
+      },
+      "OnePlus Nord 5 8GB 256GB Marble Sands": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 2.28,
+          "3": 2.48,
+          "4": 0.0,
+          "5": 2.28,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.16
+      },
+      "OnePlus Nord 5 8GB 256GB Phantom Gray": {
+        "mean_daily": 0.07,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.93,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 1.15,
+          "3": 0.0,
+          "4": 1.15,
+          "5": 1.15,
+          "6": 3.46
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.76
+      },
+      "OnePlus Nord CE5 12GB 256GB Black Infinity": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 3.41,
+          "6": 3.41
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.08
+      },
+      "OnePlus Nord CE5 8GB 128GB Nexus Blue": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 3.54,
+          "1": 0.0,
+          "2": 3.29,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.74
+      },
+      "OnePlus Nord CE5 8GB 256GB Nexus Blue": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 3.79,
+          "5": 0.0,
+          "6": 3.31
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.1
+      }
+    },
+    "Oppo": {
+      "Oppo A5 Pro 5G 8GB 128GB Brown": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 3.33,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 3.57
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 7.04
+      },
+      "Oppo A5X 4+128GB 5G Laser White": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 1.71,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 1.71,
+          "6": 3.43
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.82
+      },
+      "Oppo A5X 4+128GB 5G Midnight blue": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 3.54,
+          "2": 1.65,
+          "3": 1.77,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.9
+      },
+      "Oppo F31 8GB  128GB Midnight Blue": {
+        "mean_daily": 0.06,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.94,
+        "dow_multipliers": {
+          "0": 1.15,
+          "1": 1.15,
+          "2": 1.15,
+          "3": 2.49,
+          "4": 1.15,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.91
+      },
+      "Oppo F31 8GB  256GB Cloud Green": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 1.71,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 1.85,
+          "4": 0.0,
+          "5": 3.43,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.82
+      },
+      "Oppo F31 8GB  256GB Midnight Blue": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 6.82,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.08
+      },
+      "Oppo F31 Pro 8GB  256GB Desert Gold": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 3.43,
+          "6": 3.43
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 7.14
+      },
+      "Oppo F31 Pro Plus 12GB  256GB Gemstone Blue": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 2.28,
+          "2": 2.28,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 2.28,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.38
+      },
+      "Oppo F31 Pro Plus 12GB  256GB Himalayan White": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 3.4,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 3.4
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 7.11
+      }
+    },
+    "POCO": {
+      "POCO C71 4GB 64GB Power Black": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 3.83,
+          "5": 0.0,
+          "6": 3.29
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.74
+      },
+      "POCO C75 5G 4GB 128GB Aqua Bliss": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 3.27,
+          "2": 0.0,
+          "3": 3.6,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.96
+      }
+    },
+    "Realme": {
+      "Realme 15 5G 8GB 128GB Flowing Silver": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 3.5,
+          "3": 3.5,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.71
+      },
+      "Realme 15 Lite 5G 8GB 128GB Electric Purple": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 2.27,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 4.53
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.77
+      },
+      "Realme 15 Lite 5G 8GB 128GB Satin Green": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 1.71,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 3.42,
+          "6": 1.71
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.64
+      },
+      "Realme 15T 5G 12GB 256GB Flowing Silver": {
+        "mean_daily": 0.08,
+        "mean_nonzero_daily": 1.14,
+        "zero_day_ratio": 0.93,
+        "dow_multipliers": {
+          "0": 0.87,
+          "1": 1.73,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 1.73,
+          "5": 0.87,
+          "6": 1.73
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.78
+      },
+      "Realme 15T 5G 8GB 128GB Flowing Silver": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 2.33,
+          "3": 4.67,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.45
+      },
+      "Realme 15T 5G 8GB 128GB Suit Titanium": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 3.4,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 3.4
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 7.11
+      },
+      "Realme 15T 5G 8GB 256GB Flowing Silver": {
+        "mean_daily": 0.05,
+        "mean_nonzero_daily": 1.25,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 1.36,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 1.46,
+          "5": 2.92,
+          "6": 1.36
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.09
+      },
+      "Realme 15T 5G 8GB 256GB Silk Blue": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 1.77,
+          "2": 1.65,
+          "3": 0.0,
+          "4": 3.54,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.9
+      },
+      "Realme 15T 5G 8GB 256GB Suit Titanium": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 6.87,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 7.14
+      },
+      "Realme 15x 5G 6GB 128GB Aqua Blue": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 4.56,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 2.28,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.38
+      },
+      "Realme 15x 5G 6GB 128GB Maroon Red": {
+        "mean_daily": 0.05,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.95,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 1.83,
+          "6": 5.08
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.61
+      },
+      "Realme 15x 5G 8GB 128GB Aqua Blue": {
+        "mean_daily": 0.21,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.79,
+        "dow_multipliers": {
+          "0": 0.69,
+          "1": 0.69,
+          "2": 0.69,
+          "3": 1.11,
+          "4": 1.48,
+          "5": 1.03,
+          "6": 1.37
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 1.96
+      },
+      "Realme 15x 5G 8GB 128GB Marine Blue": {
+        "mean_daily": 0.08,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.92,
+        "dow_multipliers": {
+          "0": 1.91,
+          "1": 0.0,
+          "2": 0.96,
+          "3": 1.04,
+          "4": 1.04,
+          "5": 1.04,
+          "6": 1.04
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.4
+      },
+      "Realme 15x 5G 8GB 128GB Maroon Red": {
+        "mean_daily": 0.07,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.93,
+        "dow_multipliers": {
+          "0": 1.13,
+          "1": 1.13,
+          "2": 2.26,
+          "3": 0.0,
+          "4": 1.22,
+          "5": 0.0,
+          "6": 1.13
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.72
+      },
+      "Realme C73 5G 4GB 128GB Jade Green": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 6.55,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.96
+      },
+      "Realme C73 5G 4GB 64GB Jade Green": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 3.5,
+          "2": 0.0,
+          "3": 1.75,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 1.75
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.69
+      },
+      "Realme C75 5G 4GB 128GB  Lily White": {
+        "mean_daily": 0.08,
+        "mean_nonzero_daily": 1.14,
+        "zero_day_ratio": 0.93,
+        "dow_multipliers": {
+          "0": 0.88,
+          "1": 0.88,
+          "2": 0.82,
+          "3": 1.77,
+          "4": 0.0,
+          "5": 0.88,
+          "6": 1.77
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.82
+      },
+      "Realme C75 5G 4GB 128GB  Midnight Lily": {
+        "mean_daily": 0.05,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.95,
+        "dow_multipliers": {
+          "0": 1.69,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 3.67,
+          "6": 1.69
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.61
+      },
+      "Realme C75 5G 4GB 128GB Purple Blossom": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 2.22,
+          "1": 0.0,
+          "2": 4.44,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.1
+      },
+      "Realme C75 5G 6GB 128GB Lily White": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.33,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 1.75,
+          "2": 3.5,
+          "3": 1.75,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.79
+      },
+      "Realme C75 5G 6GB 128GB Midnight Lily": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 3.25,
+          "3": 3.55,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.2
+      },
+      "Realme C85 5G 6GB 128GB Parrot Purple": {
+        "mean_daily": 0.09,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.91,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 2.67,
+          "5": 0.0,
+          "6": 4.27
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.16
+      },
+      "Realme GT 7 12GB 512GB IceSense Blue": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 3.31,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 3.58
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.52
+      },
+      "Realme GT 7T 12GB 256GB IceSense Black": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 2.25,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 2.45,
+          "5": 0.0,
+          "6": 2.25
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.13
+      },
+      "realme C71 4G 4GB 64GB Obsidian Black": {
+        "mean_daily": 0.07,
+        "mean_nonzero_daily": 1.2,
+        "zero_day_ratio": 0.95,
+        "dow_multipliers": {
+          "0": 1.17,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 1.17,
+          "4": 0.0,
+          "5": 2.33,
+          "6": 2.33
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.41
+      },
+      "realme C71 4G 4GB 64GB Sea Blue": {
+        "mean_daily": 0.15,
+        "mean_nonzero_daily": 1.25,
+        "zero_day_ratio": 0.88,
+        "dow_multipliers": {
+          "0": 1.37,
+          "1": 0.46,
+          "2": 1.37,
+          "3": 0.49,
+          "4": 0.49,
+          "5": 1.83,
+          "6": 0.92
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 2.95
+      }
+    },
+    "Samsung": {
+      "Samsung A06 5G 4GB 128GB Gray": {
+        "mean_daily": 0.08,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.92,
+        "dow_multipliers": {
+          "0": 2.02,
+          "1": 0.0,
+          "2": 0.94,
+          "3": 0.0,
+          "4": 2.02,
+          "5": 2.02,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.5
+      },
+      "Samsung A06 5G 4GB 128GB Light Green": {
+        "mean_daily": 0.08,
+        "mean_nonzero_daily": 1.2,
+        "zero_day_ratio": 0.94,
+        "dow_multipliers": {
+          "0": 1.2,
+          "1": 2.19,
+          "2": 1.1,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 2.39,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.09
+      },
+      "Samsung A06 5G 4GB 64GB Black": {
+        "mean_daily": 0.06,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.94,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 1.13,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 1.22,
+          "5": 2.44,
+          "6": 2.26
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.87
+      },
+      "Samsung A06 5G 6GB 128GB Black": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 6.83,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.36
+      },
+      "Samsung A06 5G 6GB 128GB Gray": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 3.42,
+          "3": 1.85,
+          "4": 0.0,
+          "5": 1.71,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.64
+      },
+      "Samsung A06 5G 6GB 128GB Light Green": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 3.35,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 3.62,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.56
+      },
+      "Samsung A17 5G 6GB 128GB Black": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 2.2,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 4.71
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.69
+      },
+      "Samsung A17 5G 6GB 128GB Blue": {
+        "mean_daily": 0.06,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.94,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 3.55,
+          "2": 1.61,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 1.78
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.12
+      },
+      "Samsung A17 5G 6GB 128GB Gray": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 2.28,
+          "6": 4.56
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.16
+      },
+      "Samsung A17 5G 8GB 128GB Black": {
+        "mean_daily": 0.09,
+        "mean_nonzero_daily": 1.2,
+        "zero_day_ratio": 0.93,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 1.12,
+          "3": 1.24,
+          "4": 1.24,
+          "5": 0.0,
+          "6": 3.35
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.75
+      },
+      "Samsung A17 5G 8GB 128GB Blue": {
+        "mean_daily": 0.06,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.94,
+        "dow_multipliers": {
+          "0": 1.34,
+          "1": 1.34,
+          "2": 1.34,
+          "3": 1.45,
+          "4": 1.45,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.07
+      },
+      "Samsung A17 5G 8GB 128GB Gray": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 1.7,
+          "1": 0.0,
+          "2": 1.7,
+          "3": 0.0,
+          "4": 1.83,
+          "5": 0.0,
+          "6": 1.7
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.79
+      },
+      "Samsung A17 5G 8GB 256GB Black": {
+        "mean_daily": 0.08,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.92,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 1.15,
+          "3": 0.0,
+          "4": 2.3,
+          "5": 0.0,
+          "6": 3.45
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.44
+      },
+      "Samsung A17 5G 8GB 256GB Blue": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 1.7,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 3.64,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 1.7
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.97
+      },
+      "Samsung A26 5G 8GB 128GB White": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 6.75
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.32
+      },
+      "Samsung A36 5G 12GB 256GB Awesome Black": {
+        "mean_daily": 0.05,
+        "mean_nonzero_daily": 1.33,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 3.7,
+          "6": 3.36
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.21
+      },
+      "Samsung A36 5G 8GB 128GB Awesome Lavender (LV)": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 3.72,
+          "5": 0.0,
+          "6": 3.35
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.74
+      },
+      "Samsung A56 5G 12GB 256GB Awesome Olive (GN)": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 2.33,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 2.33,
+          "4": 2.33,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.0
+      },
+      "Samsung A56 5G 12GB 256GB Awesome Pink": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 3.72,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 3.35
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.74
+      },
+      "Samsung F17 5G 4GB 128GB Light Violet": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 1.73,
+          "1": 0.0,
+          "2": 1.73,
+          "3": 0.0,
+          "4": 1.73,
+          "5": 1.73,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.85
+      },
+      "Samsung F17 5G 6GB 128GB Black": {
+        "mean_daily": 0.11,
+        "mean_nonzero_daily": 1.12,
+        "zero_day_ratio": 0.9,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 4.14,
+          "5": 1.52,
+          "6": 1.52
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.2
+      },
+      "Samsung F17 5G 6GB 128GB Light Violet": {
+        "mean_daily": 0.13,
+        "mean_nonzero_daily": 1.18,
+        "zero_day_ratio": 0.89,
+        "dow_multipliers": {
+          "0": 1.57,
+          "1": 0.52,
+          "2": 1.05,
+          "3": 1.12,
+          "4": 0.0,
+          "5": 1.12,
+          "6": 1.57
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.06
+      },
+      "Samsung S25 5G 12GB 256GB Mint": {
+        "mean_daily": 0.06,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.94,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 2.24,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 4.48,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.87
+      },
+      "Samsung S25 FE 8GB 512GB Dark Blue": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 3.43,
+          "6": 3.43
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.89
+      },
+      "Samsung S25 FE 8GB 512GB WHITE": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 3.32,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 3.65
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.0
+      },
+      "Samsung S25 Ultra 5G 12GB 256GB Titanium Gray": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 3.32,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 3.65
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.0
+      }
+    },
+    "Vivo": {
+      "Vivo T4 5G 8GB 128GB Emerald Blaze": {
+        "mean_daily": 0.06,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.94,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 1.13,
+          "2": 1.13,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 1.21,
+          "6": 3.4
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.02
+      },
+      "Vivo T4 5G 8GB 128GB Phantom Grey": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 3.44,
+          "5": 0.0,
+          "6": 3.44
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.52
+      },
+      "Vivo T4 Lite 8GB 256GB Blue": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 3.67,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 3.38
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.6
+      },
+      "Vivo T4 Pro 12GB 256GB Nitro Blue": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 3.65,
+          "6": 3.39
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.86
+      },
+      "Vivo T4 Pro 8GB 256GB Blaze Gold": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 3.5,
+          "2": 0.0,
+          "3": 3.5,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.96
+      },
+      "Vivo T4R 5G 8GB 128GB Arctic White": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 2.19,
+          "2": 2.19,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 2.39,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.07
+      },
+      "Vivo T4x 5G 6GB 128GB Marine Blue": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 3.5,
+          "2": 0.0,
+          "3": 3.5,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.71
+      },
+      "Vivo T4x 5G 8GB 128GB Glacial Teal": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 3.29,
+          "2": 0.0,
+          "3": 3.59,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.24
+      },
+      "Vivo V50e 5G 8GB 256GB Sapphire Blue": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 3.43,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 3.43,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.89
+      },
+      "Vivo V60 5G 12GB 256GB Auspicious Gold": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 3.3,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 3.67
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.7
+      },
+      "Vivo V60 5G 12GB 256GB Mist Gray": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 3.42,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 3.42,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.63
+      },
+      "Vivo V60 5G 12GB 256GB Moonlight Blue": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 2.44,
+          "6": 4.51
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.35
+      },
+      "Vivo V60 5G 8GB 256GB Auspicious Gold": {
+        "mean_daily": 0.08,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.92,
+        "dow_multipliers": {
+          "0": 2.02,
+          "1": 0.0,
+          "2": 1.88,
+          "3": 1.01,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 2.02
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.5
+      },
+      "Vivo V60 5G 8GB 256GB Moonlight Blue": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 2.46,
+          "4": 0.0,
+          "5": 2.29,
+          "6": 2.29
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.6
+      },
+      "Vivo V60e 12GB 256GB Elite Purple": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 2.19,
+          "2": 0.0,
+          "3": 2.39,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 2.39
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.07
+      },
+      "Vivo V60e 12GB 256GB Noble Gold": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.5,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 2.28,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 4.56,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.72
+      },
+      "Vivo V60e 8GB 128GB Elite Purple": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 3.5,
+          "3": 3.5,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.44
+      },
+      "Vivo V60e 8GB 128GB Noble Gold": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 3.28,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 3.69,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.38
+      },
+      "Vivo V60e 8GB 256GB Elite Purple": {
+        "mean_daily": 0.09,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.91,
+        "dow_multipliers": {
+          "0": 3.04,
+          "1": 0.0,
+          "2": 0.93,
+          "3": 1.01,
+          "4": 0.0,
+          "5": 1.01,
+          "6": 1.01
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.21
+      },
+      "Vivo V60e 8GB 256GB Noble Gold": {
+        "mean_daily": 0.05,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.95,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 4.0,
+          "4": 0.0,
+          "5": 3.33,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.41
+      },
+      "Vivo X200 FE 12GB 256GB Frost Blue": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 3.37,
+          "1": 0.0,
+          "2": 3.37,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 7.07
+      },
+      "Vivo X200 FE 16GB 512GB Luxe Grey": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.5,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 2.31,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 4.62,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 7.31
+      },
+      "Vivo X200 Pro 5G 16GB 512GB Titanium Gray": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 3.3,
+          "3": 0.0,
+          "4": 3.54,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 7.0
+      },
+      "Vivo Y19 5G 4GB 128GB Megistic Green": {
+        "mean_daily": 0.07,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.93,
+        "dow_multipliers": {
+          "0": 1.13,
+          "1": 0.0,
+          "2": 1.13,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 1.22,
+          "6": 3.38
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.72
+      },
+      "Vivo Y19 5G 4GB 64GB Megistic Green": {
+        "mean_daily": 0.1,
+        "mean_nonzero_daily": 1.11,
+        "zero_day_ratio": 0.91,
+        "dow_multipliers": {
+          "0": 2.8,
+          "1": 0.0,
+          "2": 0.7,
+          "3": 0.7,
+          "4": 0.0,
+          "5": 1.4,
+          "6": 1.4
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.3
+      },
+      "Vivo Y19 5G 4GB 64GB Titanium Silver": {
+        "mean_daily": 0.09,
+        "mean_nonzero_daily": 1.17,
+        "zero_day_ratio": 0.93,
+        "dow_multipliers": {
+          "0": 2.89,
+          "1": 0.0,
+          "2": 0.96,
+          "3": 1.05,
+          "4": 0.0,
+          "5": 1.05,
+          "6": 0.96
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.75
+      },
+      "Vivo Y19 5G 6GB 128GB Megistic Green": {
+        "mean_daily": 0.09,
+        "mean_nonzero_daily": 1.12,
+        "zero_day_ratio": 0.92,
+        "dow_multipliers": {
+          "0": 0.76,
+          "1": 0.0,
+          "2": 0.76,
+          "3": 0.81,
+          "4": 1.62,
+          "5": 0.81,
+          "6": 2.27
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.6
+      },
+      "Vivo Y19 5G 6GB 128GB Titanium Silver": {
+        "mean_daily": 0.11,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.89,
+        "dow_multipliers": {
+          "0": 0.7,
+          "1": 1.4,
+          "2": 1.4,
+          "3": 1.4,
+          "4": 0.0,
+          "5": 0.7,
+          "6": 1.4
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 2.86
+      },
+      "Vivo Y19S 5G 4GB 64GB Majestic Green": {
+        "mean_daily": 0.1,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.9,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 3.5,
+          "3": 1.75,
+          "4": 0.0,
+          "5": 1.75,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.12
+      },
+      "Vivo Y19S 5G 4GB 64GB Titanium Silver": {
+        "mean_daily": 0.08,
+        "mean_nonzero_daily": 1.33,
+        "zero_day_ratio": 0.94,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 4.0,
+          "4": 1.71,
+          "5": 0.0,
+          "6": 1.71
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.17
+      },
+      "Vivo Y19S 5G 6GB 128GB Titanium Silver": {
+        "mean_daily": 0.13,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.87,
+        "dow_multipliers": {
+          "0": 2.14,
+          "1": 1.07,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 1.25,
+          "5": 1.25,
+          "6": 1.25
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 2.58
+      },
+      "Vivo Y19e 4G 4GB 64GB Megistic Green": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 3.32,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 3.65,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.0
+      },
+      "Vivo Y19e 4G 4GB 64GB Titanium Silver": {
+        "mean_daily": 0.07,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.93,
+        "dow_multipliers": {
+          "0": 1.17,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 2.33,
+          "4": 2.33,
+          "5": 1.17,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.78
+      },
+      "Vivo Y29 5G 4GB 128GB Diamond Black": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 2.45,
+          "4": 0.0,
+          "5": 2.29,
+          "6": 2.29
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.8
+      },
+      "Vivo Y29 5G 6GB 128GB Glacier Blue": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 2.33,
+          "4": 2.33,
+          "5": 0.0,
+          "6": 2.33
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.66
+      },
+      "Vivo Y31 4GB 128GB Diamond Green": {
+        "mean_daily": 0.1,
+        "mean_nonzero_daily": 1.17,
+        "zero_day_ratio": 0.92,
+        "dow_multipliers": {
+          "0": 0.95,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 1.04,
+          "4": 1.04,
+          "5": 2.09,
+          "6": 2.09
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.55
+      },
+      "Vivo Y31 4GB 128GB Rose Red": {
+        "mean_daily": 0.05,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.95,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 1.77,
+          "2": 1.62,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 3.55
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.33
+      },
+      "Vivo Y31 6GB 128GB Diamond Green": {
+        "mean_daily": 0.18,
+        "mean_nonzero_daily": 1.06,
+        "zero_day_ratio": 0.83,
+        "dow_multipliers": {
+          "0": 1.56,
+          "1": 0.0,
+          "2": 1.17,
+          "3": 1.56,
+          "4": 0.39,
+          "5": 0.78,
+          "6": 1.56
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 2.26
+      },
+      "Vivo Y31 6GB 128GB Rose Red": {
+        "mean_daily": 0.18,
+        "mean_nonzero_daily": 1.12,
+        "zero_day_ratio": 0.84,
+        "dow_multipliers": {
+          "0": 1.17,
+          "1": 1.17,
+          "2": 0.39,
+          "3": 2.33,
+          "4": 1.56,
+          "5": 0.0,
+          "6": 0.39
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 2.39
+      },
+      "Vivo Y31 Pro 8GB 128GB Dreamy White": {
+        "mean_daily": 0.11,
+        "mean_nonzero_daily": 1.1,
+        "zero_day_ratio": 0.9,
+        "dow_multipliers": {
+          "0": 2.6,
+          "1": 1.21,
+          "2": 0.0,
+          "3": 0.65,
+          "4": 1.3,
+          "5": 0.65,
+          "6": 0.65
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.14
+      },
+      "Vivo Y31 Pro 8GB 128GB Mocha Brown": {
+        "mean_daily": 0.12,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.88,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 1.71,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.62,
+          "5": 1.71,
+          "6": 2.86
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 2.66
+      },
+      "Vivo Y31 Pro 8GB 256GB Dreamy White": {
+        "mean_daily": 0.08,
+        "mean_nonzero_daily": 1.14,
+        "zero_day_ratio": 0.93,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 1.65,
+          "3": 1.77,
+          "4": 0.0,
+          "5": 0.88,
+          "6": 2.65
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.82
+      },
+      "Vivo Y31 Pro 8GB 256GB Mocha Brown": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 3.7,
+          "5": 0.0,
+          "6": 3.36
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.04
+      },
+      "Vivo Y400 5G 8GB 128GB Glam White": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 1.71,
+          "1": 1.71,
+          "2": 1.71,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 1.71,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.64
+      },
+      "Vivo Y400 5G 8GB 128GB Olive Green": {
+        "mean_daily": 0.15,
+        "mean_nonzero_daily": 1.15,
+        "zero_day_ratio": 0.87,
+        "dow_multipliers": {
+          "0": 0.45,
+          "1": 1.36,
+          "2": 0.91,
+          "3": 0.97,
+          "4": 0.49,
+          "5": 0.97,
+          "6": 1.81
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 2.77
+      },
+      "Vivo Y400 5G 8GB 256GB Glam White": {
+        "mean_daily": 0.07,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.93,
+        "dow_multipliers": {
+          "0": 2.88,
+          "1": 0.0,
+          "2": 0.96,
+          "3": 1.03,
+          "4": 1.03,
+          "5": 0.0,
+          "6": 1.03
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.54
+      },
+      "Vivo Y400 5G 8GB 256GB Olive Green": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 1.7,
+          "1": 0.0,
+          "2": 1.7,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 1.83,
+          "6": 1.7
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.79
+      },
+      "Vivo Y400 Pro 5G 8GB 128GB Freestyle White": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 2.47,
+          "4": 0.0,
+          "5": 2.47,
+          "6": 2.24
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.9
+      },
+      "Vivo Y400 Pro 5G 8GB 256GB Freestyle White": {
+        "mean_daily": 0.06,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.94,
+        "dow_multipliers": {
+          "0": 4.49,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 1.2,
+          "6": 1.2
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.0
+      },
+      "Y21T 4GB 128GB Pearl White": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 2.27,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 2.27,
+          "6": 2.27
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.93
+      }
+    },
+    "Xiaomi": {
+      "Redmi 14C 5G 4GB 128GB Stardust Purple": {
+        "mean_daily": 0.06,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.94,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 2.22,
+          "2": 2.22,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 2.38
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.98
+      },
+      "Redmi 14C 5G 4GB 128GB Stargaze Black": {
+        "mean_daily": 0.07,
+        "mean_nonzero_daily": 1.17,
+        "zero_day_ratio": 0.94,
+        "dow_multipliers": {
+          "0": 1.02,
+          "1": 0.95,
+          "2": 0.95,
+          "3": 3.06,
+          "4": 1.02,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.19
+      },
+      "Redmi 14C 5G 4GB 128GB Starlight Blue": {
+        "mean_daily": 0.06,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.94,
+        "dow_multipliers": {
+          "0": 2.38,
+          "1": 2.22,
+          "2": 0.0,
+          "3": 2.38,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.98
+      },
+      "Redmi 14C 5G 4GB 64GB Stardust Purple": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 2.19,
+          "2": 2.19,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 2.39,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.07
+      },
+      "Redmi 14C 5G 4GB 64GB Stargaze Black": {
+        "mean_daily": 0.06,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.94,
+        "dow_multipliers": {
+          "0": 1.78,
+          "1": 0.0,
+          "2": 1.61,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 1.78,
+          "6": 1.78
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.12
+      },
+      "Redmi 14C 5G 4GB 64GB Starlight Blue": {
+        "mean_daily": 0.05,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.95,
+        "dow_multipliers": {
+          "0": 1.69,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 1.84,
+          "4": 0.0,
+          "5": 1.84,
+          "6": 1.69
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.41
+      },
+      "Redmi 14C 5G 6GB 128GB Stardust Purple": {
+        "mean_daily": 0.09,
+        "mean_nonzero_daily": 1.12,
+        "zero_day_ratio": 0.92,
+        "dow_multipliers": {
+          "0": 0.78,
+          "1": 0.0,
+          "2": 0.78,
+          "3": 1.56,
+          "4": 2.33,
+          "5": 0.0,
+          "6": 1.56
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.53
+      },
+      "Redmi 14C 5G 6GB 128GB Stargaze Black": {
+        "mean_daily": 0.09,
+        "mean_nonzero_daily": 1.29,
+        "zero_day_ratio": 0.93,
+        "dow_multipliers": {
+          "0": 0.75,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.8,
+          "4": 3.21,
+          "5": 1.6,
+          "6": 0.8
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.92
+      },
+      "Redmi 14C 5G 6GB 128GB Starlight Blue": {
+        "mean_daily": 0.12,
+        "mean_nonzero_daily": 1.11,
+        "zero_day_ratio": 0.89,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.69,
+          "2": 0.0,
+          "3": 1.51,
+          "4": 2.08,
+          "5": 2.08,
+          "6": 0.69
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.01
+      },
+      "Redmi 15 5G 6GB 128GB Sandy Purple": {
+        "mean_daily": 0.06,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.94,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 2.21,
+          "2": 2.21,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 2.21
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.12
+      },
+      "Redmi 15 5G 8GB 256GB Frosted White": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 2.19,
+          "3": 2.36,
+          "4": 0.0,
+          "5": 2.36,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.48
+      },
+      "Redmi 15 5G 8GB 256GB Sandy Purple": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 3.36,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 3.62,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.82
+      },
+      "Redmi A5 3GB 64GB Jaisalmer Gold": {
+        "mean_daily": 0.13,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.87,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.54,
+          "2": 0.51,
+          "3": 1.63,
+          "4": 3.26,
+          "5": 1.09,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 2.59
+      },
+      "Redmi A5 3GB 64GB Just Black": {
+        "mean_daily": 0.05,
+        "mean_nonzero_daily": 1.25,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 2.86,
+          "1": 1.33,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 1.43,
+          "5": 1.43,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.22
+      },
+      "Redmi A5 3GB 64GB Pondicherry Blue": {
+        "mean_daily": 0.13,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.87,
+        "dow_multipliers": {
+          "0": 0.62,
+          "1": 1.24,
+          "2": 1.24,
+          "3": 0.68,
+          "4": 0.0,
+          "5": 0.62,
+          "6": 2.48
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 2.56
+      },
+      "Redmi A5 4GB 128GB Pondicherry Blue": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 3.17,
+          "3": 0.0,
+          "4": 3.56,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.29
+      },
+      "Redmi Note 14 5G 8GB 128GB Titan Black": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 3.28,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 3.69,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.38
+      },
+      "Redmi Note 14 5G 8GB 256GB Mystique White": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 3.75,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 3.33
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.43
+      },
+      "Redmi Note 14 Pro+ 5G 12GB 512GB Phantom Purple": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 3.12,
+          "3": 0.0,
+          "4": 3.57,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.95
+      }
+    }
+  },
+  "Dindigul - 3 - (Salai Road)": {
+    "Nothing": {
+      "Nothing Phone (3a) 8GB 256GB Black": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 3.46,
+          "5": 3.46,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.93
+      }
+    },
+    "OnePlus": {
+      "OnePlus Nord 5 8GB 256GB Marble Sands": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 6.45,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.92
+      }
+    },
+    "Oppo": {
+      "Oppo F31 8GB  256GB Cloud Green": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 3.29,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 3.54,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.74
+      }
+    },
+    "Samsung": {
+      "Samsung A17 5G 8GB 128GB Blue": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 3.44,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 3.44,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.52
+      }
+    },
+    "Vivo": {
+      "Vivo V60 5G 12GB 256GB Auspicious Gold": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 6.5,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.66
+      },
+      "Vivo V60 5G 8GB 256GB Auspicious Gold": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 3.33,
+          "2": 1.67,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 1.79,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.92
+      },
+      "Vivo V60 5G 8GB 256GB Moonlight Blue": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 7.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.16
+      },
+      "Vivo V60e 12GB 256GB Noble Gold": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 3.45,
+          "5": 3.45,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.12
+      },
+      "Vivo V60e 8GB 128GB Elite Purple": {
+        "mean_daily": 0.05,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.95,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 1.69,
+          "3": 1.84,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 3.38
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.41
+      },
+      "Vivo V60e 8GB 128GB Noble Gold": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 2.3,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 2.3,
+          "5": 0.0,
+          "6": 2.3
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.97
+      },
+      "Vivo V60e 8GB 256GB Noble Gold": {
+        "mean_daily": 0.08,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.92,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.99,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 3.95,
+          "5": 0.0,
+          "6": 1.98
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.32
+      },
+      "Vivo Y19 5G 4GB 128GB Megistic Green": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 3.7,
+          "6": 3.36
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.04
+      },
+      "Vivo Y19 5G 4GB 64GB Megistic Green": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 1.72,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 3.43,
+          "6": 1.72
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.0
+      },
+      "Vivo Y19 5G 6GB 128GB Megistic Green": {
+        "mean_daily": 0.07,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.93,
+        "dow_multipliers": {
+          "0": 1.02,
+          "1": 0.95,
+          "2": 0.95,
+          "3": 1.02,
+          "4": 1.02,
+          "5": 1.02,
+          "6": 1.02
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.66
+      },
+      "Vivo Y19 5G 6GB 128GB Titanium Silver": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 3.46,
+          "3": 0.0,
+          "4": 3.46,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.67
+      },
+      "Vivo Y19e 4G 4GB 64GB Megistic Green": {
+        "mean_daily": 0.14,
+        "mean_nonzero_daily": 1.86,
+        "zero_day_ratio": 0.92,
+        "dow_multipliers": {
+          "0": 1.62,
+          "1": 1.08,
+          "2": 0.54,
+          "3": 0.54,
+          "4": 0.0,
+          "5": 2.69,
+          "6": 0.54
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.5
+      },
+      "Vivo Y19e 4G 4GB 64GB Titanium Silver": {
+        "mean_daily": 0.07,
+        "mean_nonzero_daily": 1.2,
+        "zero_day_ratio": 0.94,
+        "dow_multipliers": {
+          "0": 2.36,
+          "1": 1.18,
+          "2": 1.09,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 1.18,
+          "6": 1.18
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.25
+      },
+      "Vivo Y31 4GB 128GB Diamond Green": {
+        "mean_daily": 0.05,
+        "mean_nonzero_daily": 1.33,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 1.68,
+          "2": 0.0,
+          "3": 1.85,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 3.36
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.21
+      },
+      "Vivo Y31 4GB 128GB Rose Red": {
+        "mean_daily": 0.09,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.91,
+        "dow_multipliers": {
+          "0": 0.87,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 1.87,
+          "4": 2.6,
+          "5": 0.87,
+          "6": 0.87
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.22
+      },
+      "Vivo Y31 6GB 128GB Diamond Green": {
+        "mean_daily": 0.17,
+        "mean_nonzero_daily": 1.23,
+        "zero_day_ratio": 0.86,
+        "dow_multipliers": {
+          "0": 0.43,
+          "1": 0.0,
+          "2": 1.29,
+          "3": 0.46,
+          "4": 0.46,
+          "5": 1.29,
+          "6": 3.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.1
+      },
+      "Vivo Y31 6GB 128GB Rose Red": {
+        "mean_daily": 0.2,
+        "mean_nonzero_daily": 1.27,
+        "zero_day_ratio": 0.85,
+        "dow_multipliers": {
+          "0": 2.19,
+          "1": 0.0,
+          "2": 0.73,
+          "3": 1.57,
+          "4": 1.09,
+          "5": 0.0,
+          "6": 1.46
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 2.62
+      },
+      "Vivo Y31 Pro 8GB 128GB Dreamy White": {
+        "mean_daily": 0.05,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.95,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 1.4,
+          "3": 2.8,
+          "4": 2.8,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.17
+      },
+      "Vivo Y31 Pro 8GB 128GB Mocha Brown": {
+        "mean_daily": 0.08,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.92,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 1.1,
+          "2": 0.0,
+          "3": 1.2,
+          "4": 3.59,
+          "5": 0.0,
+          "6": 1.2
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.51
+      },
+      "Vivo Y31 Pro 8GB 256GB Dreamy White": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 3.37,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 3.61
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 7.07
+      },
+      "Vivo Y31 Pro 8GB 256GB Mocha Brown": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 2.3,
+          "3": 2.56,
+          "4": 2.3,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.72
+      },
+      "Vivo Y400 5G 8GB 256GB Olive Green": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 2.47,
+          "5": 4.56,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.38
+      },
+      "Vivo Y400 Pro 5G 8GB 128GB Freestyle White": {
+        "mean_daily": 0.06,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.94,
+        "dow_multipliers": {
+          "0": 1.14,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 1.23,
+          "4": 0.0,
+          "5": 2.29,
+          "6": 2.29
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.89
+      },
+      "Vivo Y400 Pro 5G 8GB 256GB Fest Gold": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 3.45,
+          "5": 3.45,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.12
+      },
+      "Vivo Y400 Pro 5G 8GB 256GB Nebula Purple": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 1.7,
+          "1": 1.7,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 1.83,
+          "5": 0.0,
+          "6": 1.7
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.79
+      }
+    },
+    "Xiaomi": {
+      "Redmi 14C 5G 4GB 128GB Stardust Purple": {
+        "mean_daily": 0.07,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.93,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 2.1,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 4.89,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.74
+      },
+      "Redmi 14C 5G 6GB 128GB Stardust Purple": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 3.33,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 3.64,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.28
+      },
+      "Redmi 14C 5G 6GB 128GB Starlight Blue": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 3.32,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 3.58,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.78
+      },
+      "Redmi A5 3GB 64GB Pondicherry Blue": {
+        "mean_daily": 0.06,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.94,
+        "dow_multipliers": {
+          "0": 1.65,
+          "1": 1.65,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 1.83,
+          "5": 1.83,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.97
+      }
+    }
+  },
+  "Hosur - 2 - (Bagalur Circle)": {
+    "Apple": {
+      "Iphone 13 128GB Midnight": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 3.54,
+          "2": 3.29,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.74
+      },
+      "Iphone 17 256GB Black": {
+        "mean_daily": 0.08,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.92,
+        "dow_multipliers": {
+          "0": 0.84,
+          "1": 0.84,
+          "2": 0.0,
+          "3": 1.8,
+          "4": 0.0,
+          "5": 1.8,
+          "6": 1.8
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.43
+      },
+      "Iphone 17 256GB Lavender": {
+        "mean_daily": 0.07,
+        "mean_nonzero_daily": 1.5,
+        "zero_day_ratio": 0.95,
+        "dow_multipliers": {
+          "0": 3.38,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 3.38
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.35
+      },
+      "Iphone 17 256GB Mist Blue": {
+        "mean_daily": 0.07,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.93,
+        "dow_multipliers": {
+          "0": 2.28,
+          "1": 0.0,
+          "2": 1.14,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 2.28,
+          "6": 1.14
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.74
+      },
+      "Iphone 17 256GB Sage": {
+        "mean_daily": 0.07,
+        "mean_nonzero_daily": 1.25,
+        "zero_day_ratio": 0.95,
+        "dow_multipliers": {
+          "0": 2.65,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 1.46,
+          "5": 2.92,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.44
+      },
+      "Iphone 17 256GB White": {
+        "mean_daily": 0.11,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.89,
+        "dow_multipliers": {
+          "0": 3.67,
+          "1": 0.61,
+          "2": 0.61,
+          "3": 0.0,
+          "4": 1.31,
+          "5": 0.0,
+          "6": 0.66
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 2.87
+      },
+      "Iphone 17 Pro 256GB Deep Blue": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 3.88,
+          "4": 3.44,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.52
+      },
+      "iPhone 15 128GB Black": {
+        "mean_daily": 0.06,
+        "mean_nonzero_daily": 1.2,
+        "zero_day_ratio": 0.95,
+        "dow_multipliers": {
+          "0": 4.49,
+          "1": 1.12,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 1.2,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.65
+      },
+      "iPhone 15 128GB Blue": {
+        "mean_daily": 0.09,
+        "mean_nonzero_daily": 1.29,
+        "zero_day_ratio": 0.93,
+        "dow_multipliers": {
+          "0": 1.53,
+          "1": 0.0,
+          "2": 1.53,
+          "3": 0.0,
+          "4": 1.63,
+          "5": 0.76,
+          "6": 1.53
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.96
+      },
+      "iPhone 15 256GB Blue": {
+        "mean_daily": 0.07,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.93,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 4.67,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 2.33
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.65
+      },
+      "iPhone 16 128GB Black": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 6.5,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.2
+      },
+      "iPhone 16 128GB Pink": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 6.77
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.6
+      },
+      "iPhone 16 128GB Teal": {
+        "mean_daily": 0.05,
+        "mean_nonzero_daily": 1.25,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 1.34,
+          "1": 1.34,
+          "2": 0.0,
+          "3": 1.45,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 2.89
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.06
+      },
+      "iPhone 16 128GB Ultramarine": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 3.31,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 3.31
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.1
+      }
+    },
+    "Google": {
+      "Google Pixel 10 12GB 256GB Obsidian": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 6.89,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.52
+      },
+      "Google Pixel 10 Pro XL 16GB 256GB Obsidian": {
+        "mean_daily": 0.06,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.94,
+        "dow_multipliers": {
+          "0": 2.17,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 2.48,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 2.48
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.08
+      },
+      "Google Pixel 8A 8GB 128GB Obsidian": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 3.5,
+          "4": 3.5,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.44
+      },
+      "Google Pixel 9A 8GB 256GB Iris": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 2.21,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 2.43,
+          "6": 2.43
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.86
+      },
+      "Google Pixel 9A 8GB 256GB Obsidian": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 5.04,
+          "1": 0.0,
+          "2": 1.68,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.77
+      },
+      "Google Pixel 9A 8GB 256GB Porcelain": {
+        "mean_daily": 0.05,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.95,
+        "dow_multipliers": {
+          "0": 1.41,
+          "1": 1.41,
+          "2": 1.32,
+          "3": 1.41,
+          "4": 0.0,
+          "5": 1.41,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.36
+      }
+    },
+    "Nothing": {
+      "Nothing CMF Phone 2 PRO 8GB 128GB White": {
+        "mean_daily": 0.06,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.94,
+        "dow_multipliers": {
+          "0": 1.65,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 1.83,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 3.67
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.97
+      },
+      "Nothing CMF Phone 2 PRO 8GB 256GB White": {
+        "mean_daily": 0.08,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.92,
+        "dow_multipliers": {
+          "0": 1.62,
+          "1": 1.62,
+          "2": 1.62,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 1.86,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.5
+      },
+      "Nothing Phone (3a) 8GB 128GB Black": {
+        "mean_daily": 0.14,
+        "mean_nonzero_daily": 1.18,
+        "zero_day_ratio": 0.88,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.52,
+          "3": 0.56,
+          "4": 1.12,
+          "5": 2.25,
+          "6": 2.61
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 2.94
+      },
+      "Nothing Phone (3a) 8GB 256GB Black": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.33,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 1.73,
+          "5": 0.0,
+          "6": 5.19
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.75
+      },
+      "Nothing Phone (3a) 8GB 256GB White": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 3.3,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 1.77,
+          "6": 1.77
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.9
+      },
+      "Nothing Phone (3a) Pro 12GB 256GB Grey": {
+        "mean_daily": 0.08,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.92,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 1.59,
+          "2": 1.59,
+          "3": 0.0,
+          "4": 1.82,
+          "5": 0.0,
+          "6": 1.82
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.46
+      },
+      "Nothing Phone (3a) Pro 8GB 128GB Black": {
+        "mean_daily": 0.05,
+        "mean_nonzero_daily": 1.25,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 2.72,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 1.46,
+          "6": 2.72
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.28
+      },
+      "Nothing Phone (3a) Pro 8GB 256GB Black": {
+        "mean_daily": 0.06,
+        "mean_nonzero_daily": 1.25,
+        "zero_day_ratio": 0.95,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 2.73,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 4.1,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.71
+      },
+      "Nothing Phone (3a) Pro 8GB 256GB Grey": {
+        "mean_daily": 0.07,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.93,
+        "dow_multipliers": {
+          "0": 2.33,
+          "1": 1.17,
+          "2": 0.0,
+          "3": 2.33,
+          "4": 0.0,
+          "5": 1.17,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.63
+      }
+    },
+    "OnePlus": {
+      "OnePlus 13R 5G 12GB 256GB Astral Trail": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 2.31,
+          "3": 0.0,
+          "4": 2.31,
+          "5": 2.31,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.63
+      },
+      "OnePlus 13s 12GB 256GB Black Velvet": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 3.27,
+          "3": 3.54,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.48
+      },
+      "OnePlus Nord 5 12GB 256GB Dry Ice": {
+        "mean_daily": 0.06,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.94,
+        "dow_multipliers": {
+          "0": 2.17,
+          "1": 2.17,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 2.48
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.08
+      },
+      "OnePlus Nord 5 8GB 256GB Dry Ice": {
+        "mean_daily": 0.05,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.95,
+        "dow_multipliers": {
+          "0": 1.4,
+          "1": 1.4,
+          "2": 1.4,
+          "3": 1.4,
+          "4": 1.4,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.17
+      },
+      "OnePlus Nord 5 8GB 256GB Marble Sands": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 2.19,
+          "3": 2.36,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 2.36
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.48
+      },
+      "OnePlus Nord CE5 12GB 256GB Black Infinity": {
+        "mean_daily": 0.06,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.94,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 2.63,
+          "2": 0.0,
+          "3": 2.87,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 1.44
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.87
+      },
+      "OnePlus Nord CE5 8GB 128GB Marble Mist": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 3.2,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 3.56,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.61
+      },
+      "OnePlus Nord CE5 8GB 256GB Black Infinity": {
+        "mean_daily": 0.05,
+        "mean_nonzero_daily": 1.25,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 1.41,
+          "1": 2.83,
+          "2": 2.64,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.2
+      },
+      "OnePlus Nord CE5 8GB 256GB Marble Mist": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 3.79,
+          "6": 3.31
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.1
+      },
+      "OnePlus Nord CE5 8GB 256GB Nexus Blue": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 3.54,
+          "1": 0.0,
+          "2": 1.65,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 1.77,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.9
+      },
+      "Oneplus 15 12GB 256GB Infinite Black": {
+        "mean_daily": 0.05,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.95,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 3.25,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 3.25
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.36
+      }
+    },
+    "Oppo": {
+      "OPPO Reno 14 12GB 256GB Forest Green": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 3.3,
+          "3": 0.0,
+          "4": 3.54,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 7.0
+      },
+      "OPPO Reno 14 12GB 256GB Mint Green": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 3.37,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 3.61,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 7.07
+      },
+      "OPPO Reno 14 12GB 256GB Pearl White": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 3.69,
+          "4": 0.0,
+          "5": 3.43,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.89
+      },
+      "OPPO Reno 14 12GB 512GB Pearl White": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 3.5,
+          "2": 0.0,
+          "3": 3.5,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.96
+      },
+      "OPPO Reno 14 8GB 256GB Pearl White": {
+        "mean_daily": 0.07,
+        "mean_nonzero_daily": 1.17,
+        "zero_day_ratio": 0.94,
+        "dow_multipliers": {
+          "0": 0.97,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 3.12,
+          "4": 1.04,
+          "5": 0.0,
+          "6": 1.94
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.23
+      },
+      "Oppo A5 5G 6GB 128GB Aurora Green": {
+        "mean_daily": 0.08,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.92,
+        "dow_multipliers": {
+          "0": 0.87,
+          "1": 0.0,
+          "2": 1.73,
+          "3": 0.93,
+          "4": 1.73,
+          "5": 0.0,
+          "6": 1.73
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.35
+      },
+      "Oppo A5 Pro 5G 8GB 128GB Blue": {
+        "mean_daily": 0.05,
+        "mean_nonzero_daily": 1.25,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 1.36,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 1.46,
+          "5": 1.46,
+          "6": 2.72
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.28
+      },
+      "Oppo A5 Pro 5G 8GB 128GB Brown": {
+        "mean_daily": 0.07,
+        "mean_nonzero_daily": 1.2,
+        "zero_day_ratio": 0.95,
+        "dow_multipliers": {
+          "0": 1.17,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 1.17,
+          "4": 0.0,
+          "5": 1.17,
+          "6": 3.5
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.41
+      },
+      "Oppo A5 Pro 5G 8GB 256GB Blue": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 2.24,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 2.41,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 2.41
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.54
+      },
+      "Oppo A5 Pro 5G 8GB 256GB Brown": {
+        "mean_daily": 0.05,
+        "mean_nonzero_daily": 1.5,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 6.67
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.73
+      },
+      "Oppo A5X 4+128GB 5G Laser White": {
+        "mean_daily": 0.07,
+        "mean_nonzero_daily": 1.17,
+        "zero_day_ratio": 0.94,
+        "dow_multipliers": {
+          "0": 1.94,
+          "1": 0.0,
+          "2": 1.94,
+          "3": 0.0,
+          "4": 2.09,
+          "5": 0.0,
+          "6": 0.97
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.08
+      },
+      "Oppo A5X 4+128GB 5G Midnight blue": {
+        "mean_daily": 0.09,
+        "mean_nonzero_daily": 1.14,
+        "zero_day_ratio": 0.92,
+        "dow_multipliers": {
+          "0": 0.88,
+          "1": 0.0,
+          "2": 1.64,
+          "3": 0.88,
+          "4": 0.88,
+          "5": 1.77,
+          "6": 0.88
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.68
+      },
+      "Oppo A5X 4G 4GB 64GB Laser White": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 1.71,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 1.85,
+          "5": 1.71,
+          "6": 1.71
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.82
+      },
+      "Oppo A5X 4G 4GB 64GB Midnight Blue": {
+        "mean_daily": 0.07,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.93,
+        "dow_multipliers": {
+          "0": 1.18,
+          "1": 1.18,
+          "2": 1.1,
+          "3": 1.18,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 2.36
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.81
+      },
+      "Oppo A5X 5G 4GB 64GB Midnight Blue": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 4.36,
+          "3": 0.0,
+          "4": 2.36,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.26
+      },
+      "Oppo A5X 6GB 128GB 5G Laser White": {
+        "mean_daily": 0.1,
+        "mean_nonzero_daily": 1.11,
+        "zero_day_ratio": 0.91,
+        "dow_multipliers": {
+          "0": 1.36,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 1.46,
+          "4": 0.73,
+          "5": 0.73,
+          "6": 2.72
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.37
+      },
+      "Oppo A5X 6GB 128GB 5G Midnight blue": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 2.24,
+          "1": 0.0,
+          "2": 2.24,
+          "3": 0.0,
+          "4": 2.4,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.74
+      },
+      "Oppo A5X\u00a05G 4GB 64GB Laser white": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 4.93,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 2.24
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.9
+      },
+      "Oppo F31 8GB  128GB Midnight Blue": {
+        "mean_daily": 0.09,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.91,
+        "dow_multipliers": {
+          "0": 1.51,
+          "1": 0.75,
+          "2": 1.51,
+          "3": 0.81,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 2.26
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.11
+      },
+      "Oppo F31 8GB  256GB Cloud Green": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 1.85,
+          "5": 1.71,
+          "6": 3.43
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.82
+      },
+      "Oppo F31 8GB  256GB Midnight Blue": {
+        "mean_daily": 0.08,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.92,
+        "dow_multipliers": {
+          "0": 3.03,
+          "1": 0.0,
+          "2": 0.94,
+          "3": 1.01,
+          "4": 1.01,
+          "5": 1.01,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.5
+      },
+      "Oppo F31 8GB 128GB Bloom Red": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 1.71,
+          "2": 0.0,
+          "3": 1.85,
+          "4": 1.85,
+          "5": 1.71,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.82
+      },
+      "Oppo F31 8GB 128GB Cloud Green": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 2.39,
+          "1": 2.19,
+          "2": 2.19,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.07
+      },
+      "Oppo F31 Pro 12GB  256GB Desert Gold": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 3.38,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 3.38
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.32
+      },
+      "Oppo F31 Pro 12GB  256GB Space Grey": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 3.46,
+          "5": 0.0,
+          "6": 3.46
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.67
+      },
+      "Oppo F31 Pro 8GB  128GB Space Grey": {
+        "mean_daily": 0.06,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.94,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 1.17,
+          "2": 0.0,
+          "3": 1.17,
+          "4": 1.17,
+          "5": 1.17,
+          "6": 2.33
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.94
+      },
+      "Oppo F31 Pro 8GB  256GB Desert Gold": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 2.24,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 2.41,
+          "5": 0.0,
+          "6": 2.41
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.54
+      },
+      "Oppo F31 Pro 8GB  256GB Space Grey": {
+        "mean_daily": 0.11,
+        "mean_nonzero_daily": 1.1,
+        "zero_day_ratio": 0.9,
+        "dow_multipliers": {
+          "0": 1.85,
+          "1": 0.62,
+          "2": 1.24,
+          "3": 0.0,
+          "4": 1.32,
+          "5": 0.66,
+          "6": 1.24
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.17
+      },
+      "Oppo F31 Pro 8GB 128GB Desert Gold": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 3.65,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 3.39
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.86
+      },
+      "Oppo F31 Pro Plus 12GB  256GB Himalayan White": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 3.5,
+          "4": 3.5,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.96
+      },
+      "Oppo Reno 13 5G 8GB 256GB Luminous Blue": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 4.42,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 2.43
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.86
+      },
+      "Reno 11 Pro 5G 12GB 256GB Pearl White": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 6.73
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.04
+      }
+    },
+    "POCO": {
+      "POCO C71 4GB 64GB Power Black": {
+        "mean_daily": 0.05,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.95,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 4.58,
+          "5": 0.0,
+          "6": 2.29
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.2
+      },
+      "POCO C75 5G 4GB 128GB Aqua Bliss": {
+        "mean_daily": 0.07,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.93,
+        "dow_multipliers": {
+          "0": 2.65,
+          "1": 0.0,
+          "2": 1.33,
+          "3": 0.0,
+          "4": 1.46,
+          "5": 0.0,
+          "6": 1.46
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.71
+      }
+    },
+    "Realme": {
+      "Realme 15T 5G 8GB 128GB Flowing Silver": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 3.43,
+          "6": 3.43
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.89
+      },
+      "Realme 15x 5G 8GB 128GB Aqua Blue": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 2.24,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 2.47,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 2.24
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.9
+      },
+      "Realme C73 5G 4GB 64GB Onyx Black": {
+        "mean_daily": 0.05,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.95,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 3.9,
+          "5": 0.0,
+          "6": 3.25
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.36
+      },
+      "realme 14x 5G 6GB 128GB Jewel Red": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 3.58,
+          "1": 3.31,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.52
+      },
+      "realme C71 4G 4GB 64GB Sea Blue": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 3.5,
+          "4": 0.0,
+          "5": 3.5,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.16
+      }
+    },
+    "Samsung": {
+      "Samsung A06 5G 4GB 64GB Gray": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 4.5,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 2.25
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.13
+      },
+      "Samsung A06 5G 6GB 128GB Black": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 2.29,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 2.29,
+          "6": 2.29
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.6
+      },
+      "Samsung A17 5G 6GB 128GB Blue": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 6.77
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.6
+      },
+      "Samsung A36 5G 8GB 256GB Awesome Lavender (LV)": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 3.32,
+          "2": 0.0,
+          "3": 3.58,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.78
+      },
+      "Samsung F17 5G 6GB 128GB Black": {
+        "mean_daily": 0.07,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.93,
+        "dow_multipliers": {
+          "0": 2.36,
+          "1": 0.0,
+          "2": 1.1,
+          "3": 1.18,
+          "4": 0.0,
+          "5": 1.18,
+          "6": 1.18
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.81
+      }
+    },
+    "Vivo": {
+      "Vivo T4x 5G 6GB 128GB Pronto Purple": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 3.38,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 3.38
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.6
+      },
+      "Vivo V50e 5G 8GB 128GB Pearl White": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 3.42,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 3.42,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.63
+      },
+      "Vivo V60 5G 12GB 256GB Auspicious Gold": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 2.33,
+          "1": 2.33,
+          "2": 0.0,
+          "3": 2.33,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.45
+      },
+      "Vivo V60 5G 12GB 256GB Mist Gray": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 1.68,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 1.81,
+          "4": 0.0,
+          "5": 1.81,
+          "6": 1.81
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.77
+      },
+      "Vivo V60 5G 12GB 256GB Moonlight Blue": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 2.26,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 4.51
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.35
+      },
+      "Vivo V60 5G 8GB 256GB Auspicious Gold": {
+        "mean_daily": 0.09,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.91,
+        "dow_multipliers": {
+          "0": 0.84,
+          "1": 0.84,
+          "2": 0.84,
+          "3": 0.9,
+          "4": 0.9,
+          "5": 0.9,
+          "6": 1.81
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.3
+      },
+      "Vivo V60 5G 8GB 256GB Moonlight Blue": {
+        "mean_daily": 0.07,
+        "mean_nonzero_daily": 1.17,
+        "zero_day_ratio": 0.94,
+        "dow_multipliers": {
+          "0": 0.98,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 3.16,
+          "5": 0.98,
+          "6": 1.96
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.1
+      },
+      "Vivo V60e 12GB 256GB Elite Purple": {
+        "mean_daily": 0.06,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.94,
+        "dow_multipliers": {
+          "0": 1.35,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 1.47,
+          "4": 2.95,
+          "5": 0.0,
+          "6": 1.35
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.92
+      },
+      "Vivo V60e 8GB 128GB Elite Purple": {
+        "mean_daily": 0.1,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.9,
+        "dow_multipliers": {
+          "0": 0.86,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.94,
+          "4": 1.73,
+          "5": 1.73,
+          "6": 1.73
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.08
+      },
+      "Vivo V60e 8GB 128GB Noble Gold": {
+        "mean_daily": 0.1,
+        "mean_nonzero_daily": 1.14,
+        "zero_day_ratio": 0.91,
+        "dow_multipliers": {
+          "0": 3.38,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.92,
+          "4": 0.0,
+          "5": 0.92,
+          "6": 1.69
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.44
+      },
+      "Vivo V60e 8GB 256GB Elite Purple": {
+        "mean_daily": 0.14,
+        "mean_nonzero_daily": 1.2,
+        "zero_day_ratio": 0.88,
+        "dow_multipliers": {
+          "0": 0.58,
+          "1": 0.58,
+          "2": 0.0,
+          "3": 1.17,
+          "4": 1.75,
+          "5": 1.75,
+          "6": 1.17
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 2.9
+      },
+      "Vivo X200 FE 12GB 256GB Frost Blue": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 3.69,
+          "5": 3.43,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.89
+      },
+      "Vivo X200 FE 16GB 512GB Amber Yellow": {
+        "mean_daily": 0.05,
+        "mean_nonzero_daily": 1.33,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 3.32,
+          "1": 3.32,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.17
+      },
+      "Vivo X200 FE 16GB 512GB Luxe Grey": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 2.21,
+          "2": 2.21,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 2.39,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.29
+      },
+      "Vivo Y19 5G 4GB 128GB Megistic Green": {
+        "mean_daily": 0.12,
+        "mean_nonzero_daily": 1.57,
+        "zero_day_ratio": 0.92,
+        "dow_multipliers": {
+          "0": 2.55,
+          "1": 0.0,
+          "2": 1.27,
+          "3": 0.64,
+          "4": 1.27,
+          "5": 0.0,
+          "6": 1.27
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.24
+      },
+      "Vivo Y19 5G 4GB 64GB Megistic Green": {
+        "mean_daily": 0.09,
+        "mean_nonzero_daily": 1.5,
+        "zero_day_ratio": 0.94,
+        "dow_multipliers": {
+          "0": 2.26,
+          "1": 0.0,
+          "2": 1.51,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.81,
+          "6": 2.26
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.1
+      },
+      "Vivo Y19 5G 4GB 64GB Titanium Silver": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.5,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 2.19,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 4.72
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 7.12
+      },
+      "Vivo Y19 5G 6GB 128GB Megistic Green": {
+        "mean_daily": 0.18,
+        "mean_nonzero_daily": 1.2,
+        "zero_day_ratio": 0.85,
+        "dow_multipliers": {
+          "0": 2.64,
+          "1": 0.0,
+          "2": 0.76,
+          "3": 0.4,
+          "4": 0.81,
+          "5": 0.81,
+          "6": 1.51
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 2.69
+      },
+      "Vivo Y19 5G 6GB 128GB Titanium Silver": {
+        "mean_daily": 0.1,
+        "mean_nonzero_daily": 1.12,
+        "zero_day_ratio": 0.91,
+        "dow_multipliers": {
+          "0": 1.56,
+          "1": 0.0,
+          "2": 0.78,
+          "3": 1.56,
+          "4": 0.0,
+          "5": 0.78,
+          "6": 2.33
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.39
+      },
+      "Vivo Y19S 5G 4GB 64GB Majestic Green": {
+        "mean_daily": 0.09,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.91,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 1.64,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 4.93
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.28
+      },
+      "Vivo Y19S 5G 4GB 64GB Titanium Silver": {
+        "mean_daily": 0.09,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.91,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 3.29,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 3.29
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.28
+      },
+      "Vivo Y19S 5G 6GB 128GB Titanium Silver": {
+        "mean_daily": 0.09,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.91,
+        "dow_multipliers": {
+          "0": 1.83,
+          "1": 3.14,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 1.83,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.2
+      },
+      "Vivo Y19e 4G 4GB 64GB Megistic Green": {
+        "mean_daily": 0.07,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.93,
+        "dow_multipliers": {
+          "0": 1.94,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 1.04,
+          "5": 0.0,
+          "6": 3.88
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.56
+      },
+      "Vivo Y19e 4G 4GB 64GB Titanium Silver": {
+        "mean_daily": 0.08,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.92,
+        "dow_multipliers": {
+          "0": 2.65,
+          "1": 0.88,
+          "2": 0.82,
+          "3": 0.0,
+          "4": 0.88,
+          "5": 0.0,
+          "6": 1.77
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.39
+      },
+      "Vivo Y31 4GB 128GB Diamond Green": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 3.44,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 3.44,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.2
+      },
+      "Vivo Y31 4GB 128GB Rose Red": {
+        "mean_daily": 0.09,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.91,
+        "dow_multipliers": {
+          "0": 0.88,
+          "1": 0.0,
+          "2": 2.46,
+          "3": 0.88,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 2.65
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.26
+      },
+      "Vivo Y31 6GB 128GB Diamond Green": {
+        "mean_daily": 0.15,
+        "mean_nonzero_daily": 1.07,
+        "zero_day_ratio": 0.86,
+        "dow_multipliers": {
+          "0": 0.93,
+          "1": 1.4,
+          "2": 1.4,
+          "3": 1.87,
+          "4": 0.0,
+          "5": 0.47,
+          "6": 0.93
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 2.54
+      },
+      "Vivo Y31 6GB 128GB Rose Red": {
+        "mean_daily": 0.28,
+        "mean_nonzero_daily": 1.37,
+        "zero_day_ratio": 0.8,
+        "dow_multipliers": {
+          "0": 1.29,
+          "1": 0.26,
+          "2": 1.81,
+          "3": 0.56,
+          "4": 1.11,
+          "5": 0.56,
+          "6": 1.39
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 2.21
+      },
+      "Vivo Y31 Pro 8GB 128GB Dreamy White": {
+        "mean_daily": 0.14,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.86,
+        "dow_multipliers": {
+          "0": 1.09,
+          "1": 0.54,
+          "2": 0.51,
+          "3": 0.54,
+          "4": 0.54,
+          "5": 1.09,
+          "6": 2.72
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 2.48
+      },
+      "Vivo Y31 Pro 8GB 128GB Mocha Brown": {
+        "mean_daily": 0.11,
+        "mean_nonzero_daily": 1.1,
+        "zero_day_ratio": 0.9,
+        "dow_multipliers": {
+          "0": 0.64,
+          "1": 0.0,
+          "2": 1.2,
+          "3": 0.0,
+          "4": 1.29,
+          "5": 1.29,
+          "6": 2.57
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.12
+      },
+      "Vivo Y31 Pro 8GB 256GB Dreamy White": {
+        "mean_daily": 0.11,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.89,
+        "dow_multipliers": {
+          "0": 0.78,
+          "1": 1.56,
+          "2": 0.0,
+          "3": 1.56,
+          "4": 0.78,
+          "5": 0.0,
+          "6": 2.33
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 2.9
+      },
+      "Vivo Y31 Pro 8GB 256GB Mocha Brown": {
+        "mean_daily": 0.08,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.92,
+        "dow_multipliers": {
+          "0": 1.7,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.91,
+          "4": 0.91,
+          "5": 1.82,
+          "6": 1.7
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.44
+      },
+      "Vivo Y39 5G 8GB 128GB Ocean Blue": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 3.4,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 3.4
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 7.11
+      },
+      "Vivo Y400 5G 8GB 128GB Glam White": {
+        "mean_daily": 0.11,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.89,
+        "dow_multipliers": {
+          "0": 0.62,
+          "1": 0.62,
+          "2": 0.62,
+          "3": 0.66,
+          "4": 0.66,
+          "5": 1.32,
+          "6": 2.47
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 2.89
+      },
+      "Vivo Y400 5G 8GB 128GB Olive Green": {
+        "mean_daily": 0.08,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.92,
+        "dow_multipliers": {
+          "0": 1.72,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 1.84,
+          "4": 0.0,
+          "5": 2.58,
+          "6": 0.86
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.46
+      },
+      "Vivo Y400 5G 8GB 256GB Glam White": {
+        "mean_daily": 0.11,
+        "mean_nonzero_daily": 1.12,
+        "zero_day_ratio": 0.9,
+        "dow_multipliers": {
+          "0": 0.75,
+          "1": 0.0,
+          "2": 1.5,
+          "3": 0.82,
+          "4": 0.82,
+          "5": 0.82,
+          "6": 2.25
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.18
+      },
+      "Vivo Y400 5G 8GB 256GB Olive Green": {
+        "mean_daily": 0.08,
+        "mean_nonzero_daily": 1.14,
+        "zero_day_ratio": 0.93,
+        "dow_multipliers": {
+          "0": 0.86,
+          "1": 1.71,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 1.71,
+          "6": 2.57
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.76
+      },
+      "Vivo Y400 Pro 5G 8GB 128GB Fest Gold": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 3.3,
+          "3": 1.77,
+          "4": 0.0,
+          "5": 1.77,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.9
+      },
+      "Vivo Y400 Pro 5G 8GB 128GB Freestyle White": {
+        "mean_daily": 0.13,
+        "mean_nonzero_daily": 1.08,
+        "zero_day_ratio": 0.88,
+        "dow_multipliers": {
+          "0": 1.04,
+          "1": 0.0,
+          "2": 1.55,
+          "3": 0.55,
+          "4": 0.55,
+          "5": 0.0,
+          "6": 3.33
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 2.84
+      },
+      "Vivo Y400 Pro 5G 8GB 128GB Nebula Purple": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 1.71,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 1.85,
+          "4": 0.0,
+          "5": 1.71,
+          "6": 1.71
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.64
+      },
+      "Vivo Y400 Pro 5G 8GB 256GB Fest Gold": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 4.48,
+          "1": 2.24,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.54
+      },
+      "Vivo Y400 Pro 5G 8GB 256GB Freestyle White": {
+        "mean_daily": 0.05,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.95,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 1.85,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 5.05
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.21
+      },
+      "Vivo Y400 Pro 5G 8GB 256GB Nebula Purple": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 6.92,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.42
+      }
+    },
+    "Xiaomi": {
+      "Redmi 14C 5G 4GB 128GB Stardust Purple": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 6.62
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.1
+      },
+      "Redmi 14C 5G 4GB 128GB Stargaze Black": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 2.21,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 2.43,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 2.43
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.86
+      },
+      "Redmi 14C 5G 4GB 128GB Starlight Blue": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.96,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 2.3,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 2.3,
+          "5": 2.3,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.97
+      },
+      "Redmi 14C 5G 4GB 64GB Stardust Purple": {
+        "mean_daily": 0.06,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.94,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 2.33,
+          "4": 1.17,
+          "5": 0.0,
+          "6": 3.5
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.94
+      },
+      "Redmi 14C 5G 4GB 64GB Stargaze Black": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 4.4,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 2.36,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.69
+      },
+      "Redmi 14C 5G 4GB 64GB Starlight Blue": {
+        "mean_daily": 0.07,
+        "mean_nonzero_daily": 1.2,
+        "zero_day_ratio": 0.94,
+        "dow_multipliers": {
+          "0": 1.12,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 1.23,
+          "4": 2.45,
+          "5": 0.0,
+          "6": 2.25
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.15
+      },
+      "Redmi 14C 5G 6GB 128GB Stardust Purple": {
+        "mean_daily": 0.08,
+        "mean_nonzero_daily": 1.17,
+        "zero_day_ratio": 0.93,
+        "dow_multipliers": {
+          "0": 0.97,
+          "1": 0.97,
+          "2": 0.0,
+          "3": 1.05,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 3.87
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.92
+      },
+      "Redmi 14C 5G 6GB 128GB Stargaze Black": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 2.33,
+          "4": 0.0,
+          "5": 2.33,
+          "6": 2.33
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.45
+      },
+      "Redmi 14C 5G 6GB 128GB Starlight Blue": {
+        "mean_daily": 0.04,
+        "mean_nonzero_daily": 1.33,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 1.75,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 1.75,
+          "4": 0.0,
+          "5": 3.5,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.79
+      },
+      "Redmi 15 5G 6GB 128GB Sandy Purple": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 2.33,
+          "2": 0.0,
+          "3": 2.33,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 2.33
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.45
+      },
+      "Redmi 15 5G 8GB 128GB Frosted White": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 6.92,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.67
+      },
+      "Redmi A5 3GB 64GB Jaisalmer Gold": {
+        "mean_daily": 0.07,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.93,
+        "dow_multipliers": {
+          "0": 1.12,
+          "1": 1.12,
+          "2": 0.0,
+          "3": 1.23,
+          "4": 2.45,
+          "5": 0.0,
+          "6": 1.12
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 3.56
+      },
+      "Redmi A5 3GB 64GB Just Black": {
+        "mean_daily": 0.05,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.95,
+        "dow_multipliers": {
+          "0": 1.4,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 2.8,
+          "4": 1.4,
+          "5": 0.0,
+          "6": 1.4
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.33
+      },
+      "Redmi A5 3GB 64GB Pondicherry Blue": {
+        "mean_daily": 0.05,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.95,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 2.8,
+          "4": 0.0,
+          "5": 2.8,
+          "6": 1.4
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 4.33
+      },
+      "Redmi Note 14 5G 8GB 128GB Titan Black": {
+        "mean_daily": 0.02,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.98,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 3.65,
+          "5": 0.0,
+          "6": 3.39
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 6.86
+      },
+      "Redmi Note 14 5G 8GB 256GB Phantom Purple": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 0.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 2.43,
+          "5": 0.0,
+          "6": 4.53
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.77
+      },
+      "Redmi Note 14 5G 8GB 256GB Titan Black": {
+        "mean_daily": 0.03,
+        "mean_nonzero_daily": 1.0,
+        "zero_day_ratio": 0.97,
+        "dow_multipliers": {
+          "0": 2.33,
+          "1": 0.0,
+          "2": 2.33,
+          "3": 2.33,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0
+        },
+        "best_window": 5,
+        "is_sparse": true,
+        "volatility": 5.45
+      }
+    }
+  }
+}
