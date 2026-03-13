@@ -23,6 +23,7 @@ from pathlib import Path
 from functools import lru_cache
 from datetime import datetime
 import json
+import re
 
 # ── Fixed training window ──────────────────────────────────────────────────
 TRAIN_START = datetime(2025, 9,  1)
@@ -68,13 +69,14 @@ def _load_model_family_map():
         return _MODEL_FAMILY_MAP
     
     _MODEL_FAMILY_MAP = []
-    checkpoint_path = Path(__file__).parent / "launch_date_checkpoint.csv"
+    checkpoint_path = Path(__file__).parent / "Model_Launch_Groups.xlsx"
     if checkpoint_path.exists():
         try:
-            df_families = pd.read_csv(checkpoint_path)
-            if "Model_Family" in df_families.columns:
-                # Sort by length descending for greedy match
-                families = df_families["Model_Family"].dropna().unique().tolist()
+            df_families = pd.read_excel(checkpoint_path)
+            if "Model Family" in df_families.columns:
+                # Remove extra spaces and sort by length descending for greedy match
+                families = df_families["Model Family"].dropna().astype(str).str.strip().unique().tolist()
+                families = [f for f in families if f]
                 families.sort(key=len, reverse=True)
                 _MODEL_FAMILY_MAP = families
         except Exception as e:
@@ -98,6 +100,12 @@ def _extract_model(item_model: str) -> str:
         if f.lower() in lower_raw:
             return f
             
+    # Fallback: if not mapped in Model_Launch_Groups.xlsx, strip specifications (like 6GB, 128GB) and color
+    # to club the same models together (e.g. "Realme C85 5G 6GB 128GB Peacock Green" -> "Realme C85 5G")
+    match = re.search(r'\b\d+(?:GB|TB|MB)\b', raw_model, flags=re.IGNORECASE)
+    if match:
+        return raw_model[:match.start()].strip()
+        
     return raw_model
 
 

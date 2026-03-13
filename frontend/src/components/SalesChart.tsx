@@ -7,8 +7,8 @@ function Tip({ active, payload, label, festMap }: any) {
   if (!active || !payload?.length) return null;
   const fest = payload[0]?.payload?.date ? festMap[payload[0].payload.date] : null;
   return (
-    <div className="px-3 py-2 rounded-lg bg-zinc-900/95 border border-zinc-700/60 shadow-xl text-xs">
-      <p className="text-zinc-400 mb-1">{label}</p>
+    <div className="px-3 py-2 rounded-lg bg-black/80 backdrop-blur-xl border border-white/10 shadow-glass text-xs">
+      <p className="text-neutral-400 mb-1">{label}</p>
       <p className="font-mono font-bold text-sky-400">{payload[0]?.value} units</p>
       {fest && <FestivalPill festival={fest} />}
     </div>
@@ -41,7 +41,7 @@ interface Props {
 }
 
 export default function SalesChart({ data, baseline, festivals }: Props) {
-  if (!data.length) return <div className="flex items-center justify-center h-48 text-zinc-600 text-sm">No historical data</div>;
+  if (!data.length) return <div className="flex items-center justify-center h-48 text-neutral-500 text-sm">No historical data</div>;
   const step = Math.max(1, Math.floor(data.length / 8));
   const cd = data.map((d, i) => ({
     ...d,

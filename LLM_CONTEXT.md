@@ -4,7 +4,7 @@ This document provides a comprehensive overview of the "MSP Analytics Dashboard"
 
 ## 1. Project Overview
 
-The project is a full-stack web application designed for predicting daily sales of mobile phones across various branches, brands, and models. It allows users to filter historical data, run multiple statistical forecasting models, compare their outputs, and evaluate their accuracy against actual historical/future data.
+The project is a full-stack web application designed for predicting daily sales of mobile phones across various branches, brands, models, and price ranges. It allows users to filter historical data, run multiple statistical forecasting models, compare their outputs, evaluate their accuracy against actual historical/future data, and analyze branch-level affinities for specific brands and price tiers.
 
 ### Key Dates & Data Handling
 - **Training Window**: September 1, 2025 – December 31, 2025 (Fixed window).
@@ -38,25 +38,37 @@ The project is a full-stack web application designed for predicting daily sales 
    - Calculates error metrics: MAE (Mean Absolute Error), MAPE (Mean Absolute Percentage Error), and RMSE.
    - Displays festival markers (`FestivalBadge`) directly on the overlay charts.
 
+4. **Curated MSP Accuracy Tab**:
+   - Uses a highly customizable, weighted moving average model (WMA 7, 28, 60 days) to simulate walk-forward forecasting over the entire historical window and projects 3 months into the future.
+   - Includes dynamic sliders to adjust algorithm weights (`W1`, `W2`, `W3`) in real-time.
+   - Toggles to apply dynamic multipliers for **Brand Affinity**, **Price Affinity**, **Day of Week (DOW)**, and **Festivals** to the baseline prediction.
+   - Features an adjustable aggregation window slider (1-30 days) to smooth out the charts (e.g., viewing weekly or monthly data instead of daily).
+
+5. **Brand Affinity Tab**:
+   - Computes how strongly a specific branch leans toward a brand relative to the entire network average.
+   - Visualizes data via an **Affinity Heatmap**, **Store Profile**, and **Brand Leaderboard**.
+   - Metric calculation: `Affinity = (Store Share / Network Share) * 50`.
+
+6. **Price Affinity Tab**:
+   - Similar to Brand Affinity, but evaluates sales strength across specific price tiers (e.g., `Under ₹10k`, `₹10k - ₹20k`, `Above ₹50k`) for each branch.
+
 ## 4. Backend Architecture
 
 The backend is structured into modular Python files inside the `backend/` directory:
 
 - **`main.py`**: The FastAPI application entry point. Configures CORS and mounts the API router.
-- **`api_routes.py`**: Defines all REST endpoints (`/api/brands`, `/api/branches`, `/api/models`, `/api/predict`, `/api/compare`, `/api/msp-accuracy`).
+- **`api_routes.py`**: Defines all REST endpoints (`/api/brands`, `/api/branches`, `/api/predict`, `/api/compare`, `/api/curated-msp`, `/api/brand-affinity`, etc.).
 - **`data_processing.py`**: Handles loading data from Excel/CSV using Pandas.
-  - Functions: `load_clean_data()`, `filter_data()`, `load_actual_feb_data()`, `filter_actual_data()`, `build_daily_series()`, `get_price_ranges()`.
-  - Normalizes column names (`Branch`, `Item/Model`, `Date`, `Qty`) and extracts brands/models.
-  - Dynamically merges `MOP` values from `Brand Item-Model MOP.xlsx` to compute a `price` column, allowing filtering by dynamic price ranges (`Under ₹10k`, `₹10k – ₹20k`, etc.).
-- **`festival_calendar.py`**: The authoritative source of truth for Tamil Nadu festivals. Contains a tiered structure (`TIER1`, `TIER2`, etc.) applying multipliers up to 4.8×, along with `lead_mult`, `trail_mult`, and even `trail2_mult` (for multi-day effects like Pongal).
-- **`statistical_model.py`**: Contains the math and logic for all 12 forecasting models.
-  - Every model follows the signature: `fn(daily, dow_series, future_dates, festival_multiplier) -> ModelResult`.
-  - Core logic includes Day-of-Week (DOW) multipliers and dynamically applies highest active multiplier (either from `festival_calendar.py` or the manual slider).
-  - Also contains a rolling-window `walk_forward_predict()` and `compute_error_metrics()`.
-- **`prediction_service.py`**: The orchestration layer. Functions (`run_prediction`, `run_comparison`, `run_msp_accuracy`) call the data processing functions (passing down `price_range` filters), run the requested models, fetch actuals, and construct the final JSON responses.
+  - Dynamically merges `MOP` values from `Brand Item-Model MOP.xlsx` to compute a `price` column, enabling filtering by price ranges.
+- **`festival_calendar.py`**: The authoritative source of truth for Tamil Nadu festivals. Contains a tiered structure (`TIER1`, `TIER2`, etc.) applying multipliers up to 4.8×, along with leading/trailing multipliers for multi-day effects.
+- **`brand_affinity.py` & `price_affinity.py`**: Calculates the branch-level affinity scores compared to the network averages, used both in their respective frontend tabs and as dynamic multipliers in the curated MSP model.
+- **`curated_msp.py`**: Houses the logic for the dynamic weighted moving average prediction, executing walk-forward loops and applying the user-selected affinity and festival multipliers.
+- **`statistical_model.py`**: Contains the math and logic for all 12 core forecasting models. Every model follows the signature: `fn(daily, dow_series, future_dates, festival_multiplier) -> ModelResult`.
+- **`prediction_service.py`**: The orchestration layer calling data processing functions, running models, and constructing the final JSON responses.
+- **`tune_stores.py` & `build_store_profiles.py` & `create_msp_table.py`**: Offline/utility scripts that determine the historically best-performing baseline model (e.g., `sma`, `wma`) for each `Branch|Brand|Model` combination, saving results to `store_profiles.json` and static MSP targets to `curated_stores_msp_lookup.json`.
 
 ### The Models
-1. `msp_curated` (Auto-Tuned Model): A meta-model that dynamically selects the historically best-performing algorithm (e.g., WMA, Median DOW, or SMA) and its optimal parameters for a specific Branch+Brand combination using `store_profiles.json`. If no profile is found, it safely falls back to a 7-day SMA.
+1. `msp_curated` (Auto-Tuned Model): A meta-model in `statistical_model.py` that selects the pre-computed best algorithm from `store_profiles.json` for a specific Branch+Brand+Model.
 2. `median_dow` (MSP Baseline)
 3. `wma` (Weighted Moving Average 7-day)
 4. `sma` (Simple Moving Average 3-day)
@@ -75,37 +87,33 @@ The backend is structured into modular Python files inside the `backend/` direct
 The frontend is a Vite + React SPA located in the `frontend/` directory.
 
 ### Key Directories and Files
-- **`src/types/index.ts`**: Contains all TypeScript interfaces matching backend JSON responses (`PredictionResponse`, `CompareResponse`, `MspAccuracyResponse`, `Filters`, etc.).
+- **`src/types/index.ts`**: Contains all TypeScript interfaces matching backend JSON responses.
 - **`src/services/api.ts`**: Axios/Fetch wrappers for calling the backend endpoints.
-- **`src/pages/Dashboard.tsx`**: The main view. Manages state for filters (branch, brand, model, days, festival multiplier) and active tabs. Fetches data for `/predict` and `/compare` endpoints.
-- **`src/pages/MspAccuracy.tsx`**: A standalone view rendered when the "MSP Accuracy" tab is active. It has its own sidebar and fetches data from `/msp-accuracy`.
+- **`src/pages/`**:
+  - `Dashboard.tsx`: Main view for standard Predictions and Model Comparison.
+  - `MspAccuracy.tsx`: Walk-Forward evaluation view for core MSP models.
+  - `CuratedMspAccuracy.tsx`: The interactive weighted moving average model UI with dynamic multiplier toggles and variable aggregation window.
+  - `BrandAffinity.tsx` & `PriceAffinity.tsx`: Detailed analytics dashboards for store-level affinities.
 
 ### Key Components (`src/components/`)
-- **`FiltersPanel.tsx`**: The sidebar UI containing dropdowns for Branch, Brand, Price Range, and Model.
-- **`FestivalBadge.tsx`**: UI primitives for displaying festival pills in tooltips and a dedicated sidebar list for upcoming calendar events.
-- **`PredictionControls.tsx`**: The sidebar UI for Days to Predict slider and Festival Multiplier slider.
-- **`PredictionChart.tsx`**: A Recharts `ComposedChart` showing predicted sales (Area) and actual sales (Line) overlaid.
-- **`SalesChart.tsx`**: A Line chart showing historical sales.
-- **`ModelComparisonChart.tsx`**: A complex Recharts LineChart showing all 12 models. Includes interactive features to isolate models on double-click.
-- **`ModelSummaryTable.tsx`**: A tabular view of model stats in the comparison tab.
-- **`DailyBarChart.tsx` / `PredictionTable.tsx`**: Detailed breakdowns of predictions.
+- **`FiltersPanel.tsx`**: Sidebar UI containing dropdowns for Branch, Brand, Price Range, and Model.
+- **`FestivalBadge.tsx`**: UI primitives for displaying festival pills.
+- **`ModelComparisonChart.tsx`**: A Recharts LineChart showing all 12 models simultaneously, with interactive features.
+- **`SalesChart.tsx`** & **`PredictionChart.tsx`**: Data visualization for historical and future predicted timelines.
 
 ## 6. How Data Flows
 
-1. User changes a filter (e.g., selects "Apple" brand) in `FiltersPanel.tsx`.
-2. `Dashboard.tsx` state updates, triggering a debounced call to `fetchPred` and/or `fetchCmp`.
-3. `api.ts` makes a POST request to `/api/predict` (or `/compare`) with the filter parameters (including `price_range`).
-4. FastAPI (`api_routes.py`) receives the request and passes it to `prediction_service.py`.
-5. `data_processing.py` filters the cached Pandas DataFrame (`Sales_Combined.xlsx`) to only "Apple".
-6. It aggregates the data into a daily time series.
-7. `statistical_model.py` runs the selected mathematical model (e.g., `median_dow`) on the time series, applying DOW logic and generating predictions for the requested future dates starting Jan 1, 2026.
-8. `prediction_service.py` fetches actual sales for Jan 1+ from `feb_sales.xlsx` using `filter_actual_data()`.
-9. The backend returns a sanitized JSON payload.
-10. `Dashboard.tsx` saves the result to state, and passes the data down to components like `PredictionChart` to render the interactive graphs.
+1. User interacts with UI filters or adjusts parameters (like algorithm weights or multiplier toggles).
+2. React state updates, triggering a debounced API call via `api.ts`.
+3. FastAPI (`api_routes.py`) routes the request to the relevant service (`prediction_service.py`, `curated_msp.py`, or `brand_affinity.py`).
+4. `data_processing.py` retrieves and filters the cached Pandas DataFrame.
+5. The chosen mathematical model processes the time-series array, dynamically applying logic for DOW, Festivals, and Affinities as requested.
+6. The backend formats and sanitizes the output (ensuring no `NaN` or `Infinity`) and returns JSON.
+7. Frontend state ingests the data, recalculating derived values like total accuracy, and renders the updated Recharts visualizations.
 
 ## 7. Known Quirks / Specifics
-- Day of Week (DOW) calculations are central to this project. Multipliers are calculated for Mon-Sun to adjust baseline predictions.
-- `NaN` and `Infinity` values produced by Pandas/Numpy are explicitly cleaned to `0.0` before returning JSON responses to avoid frontend parsing crashes.
-- The `alpha` value in the `ets` model is set to `0.6` and `holt_winters` to `0.45` to prioritize recent trends.
-- **Festivals:** Hardcoded festival logic (`festival_calendar.py`) takes precedence via `max(hardcoded_mult, manual_slider_mult)` when generating day-level predictions.
-- The UI uses a dark mode aesthetic (`bg-zinc-950`) with specific accent colors for different data points (e.g., Emerald for predictions, Sky for historical, Amber for baseline).
+- **Day of Week (DOW)** calculations are central to this project. Multipliers are calculated for Mon-Sun to adjust baseline predictions.
+- **Affinities** (`brand_affinity.py` / `price_affinity.py`): Scaled such that an affinity score directly correlates to a multiplier logic (`0.5 + (affinity_score / 100.0)`) in `curated_msp.py`.
+- **Festivals**: Hardcoded festival logic (`festival_calendar.py`) strictly overrides standard prediction multipliers via `max(hardcoded_mult, manual_slider_mult)` in core models, but can be interactively toggled in the Curated MSP context.
+- `NaN` and `Infinity` values from Pandas/Numpy calculations are explicitly sanitized to `0.0` or `'N/A'` before JSON serialization to avoid React crashes.
+- The UI leverages a dark mode aesthetic (`bg-zinc-950`) with specific accent colors to maintain visual consistency (e.g., Emerald for predictions/success, Sky for historical/actuals, Amber for baseline/warnings, Red for errors).

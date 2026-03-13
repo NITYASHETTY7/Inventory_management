@@ -7,8 +7,8 @@ function Tip({ active, payload, label }: any) {
   // payload can contain predicted_qty (Area) and/or actual_qty (Line)
   const d = payload[0]?.payload;
   return (
-    <div className="px-3 py-2 rounded-lg bg-zinc-900/95 border border-zinc-700/60 shadow-xl text-xs">
-      <p className="text-zinc-400 mb-1">{d?.weekday_name}, {label}</p>
+    <div className="px-3 py-2 rounded-lg bg-black/80 backdrop-blur-xl border border-white/10 shadow-glass text-xs">
+      <p className="text-neutral-400 mb-1">{d?.weekday_name}, {label}</p>
       {d?.predicted_qty != null && (
         <p className="font-mono font-bold text-emerald-400">Predicted: {d.predicted_qty}</p>
       )}
@@ -16,14 +16,14 @@ function Tip({ active, payload, label }: any) {
         <p className="font-mono font-bold text-sky-400">Actual: {d.actual_qty}</p>
       )}
       {d?.dow_multiplier && (
-        <p className="text-zinc-500 mt-0.5">DOW ×{d?.dow_multiplier} · Fest ×{d?.festival_multiplier}</p>
+        <p className="text-neutral-400 mt-0.5">DOW ×{d?.dow_multiplier} · Fest ×{d?.festival_multiplier}</p>
       )}
     </div>
   );
 }
 
 export default function PredictionChart({ data, actualSales = [] }: { data: DayPrediction[]; actualSales?: HistoricalSale[] }) {
-  if (!data.length) return <div className="flex items-center justify-center h-48 text-zinc-600 text-sm">No predictions yet</div>;
+  if (!data.length) return <div className="flex items-center justify-center h-48 text-neutral-500 text-sm">No predictions yet</div>;
 
   const actualMap: Record<string, number> = {};
   actualSales.forEach(s => actualMap[s.date] = s.qty);
@@ -42,7 +42,7 @@ export default function PredictionChart({ data, actualSales = [] }: { data: DayP
   return (
     <div className="flex flex-col h-full relative">
       {actualSales.length > 0 && (
-        <div className="absolute top-0 right-2 flex gap-4 text-[10px] font-mono z-10 bg-zinc-900/80 px-3 py-1.5 rounded-lg border border-zinc-800 shadow-md">
+        <div className="absolute top-0 right-2 flex gap-4 text-[10px] font-mono z-10 bg-[#0A0A0A]/60 px-3 py-1.5 rounded-lg border border-white/10 shadow-md">
           <div className="text-emerald-400 flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-emerald-400" />Pred: <span className="font-bold text-sm">{predSum.toFixed(0)}</span></div>
           <div className="text-sky-400 flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-sky-400" />Actual: <span className="font-bold text-sm">{actualSum.toFixed(0)}</span></div>
         </div>

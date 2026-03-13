@@ -6,16 +6,16 @@ function Tip({ active, payload }: any) {
   if (!active || !payload?.length) return null;
   const d = payload[0]?.payload as DayPrediction;
   return (
-    <div className="px-3 py-2 rounded-lg bg-zinc-900/95 border border-zinc-700/60 shadow-xl text-xs">
-      <p className="text-zinc-400 mb-1">{d?.weekday_name}</p>
+    <div className="px-3 py-2 rounded-lg bg-black/80 backdrop-blur-xl border border-white/10 shadow-glass text-xs">
+      <p className="text-neutral-400 mb-1">{d?.weekday_name}</p>
       <p className={`font-mono font-bold ${d?.dow>=5?'text-amber-400':'text-indigo-400'}`}>{d?.predicted_qty} units</p>
-      <p className="text-zinc-500">{new Date(d.date).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})}</p>
+      <p className="text-neutral-400">{new Date(d.date).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})}</p>
     </div>
   );
 }
 
 export default function DailyBarChart({ data }: { data: DayPrediction[] }) {
-  if (!data.length) return <div className="flex items-center justify-center h-48 text-zinc-600 text-sm">No data</div>;
+  if (!data.length) return <div className="flex items-center justify-center h-48 text-neutral-500 text-sm">No data</div>;
   const cd = data.map(d => ({ ...d, label: new Date(d.date).toLocaleDateString('en-GB',{weekday:'short',day:'numeric'}) }));
   return (
     <>
@@ -31,8 +31,8 @@ export default function DailyBarChart({ data }: { data: DayPrediction[] }) {
         </BarChart>
       </ResponsiveContainer>
       <div className="flex gap-4 justify-end mt-1 pr-2">
-        <div className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-sm bg-indigo-500/80"/><span className="text-[10px] text-zinc-500">Weekday</span></div>
-        <div className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-sm bg-amber-500/80"/><span className="text-[10px] text-zinc-500">Weekend</span></div>
+        <div className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-sm bg-indigo-500/80"/><span className="text-[10px] text-neutral-400">Weekday</span></div>
+        <div className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-sm bg-amber-500/80"/><span className="text-[10px] text-neutral-400">Weekend</span></div>
       </div>
     </>
   );

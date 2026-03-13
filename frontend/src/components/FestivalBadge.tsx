@@ -54,7 +54,7 @@ export function FestivalCalendarPanel({ festivals }: { festivals: FestivalEntry[
     <div className="flex flex-col gap-2">
       <div className="flex items-center gap-2 mb-1">
         <div className="w-1 h-5 rounded-full bg-amber-400" />
-        <span className="text-[10px] font-bold tracking-widest uppercase text-zinc-400">
+        <span className="text-[10px] font-bold tracking-widest uppercase text-neutral-400">
           Upcoming Festivals
         </span>
       </div>
@@ -71,7 +71,7 @@ export function FestivalCalendarPanel({ festivals }: { festivals: FestivalEntry[
             </div>
             <div className="flex-1 min-w-0">
               <p className={`text-[11px] font-bold truncate ${c.text}`}>{f.name}</p>
-              <p className="text-[10px] text-zinc-500 font-mono mt-0.5">
+              <p className="text-[10px] text-neutral-400 font-mono mt-0.5">
                 {new Date(f.date).toLocaleDateString('en-GB', {
                   day: 'numeric', month: 'short', year: 'numeric',
                 })}

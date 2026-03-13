@@ -13,10 +13,10 @@ function Tip({ active, payload }: any) {
   if (!active||!payload?.length) return null;
   const d = payload[0]?.payload as ModelSummaryRow;
   return (
-    <div className="px-3 py-2 rounded-lg bg-zinc-900/95 border border-zinc-700/60 shadow-xl text-xs">
-      <p className="font-semibold text-zinc-200 mb-1">{d.model}</p>
-      <p className="text-zinc-400">Avg/day: <span className="text-zinc-900 font-mono">{d.avg_per_day.toFixed(2)}</span></p>
-      <p className="text-zinc-400">Range: <span className="text-zinc-900 font-mono">{d.min_day.toFixed(1)}–{d.max_day.toFixed(1)}</span></p>
+    <div className="px-3 py-2 rounded-lg bg-black/80 backdrop-blur-xl border border-white/10 shadow-glass text-xs">
+      <p className="font-semibold text-neutral-200 mb-1">{d.model}</p>
+      <p className="text-neutral-400">Avg/day: <span className="text-zinc-900 font-mono">{d.avg_per_day.toFixed(2)}</span></p>
+      <p className="text-neutral-400">Range: <span className="text-zinc-900 font-mono">{d.min_day.toFixed(1)}–{d.max_day.toFixed(1)}</span></p>
     </div>
   );
 }

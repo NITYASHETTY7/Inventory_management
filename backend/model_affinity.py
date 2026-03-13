@@ -5,14 +5,16 @@ from pathlib import Path
 
 # Load the external mapping file once
 try:
-    checkpoint_path = Path(__file__).parent / "launch_date_checkpoint.csv"
-    mop_df = pd.read_csv(checkpoint_path)
-    # Create a mapping from 'Model_Family' to 'India_Launch_Quarter'
-    mop_df = mop_df.dropna(subset=['Model_Family', 'India_Launch_Quarter'])
+    checkpoint_path = Path(__file__).parent / "Model_Launch_Groups.xlsx"
+    mop_df = pd.read_excel(checkpoint_path)
+    # Create a mapping from 'Model Family' to 'Launch Quarter'
+    mop_df = mop_df.dropna(subset=['Model Family', 'Launch Quarter'])
+    mop_df['Model Family'] = mop_df['Model Family'].astype(str).str.strip()
+    mop_df['Launch Quarter'] = mop_df['Launch Quarter'].astype(str).str.strip()
     # The models returned by data_processing are already clubbed to Model_Family!
-    model_to_quarter = dict(zip(mop_df['Model_Family'].str.strip(), mop_df['India_Launch_Quarter'].str.strip()))
+    model_to_quarter = dict(zip(mop_df['Model Family'], mop_df['Launch Quarter']))
 except Exception as e:
-    print(f"Warning: Could not load launch_date_checkpoint.csv: {e}")
+    print(f"Warning: Could not load Model_Launch_Groups.xlsx: {e}")
     model_to_quarter = {}
 
 def compute_model_affinity(branch=None, brand=None, price_range=None) -> dict:

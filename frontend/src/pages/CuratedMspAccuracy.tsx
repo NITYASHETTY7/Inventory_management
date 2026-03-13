@@ -19,12 +19,12 @@ function ChartCard({ title, subtitle, children, accent='sky' }: {
 }) {
   const map={sky:'bg-sky-400',emerald:'bg-emerald-400',amber:'bg-amber-400',violet:'bg-violet-400',indigo:'bg-indigo-400'};
   return (
-    <div className="relative rounded-2xl bg-zinc-900/60 border border-zinc-800/60 p-5 shadow-xl shadow-zinc-800/20">
+    <div className="relative glass-card p-5">
       <div className="flex items-center gap-2.5 mb-4">
         <div className={`w-1.5 h-6 rounded-full ${map[accent]}`}/>
         <div>
-          <h3 className="text-sm font-bold text-zinc-200">{title}</h3>
-          {subtitle && <p className="text-[10px] text-zinc-500 mt-0.5">{subtitle}</p>}
+          <h3 className="text-sm font-bold text-neutral-200">{title}</h3>
+          {subtitle && <p className="text-[10px] text-neutral-400 mt-0.5">{subtitle}</p>}
         </div>
       </div>
       {children}
@@ -36,8 +36,8 @@ function CustomTip({ active, payload }: any) {
   if (!active || !payload?.length) return null;
   const dateStr = payload[0]?.payload?.label || '';
   return (
-    <div className="px-3 py-2.5 rounded-lg bg-zinc-900/95 border border-zinc-700/60 shadow-xl text-xs">
-      <p className="text-zinc-400 mb-2 font-mono border-b border-zinc-800 pb-1">{dateStr}</p>
+    <div className="px-3 py-2.5 rounded-lg bg-black/80 backdrop-blur-xl border border-white/10 shadow-glass text-xs">
+      <p className="text-neutral-400 mb-2 font-mono border-b border-white/5 pb-1">{dateStr}</p>
       {payload.map((p: any) => (
         <div key={p.dataKey} className="flex justify-between gap-4">
           <span style={{color: p.color}} className="font-medium">{p.name}</span>
@@ -55,7 +55,12 @@ export default function CuratedMspAccuracy() {
   const [error, setError] = useState<string|null>(null);
   const [showInfo, setShowInfo] = useState(false);
   const [aggregationWindow, setAggregationWindow] = useState(10);
+  const [tableAggregationIndex, setTableAggregationIndex] = useState(4); // index 4 -> 30 days
+  const [tableStartDate, setTableStartDate] = useState<string>('');
   const debounce = useRef<ReturnType<typeof setTimeout>|null>(null);
+
+  const TABLE_WINDOWS = [1, 5, 15, 20, 30, 60];
+  const tableAggregationWindow = TABLE_WINDOWS[tableAggregationIndex];
 
   const fetch = useCallback(async (f: Filters) => {
     setLoading(true); setError(null);
@@ -135,13 +140,13 @@ export default function CuratedMspAccuracy() {
   return (
     <div className="flex gap-0 h-full">
       {/* Sidebar */}
-      <aside className="w-72 shrink-0 border-r border-zinc-800/60 overflow-y-auto p-5 flex flex-col gap-6 bg-zinc-950/50">
+      <aside className="w-72 shrink-0 border-r border-white/10 overflow-y-auto p-5 flex flex-col gap-6 bg-transparent">
         <FiltersPanel filters={filters} onChange={handleChange} hideDays={true} />
 
         {/* Algorithm Weights */}
-        <div className="border-t border-zinc-800/60 pt-4 flex flex-col gap-3">
+        <div className="border-t border-white/10 pt-4 flex flex-col gap-3">
           <div className="flex items-center justify-between">
-            <h3 className="text-xs font-bold text-zinc-400 tracking-widest uppercase">Algorithm Weights</h3>
+            <h3 className="text-xs font-bold text-neutral-400 tracking-widest uppercase">Algorithm Weights</h3>
             {((filters.w1 ?? 0.5) !== 0.5 || (filters.w2 ?? 0.3) !== 0.3 || (filters.w3 ?? 0.2) !== 0.2) && (
               <button
                 onClick={() => handleChange({ w1: 0.5, w2: 0.3, w3: 0.2 })}
@@ -153,33 +158,33 @@ export default function CuratedMspAccuracy() {
           </div>
           
           <div className="flex flex-col gap-2">
-            <label className="text-xs text-zinc-500 flex justify-between">
+            <label className="text-xs text-neutral-400 flex justify-between">
               <span>W1 (Avg 7 Days)</span>
               <span className="font-mono text-amber-400">{filters.w1?.toFixed(2)}</span>
             </label>
             <input type="range" min="0" max="1" step="0.05" value={filters.w1 ?? 0.5}
               onChange={e => handleChange({ w1: parseFloat(e.target.value) })}
-              className="w-full accent-amber-400 h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer" />
+              className="w-full accent-amber-400 h-1 bg-white/5 rounded-lg appearance-none cursor-pointer" />
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-xs text-zinc-500 flex justify-between">
+            <label className="text-xs text-neutral-400 flex justify-between">
               <span>W2 (Avg 7-28 Days)</span>
               <span className="font-mono text-amber-400">{filters.w2?.toFixed(2)}</span>
             </label>
             <input type="range" min="0" max="1" step="0.05" value={filters.w2 ?? 0.3}
               onChange={e => handleChange({ w2: parseFloat(e.target.value) })}
-              className="w-full accent-amber-400 h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer" />
+              className="w-full accent-amber-400 h-1 bg-white/5 rounded-lg appearance-none cursor-pointer" />
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-xs text-zinc-500 flex justify-between">
+            <label className="text-xs text-neutral-400 flex justify-between">
               <span>W3 (Avg 30-60 Days)</span>
               <span className="font-mono text-amber-400">{filters.w3?.toFixed(2)}</span>
             </label>
             <input type="range" min="0" max="1" step="0.05" value={filters.w3 ?? 0.2}
               onChange={e => handleChange({ w3: parseFloat(e.target.value) })}
-              className="w-full accent-amber-400 h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer" />
+              className="w-full accent-amber-400 h-1 bg-white/5 rounded-lg appearance-none cursor-pointer" />
           </div>
           
           {Math.abs((filters.w1 ?? 0.5) + (filters.w2 ?? 0.3) + (filters.w3 ?? 0.2) - 1.0) > 0.01 && (
@@ -188,15 +193,15 @@ export default function CuratedMspAccuracy() {
         </div>
 
         {/* Info box */}
-        <div className="border-t border-zinc-800/60 pt-4">
-          <div className="p-3 rounded-lg bg-zinc-800/40 border border-zinc-700/30 text-[10px] text-zinc-500 leading-relaxed">
-            <p className="font-bold text-zinc-400 mb-1.5">Curated MSP Algorithm</p>
-            <p className="mt-1 font-mono text-[9px] text-zinc-300">1. Base = (W1×Avg7) + (W2×Avg7_28) + (W3×Avg30_60)</p>
+        <div className="border-t border-white/10 pt-4">
+          <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-[10px] text-neutral-400 leading-relaxed">
+            <p className="font-bold text-neutral-400 mb-1.5">Curated MSP Algorithm</p>
+            <p className="mt-1 font-mono text-[9px] text-neutral-300">1. Base = (W1×Avg7) + (W2×Avg7_28) + (W3×Avg30_60)</p>
             <p className="mt-1.5 font-mono text-[9px] text-amber-400">2. Final = Base × Brand_Affinity</p>
             <p className="font-mono text-[9px] text-amber-400 pl-10">× Price_Affinity</p>
             <p className="font-mono text-[9px] text-amber-400 pl-10">× DOW_Multiplier</p>
             <p className="font-mono text-[9px] text-amber-400 pl-10">× Festival_Multiplier</p>
-            <p className="mt-2 text-zinc-400 italic">Adjustments only apply if enabled via controls.</p>
+            <p className="mt-2 text-neutral-400 italic">Adjustments only apply if enabled via controls.</p>
           </div>
         </div>
 
@@ -218,16 +223,16 @@ export default function CuratedMspAccuracy() {
 
         {loading && !apiData && (
           <div className="animate-pulse flex flex-col gap-3">
-            <div className="h-4 bg-zinc-800 rounded w-1/3"/>
-            <div className="h-48 bg-zinc-800/60 rounded-xl"/>
-            <div className="h-4 bg-zinc-800 rounded w-1/2"/>
+            <div className="h-4 bg-white/5 rounded w-1/3"/>
+            <div className="h-48 bg-white/5 rounded-xl"/>
+            <div className="h-4 bg-white/5 rounded w-1/2"/>
           </div>
         )}
 
         {apiData && chartData.length > 0 && (
           <>
-            <div className="rounded-2xl bg-zinc-900/60 border border-zinc-800/60 p-5 shadow-xl flex flex-col gap-4 mb-2">
-              <h3 className="text-sm font-bold text-zinc-200">Demand Adjustment Controls</h3>
+            <div className="rounded-2xl bg-[#0A0A0A]/60 border border-white/10 p-5 shadow-xl flex flex-col gap-4 mb-2">
+              <h3 className="text-sm font-bold text-neutral-200">Demand Adjustment Controls</h3>
               <div className="flex flex-col gap-3 sm:flex-row sm:gap-6 mt-1 flex-wrap">
                 <label className="flex items-center gap-2.5 cursor-pointer group">
                   <div className="relative flex items-center justify-center">
@@ -237,12 +242,12 @@ export default function CuratedMspAccuracy() {
                       checked={filters.enableDow || false}
                       onChange={e => handleChange({ enableDow: e.target.checked })}
                     />
-                    <div className="w-5 h-5 rounded border border-zinc-600 bg-zinc-800/50 peer-checked:bg-amber-500 peer-checked:border-amber-500 transition-all group-hover:border-amber-500/50"></div>
+                    <div className="w-5 h-5 rounded border border-white/30 bg-white/5 peer-checked:bg-amber-500 peer-checked:border-amber-500 transition-all group-hover:border-amber-500/50"></div>
                     <svg className="absolute w-3 h-3 text-zinc-950 pointer-events-none opacity-0 peer-checked:opacity-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
-                  <span className="text-sm text-zinc-300 group-hover:text-zinc-100 transition-colors">Enable Day-of-Week Adjustment</span>
+                  <span className="text-sm text-neutral-300 group-hover:text-white transition-colors">Enable Day-of-Week Adjustment</span>
                 </label>
                 
                 <label className="flex items-center gap-2.5 cursor-pointer group">
@@ -253,12 +258,12 @@ export default function CuratedMspAccuracy() {
                       checked={filters.enableFestival || false}
                       onChange={e => handleChange({ enableFestival: e.target.checked })}
                     />
-                    <div className="w-5 h-5 rounded border border-zinc-600 bg-zinc-800/50 peer-checked:bg-amber-500 peer-checked:border-amber-500 transition-all group-hover:border-amber-500/50"></div>
+                    <div className="w-5 h-5 rounded border border-white/30 bg-white/5 peer-checked:bg-amber-500 peer-checked:border-amber-500 transition-all group-hover:border-amber-500/50"></div>
                     <svg className="absolute w-3 h-3 text-zinc-950 pointer-events-none opacity-0 peer-checked:opacity-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
-                  <span className="text-sm text-zinc-300 group-hover:text-zinc-100 transition-colors">Enable Festival Demand Adjustment</span>
+                  <span className="text-sm text-neutral-300 group-hover:text-white transition-colors">Enable Festival Demand Adjustment</span>
                 </label>
 
                 <label className={`flex items-center gap-2.5 ${(!filters.branch || !filters.priceRange) ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer group'}`} title={(!filters.branch || !filters.priceRange) ? 'Please select a Branch and a Price Range from the filters to use this multiplier' : ''}>
@@ -270,13 +275,13 @@ export default function CuratedMspAccuracy() {
                       disabled={!filters.branch || !filters.priceRange}
                       onChange={e => handleChange({ enablePriceAffinity: e.target.checked })}
                     />
-                    <div className="w-5 h-5 rounded border border-zinc-600 bg-zinc-800/50 peer-checked:bg-amber-500 peer-checked:border-amber-500 transition-all group-hover:border-amber-500/50"></div>
+                    <div className="w-5 h-5 rounded border border-white/30 bg-white/5 peer-checked:bg-amber-500 peer-checked:border-amber-500 transition-all group-hover:border-amber-500/50"></div>
                     <svg className="absolute w-3 h-3 text-zinc-950 pointer-events-none opacity-0 peer-checked:opacity-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-sm text-zinc-300 group-hover:text-zinc-100 transition-colors">Enable Price Affinity</span>
+                    <span className="text-sm text-neutral-300 group-hover:text-white transition-colors">Enable Price Affinity</span>
                     {(!filters.branch || !filters.priceRange) && (
                       <span className="text-[9px] text-amber-500/80 uppercase tracking-widest font-bold mt-0.5">Requires Branch & Price Range</span>
                     )}
@@ -292,13 +297,13 @@ export default function CuratedMspAccuracy() {
                       disabled={!filters.branch || !filters.brand}
                       onChange={e => handleChange({ enableBrandAffinity: e.target.checked })}
                     />
-                    <div className="w-5 h-5 rounded border border-zinc-600 bg-zinc-800/50 peer-checked:bg-amber-500 peer-checked:border-amber-500 transition-all group-hover:border-amber-500/50"></div>
+                    <div className="w-5 h-5 rounded border border-white/30 bg-white/5 peer-checked:bg-amber-500 peer-checked:border-amber-500 transition-all group-hover:border-amber-500/50"></div>
                     <svg className="absolute w-3 h-3 text-zinc-950 pointer-events-none opacity-0 peer-checked:opacity-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-sm text-zinc-300 group-hover:text-zinc-100 transition-colors">Enable Brand Affinity</span>
+                    <span className="text-sm text-neutral-300 group-hover:text-white transition-colors">Enable Brand Affinity</span>
                     {(!filters.branch || !filters.brand) && (
                       <span className="text-[9px] text-amber-500/80 uppercase tracking-widest font-bold mt-0.5">Requires Branch & Brand</span>
                     )}
@@ -307,15 +312,15 @@ export default function CuratedMspAccuracy() {
               </div>
             </div>
 
-            <div className="rounded-2xl bg-zinc-900/60 border border-zinc-800/60 p-5 shadow-xl flex flex-col gap-4 mb-2">
+            <div className="rounded-2xl bg-[#0A0A0A]/60 border border-white/10 p-5 shadow-xl flex flex-col gap-4 mb-2">
               <div className="flex justify-between items-center">
-                <h3 className="text-sm font-bold text-zinc-200">Aggregation Window</h3>
+                <h3 className="text-sm font-bold text-neutral-200">Aggregation Window</h3>
                 <span className="font-mono text-amber-400 font-bold">{aggregationWindow} Days</span>
               </div>
               <input type="range" min="1" max="30" step="1" value={aggregationWindow}
                 onChange={e => setAggregationWindow(parseInt(e.target.value))}
-                className="w-full accent-amber-400 h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer" />
-              <div className="flex justify-between text-[10px] text-zinc-500">
+                className="w-full accent-amber-400 h-1 bg-white/5 rounded-lg appearance-none cursor-pointer" />
+              <div className="flex justify-between text-[10px] text-neutral-400">
                 <span>1 Day (Daily)</span>
                 <span>30 Days (Monthly)</span>
               </div>
@@ -332,46 +337,46 @@ export default function CuratedMspAccuracy() {
                   className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold border transition-all ${
                     showInfo
                       ? 'bg-amber-500/20 border-amber-500/40 text-amber-400'
-                      : 'bg-zinc-800/60 border-zinc-700/40 text-zinc-400 hover:border-amber-500/30 hover:text-amber-400'
+                      : 'bg-white/5 border-white/20 text-neutral-400 hover:border-amber-500/30 hover:text-amber-400'
                   }`}
                   title="How is this calculated?"
-                >ℹ</button>
+                >i</button>
               </div>
 
               {showInfo && (
-                <div className="p-5 border-l-2 border-amber-400 bg-zinc-800/80 rounded-r-lg text-xs text-zinc-300 leading-relaxed shadow-lg mb-4 space-y-4">
+                <div className="p-5 border-l-2 border-amber-400 bg-white/5 rounded-r-lg text-xs text-neutral-300 leading-relaxed shadow-lg mb-4 space-y-4">
                   <div>
                     <p className="font-bold text-amber-400 mb-1 uppercase tracking-widest text-[10px]">Brand Affinity Calculation</p>
-                    <div className="p-2 bg-zinc-900/50 rounded font-mono text-zinc-200 text-[11px] mb-2 border border-zinc-700/50">
+                    <div className="p-2 bg-[#0A0A0A]/60 rounded font-mono text-neutral-200 text-[11px] mb-2 border border-white/20">
                       Brand Affinity (BA) = Brand Sales / Category Average Sales
                     </div>
-                    <p className="text-zinc-400 mb-1">Where:</p>
-                    <ul className="list-disc pl-4 space-y-1 text-zinc-400">
-                      <li><strong className="text-zinc-300">Brand Sales</strong> = Total sales of the selected brand for the product within the selected time window</li>
-                      <li><strong className="text-zinc-300">Category Average Sales</strong> = Average sales of all brands within the same product category during the same time window</li>
+                    <p className="text-neutral-400 mb-1">Where:</p>
+                    <ul className="list-disc pl-4 space-y-1 text-neutral-400">
+                      <li><strong className="text-neutral-300">Brand Sales</strong> = Total sales of the selected brand for the product within the selected time window</li>
+                      <li><strong className="text-neutral-300">Category Average Sales</strong> = Average sales of all brands within the same product category during the same time window</li>
                     </ul>
                   </div>
 
                   <div>
                     <p className="font-bold text-amber-400/80 mb-1 text-[10px] uppercase tracking-wider">Expanded Form</p>
-                    <div className="p-2 bg-zinc-900/50 rounded font-mono text-zinc-200 text-[11px] border border-zinc-700/50">
+                    <div className="p-2 bg-[#0A0A0A]/60 rounded font-mono text-neutral-200 text-[11px] border border-white/20">
                       BA = ( Σ Brand Daily Sales ) / ( Σ Category Daily Sales / Number of Brands )
                     </div>
                   </div>
 
                   <div>
                     <p className="font-bold text-amber-400/80 mb-1 text-[10px] uppercase tracking-wider">Interpretation</p>
-                    <ul className="space-y-1 text-zinc-400">
+                    <ul className="space-y-1 text-neutral-400">
                       <li><span className="text-emerald-400 font-mono">BA {'>'} 1</span> → Brand performs better than the category average</li>
-                      <li><span className="text-zinc-300 font-mono">BA = 1</span> → Brand performance equals category average</li>
+                      <li><span className="text-neutral-300 font-mono">BA = 1</span> → Brand performance equals category average</li>
                       <li><span className="text-red-400 font-mono">BA {'<'} 1</span> → Brand performs below category average</li>
                     </ul>
                   </div>
 
-                  <div className="pt-2 border-t border-zinc-700/50">
+                  <div className="pt-2 border-t border-white/20">
                     <p className="font-bold text-amber-400/80 mb-1 text-[10px] uppercase tracking-wider">Role in MSP Model</p>
-                    <p className="text-zinc-400 mb-2">Brand & Price Affinity act as a demand adjustment multipliers in the MSP calculation:</p>
-                    <div className="p-2 bg-zinc-900/50 rounded font-mono text-emerald-300 text-[11px] border border-emerald-900/50">
+                    <p className="text-neutral-400 mb-2">Brand & Price Affinity act as a demand adjustment multipliers in the MSP calculation:</p>
+                    <div className="p-2 bg-[#0A0A0A]/60 rounded font-mono text-emerald-300 text-[11px] border border-emerald-900/50">
                       Demand = Baseline × Brand Affinity × Price Affinity
                     </div>
                   </div>
@@ -425,7 +430,7 @@ export default function CuratedMspAccuracy() {
                   <XAxis dataKey="label" tick={{fill:'#71717a', fontSize:10}} axisLine={false} tickLine={false}/>
                   <YAxis tick={{fill:'#71717a', fontSize:10}} axisLine={false} tickLine={false}/>
                   <Tooltip content={<CustomTip/>}/>
-                  <Legend wrapperStyle={{fontSize:'11px', paddingTop:'12px'}} formatter={(v) => <span className="text-zinc-300">{v}</span>}/>
+                  <Legend wrapperStyle={{fontSize:'11px', paddingTop:'12px'}} formatter={(v) => <span className="text-neutral-300">{v}</span>}/>
                   
                   <Line
                     type="monotone"
@@ -451,6 +456,152 @@ export default function CuratedMspAccuracy() {
               </ResponsiveContainer>
             </ChartCard>
 
+            {/* Next Aggregation Window Orders Table */}
+            {(rawData.length > 0 || futureRawData.length > 0) && (() => {
+              const allData = [...rawData, ...futureRawData];
+              const minDate = allData.length > 0 ? allData[0].date : '';
+              const maxDate = allData.length > 0 ? allData[allData.length - 1].date : '';
+              // Default to the start of future data, or start of all data if no future data
+              const defaultStartDate = futureRawData.length > 0 ? futureRawData[0].date : minDate;
+              const effectiveStartDate = tableStartDate || defaultStartDate;
+
+              return (
+                <ChartCard
+                  title={`Suggested Orders for Next ${tableAggregationWindow} Days`}
+                  subtitle={`Based on selected branch (${filters.branch || 'All'}) and projected demand for the period.`}
+                  accent="indigo"
+                >
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4 bg-[#0A0A0A]/60 p-3 rounded-lg border border-white/10">
+                    <div className="flex flex-col w-full sm:w-1/2">
+                      <div className="flex justify-between items-center text-xs text-neutral-400 mb-2">
+                        <span>Aggregation Window</span>
+                        <span className="font-mono text-indigo-400 font-bold">{tableAggregationWindow} Days</span>
+                      </div>
+                      <input type="range" min="0" max={TABLE_WINDOWS.length - 1} step="1" value={tableAggregationIndex}
+                        onChange={e => setTableAggregationIndex(parseInt(e.target.value))}
+                        className="w-full accent-indigo-400 h-1.5 bg-white/5 rounded-lg appearance-none cursor-pointer" />
+                      <div className="flex justify-between text-[10px] text-neutral-500 px-0.5 mt-1 font-mono">
+                        {TABLE_WINDOWS.map(w => (
+                          <span key={w}>{w}</span>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div className="flex justify-end">
+                      <label className="text-xs text-neutral-400 flex items-center gap-2">
+                        Start Date:
+                        <input
+                          type="date"
+                          className="bg-transparent border border-white/20 text-neutral-200 rounded px-2 py-1 outline-none focus:border-indigo-500 font-mono"
+                          min={minDate}
+                          max={maxDate}
+                          value={effectiveStartDate}
+                          onChange={e => setTableStartDate(e.target.value)}
+                        />
+                      </label>
+                    </div>
+                  </div>
+                  <div className="overflow-x-auto border border-white/10 rounded-xl">
+                    <table className="w-full text-left text-sm">
+                      <thead className="bg-[#0A0A0A]/60 border-b border-white/5/60 text-neutral-400">
+                        <tr>
+                          <th className="px-4 py-3 font-medium">Brand</th>
+                          <th className="px-4 py-3 font-medium">Model Family (Clubbed)</th>
+                          <th className="px-4 py-3 font-medium text-right">Projected MSP ({tableAggregationWindow}d)</th>
+                          <th className="px-4 py-3 font-medium text-right">% of Total</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-zinc-800/40">
+                        {(() => {
+                          const startIndex = allData.findIndex(d => d.date >= effectiveStartDate);
+                          const actualStartIndex = startIndex !== -1 ? startIndex : 0;
+                          const nextWindowData = allData.slice(actualStartIndex, actualStartIndex + tableAggregationWindow);
+                          const totalProjected = nextWindowData.reduce((sum, d) => sum + (d.predicted || 0), 0);
+                        
+                        // Dummy models logic, but scaled to the totalProjected
+                        const ALL_DUMMY_MODELS = [
+                          { brand: 'Apple', model: 'iPhone 15', share: 0.35 },
+                          { brand: 'Apple', model: 'iPhone 16', share: 0.25 },
+                          { brand: 'Apple', model: 'iPhone 14', share: 0.20 },
+                          { brand: 'Apple', model: 'iPhone 13', share: 0.20 },
+                          
+                          { brand: 'Samsung', model: 'Galaxy A15', share: 0.35 },
+                          { brand: 'Samsung', model: 'Galaxy M35', share: 0.25 },
+                          { brand: 'Samsung', model: 'Galaxy S24', share: 0.25 },
+                          { brand: 'Samsung', model: 'Galaxy A55', share: 0.15 },
+                          
+                          { brand: 'Vivo', model: 'Vivo Y28', share: 0.40 },
+                          { brand: 'Vivo', model: 'Vivo T3x', share: 0.35 },
+                          { brand: 'Vivo', model: 'Vivo V30', share: 0.25 },
+                          
+                          { brand: 'Oppo', model: 'Oppo A3', share: 0.45 },
+                          { brand: 'Oppo', model: 'Oppo Reno 12', share: 0.35 },
+                          { brand: 'Oppo', model: 'Oppo F25', share: 0.20 },
+                          
+                          { brand: 'Xiaomi', model: 'Redmi Note 13', share: 0.50 },
+                          { brand: 'Xiaomi', model: 'Redmi 13C', share: 0.50 },
+                          
+                          { brand: 'Realme', model: 'Realme 12', share: 0.60 },
+                          { brand: 'Realme', model: 'Realme C65', share: 0.40 },
+                        ];
+
+                        let displayModels = ALL_DUMMY_MODELS;
+                        
+                        // Default to top models across brands if no brand selected
+                        if (!filters.brand) {
+                          displayModels = [
+                            { brand: 'Apple', model: 'iPhone 15', share: 0.25 },
+                            { brand: 'Samsung', model: 'Galaxy A15', share: 0.20 },
+                            { brand: 'Vivo', model: 'Vivo Y28', share: 0.15 },
+                            { brand: 'Oppo', model: 'Oppo A3', share: 0.10 },
+                            { brand: 'Xiaomi', model: 'Redmi Note 13', share: 0.10 },
+                            { brand: 'Samsung', model: 'Galaxy M35', share: 0.08 },
+                            { brand: 'Apple', model: 'iPhone 16', share: 0.07 },
+                            { brand: 'Realme', model: 'Realme 12', share: 0.05 },
+                          ];
+                        } else {
+                          displayModels = displayModels.filter(m => m.brand === filters.brand);
+                        }
+
+                        if (filters.model) {
+                          displayModels = displayModels.filter(m => m.model === filters.model);
+                        }
+
+                        if (displayModels.length === 0) {
+                          displayModels = [{ brand: filters.brand || 'Other', model: filters.model || 'Other Models', share: 1 }];
+                        }
+
+                        const totalShare = displayModels.reduce((sum, m) => sum + m.share, 0);
+                        displayModels = displayModels.map(m => ({ ...m, normalizedShare: m.share / totalShare }));
+
+                        return (
+                          <>
+                            {displayModels.map((m, idx) => {
+                              const projectedMsp = Math.round(totalProjected * m.normalizedShare);
+                              return (
+                                <tr key={idx} className="hover:bg-white/5 transition-colors">
+                                  <td className="px-4 py-3 text-neutral-300">{m.brand}</td>
+                                  <td className="px-4 py-3 font-medium text-white">{m.model}</td>
+                                  <td className="px-4 py-3 text-right text-indigo-400 font-bold">{projectedMsp}</td>
+                                  <td className="px-4 py-3 text-right text-neutral-400">{(m.normalizedShare * 100).toFixed(0)}%</td>
+                                </tr>
+                              );
+                            })}
+                            <tr className="bg-[#0A0A0A]/60 font-bold border-t-2 border-white/10">
+                              <td className="px-4 py-3 text-neutral-300" colSpan={2}>Total ({tableAggregationWindow} Days)</td>
+                              <td className="px-4 py-3 text-right text-emerald-400">{Math.round(totalProjected)}</td>
+                              <td className="px-4 py-3 text-right text-neutral-400">100%</td>
+                            </tr>
+                          </>
+                        );
+                        })()}
+                      </tbody>
+                    </table>
+                  </div>
+                </ChartCard>
+              );
+            })()}
+
             {futureChartData.length > 0 && (
               <ChartCard
                 title="Future Prediction (3 Months)"
@@ -472,7 +623,7 @@ export default function CuratedMspAccuracy() {
                     <XAxis dataKey="label" tick={{fill:'#71717a', fontSize:10}} axisLine={false} tickLine={false}/>
                     <YAxis tick={{fill:'#71717a', fontSize:10}} axisLine={false} tickLine={false}/>
                     <Tooltip content={<CustomTip/>}/>
-                    <Legend wrapperStyle={{fontSize:'11px', paddingTop:'12px'}} formatter={(v) => <span className="text-zinc-300">{v}</span>}/>
+                    <Legend wrapperStyle={{fontSize:'11px', paddingTop:'12px'}} formatter={(v) => <span className="text-neutral-300">{v}</span>}/>
 
                     <Line
                       type="monotone"

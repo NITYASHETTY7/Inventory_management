@@ -72,7 +72,7 @@ export default function BrandAffinity({ filters }: { filters: Filters }) {
           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
         </svg>
-        <span className="text-zinc-500 font-mono text-sm">Loading brand affinity data…</span>
+        <span className="text-neutral-400 font-mono text-sm">Loading brand affinity data…</span>
       </div>
     );
   }
@@ -110,8 +110,8 @@ export default function BrandAffinity({ filters }: { filters: Filters }) {
           <div className="flex items-center gap-3">
             <div className="w-1.5 h-8 rounded-full bg-amber-400" />
             <div>
-              <h1 className="text-2xl font-black text-zinc-100">Brand Affinity</h1>
-              <p className="text-xs text-zinc-500 font-mono mt-0.5">How strongly each store leans toward each brand · Sep–Dec 2025</p>
+              <h1 className="text-2xl font-black text-white">Brand Affinity</h1>
+              <p className="text-xs text-neutral-400 font-mono mt-0.5">How strongly each store leans toward each brand · Sep–Dec 2025</p>
             </div>
           </div>
           <button
@@ -119,48 +119,48 @@ export default function BrandAffinity({ filters }: { filters: Filters }) {
             className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold border transition-all ${
               showInfo
                 ? 'bg-amber-500/20 border-amber-500/40 text-amber-400'
-                : 'bg-zinc-800/60 border-zinc-700/40 text-zinc-400 hover:border-amber-500/30 hover:text-amber-400'
+                : 'bg-white/5 border-white/20 text-neutral-400 hover:border-amber-500/30 hover:text-amber-400'
             }`}
             title="How is this calculated?"
-          >ℹ</button>
+          >i</button>
         </div>
 
         {showInfo && (
-          <div className="p-4 border-l-2 border-amber-400 bg-zinc-800/80 rounded-r-lg text-xs text-zinc-300 leading-relaxed shadow-lg">
+          <div className="p-4 border-l-2 border-amber-400 bg-white/5 rounded-r-lg text-xs text-neutral-300 leading-relaxed shadow-lg">
             <p className="font-bold text-amber-400 mb-2 uppercase tracking-widest text-[10px]">How Brand Affinity is Calculated</p>
-            <p className="mb-2"><strong>1. Store Share:</strong> We calculate what percentage of a store's total sales comes from a specific brand. <br/><span className="text-zinc-500 italic">(e.g., If Store A sells 100 phones and 30 are Vivo, Vivo's Store Share is 30%)</span></p>
-            <p className="mb-2"><strong>2. Network Share:</strong> We calculate that brand's overall share across the entire network. <br/><span className="text-zinc-500 italic">(e.g., If Vivo accounts for 20% of all sales network-wide)</span></p>
-            <p><strong>3. Affinity Score:</strong> The Store Share is divided by the Network Share (then scaled out of 50). <br/><span className="text-zinc-500 italic">(e.g., A store selling 30% Vivo when the network average is 20% shows a high positive affinity for Vivo)</span></p>
+            <p className="mb-2"><strong>1. Store Share:</strong> We calculate what percentage of a store's total sales comes from a specific brand. <br/><span className="text-neutral-400 italic">(e.g., If Store A sells 100 phones and 30 are Vivo, Vivo's Store Share is 30%)</span></p>
+            <p className="mb-2"><strong>2. Network Share:</strong> We calculate that brand's overall share across the entire network. <br/><span className="text-neutral-400 italic">(e.g., If Vivo accounts for 20% of all sales network-wide)</span></p>
+            <p><strong>3. Affinity Score:</strong> The Store Share is divided by the Network Share (then scaled out of 50). <br/><span className="text-neutral-400 italic">(e.g., A store selling 30% Vivo when the network average is 20% shows a high positive affinity for Vivo)</span></p>
           </div>
         )}
 
-        <div className="flex gap-2 p-1 rounded-xl bg-zinc-900/50 border border-zinc-800/50 w-fit">
-          <button onClick={() => setActiveTab('heatmap')} className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTab==='heatmap'?'bg-zinc-800 text-zinc-100 border border-zinc-700':'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/40'}`}>
+        <div className="flex gap-2 p-1 rounded-xl bg-[#0A0A0A]/60 border border-white/10 w-fit">
+          <button onClick={() => setActiveTab('heatmap')} className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTab==='heatmap'?'bg-white/5 text-white border border-white/20':'text-neutral-400 hover:text-neutral-300 hover:bg-white/5'}`}>
             🔥 Affinity Heatmap
           </button>
-          <button onClick={() => setActiveTab('profile')} className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTab==='profile'?'bg-zinc-800 text-zinc-100 border border-zinc-700':'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/40'}`}>
+          <button onClick={() => setActiveTab('profile')} className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTab==='profile'?'bg-white/5 text-white border border-white/20':'text-neutral-400 hover:text-neutral-300 hover:bg-white/5'}`}>
             🏪 Store Profile
           </button>
-          <button onClick={() => setActiveTab('leaderboard')} className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTab==='leaderboard'?'bg-zinc-800 text-zinc-100 border border-zinc-700':'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/40'}`}>
+          <button onClick={() => setActiveTab('leaderboard')} className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTab==='leaderboard'?'bg-white/5 text-white border border-white/20':'text-neutral-400 hover:text-neutral-300 hover:bg-white/5'}`}>
             🏆 Brand Leaderboard
           </button>
         </div>
 
         <div className="grid grid-cols-4 gap-4">
-          <div className="rounded-2xl bg-zinc-900/60 border border-zinc-800/60 p-5">
-            <p className="text-[10px] font-bold tracking-widest uppercase text-zinc-500">Total Stores</p>
-            <p className="text-2xl font-mono font-black mt-1 text-zinc-300">{data.stores.length}</p>
+          <div className="rounded-2xl bg-[#0A0A0A]/60 border border-white/10 p-5">
+            <p className="text-[10px] font-bold tracking-widest uppercase text-neutral-400">Total Stores</p>
+            <p className="text-2xl font-mono font-black mt-1 text-neutral-300">{data.stores.length}</p>
           </div>
-          <div className="rounded-2xl bg-zinc-900/60 border border-zinc-800/60 p-5">
-            <p className="text-[10px] font-bold tracking-widest uppercase text-zinc-500">Total Brands</p>
-            <p className="text-2xl font-mono font-black mt-1 text-zinc-300">{data.brands.length}</p>
+          <div className="rounded-2xl bg-[#0A0A0A]/60 border border-white/10 p-5">
+            <p className="text-[10px] font-bold tracking-widest uppercase text-neutral-400">Total Brands</p>
+            <p className="text-2xl font-mono font-black mt-1 text-neutral-300">{data.brands.length}</p>
           </div>
-          <div className="rounded-2xl bg-zinc-900/60 border border-zinc-800/60 p-5">
-            <p className="text-[10px] font-bold tracking-widest uppercase text-zinc-500">Top Brand (Network)</p>
+          <div className="rounded-2xl bg-[#0A0A0A]/60 border border-white/10 p-5">
+            <p className="text-[10px] font-bold tracking-widest uppercase text-neutral-400">Top Brand (Network)</p>
             <p className="text-2xl font-mono font-black mt-1 text-amber-400">{topBrand}</p>
           </div>
-          <div className="rounded-2xl bg-zinc-900/60 border border-zinc-800/60 p-5">
-            <p className="text-[10px] font-bold tracking-widest uppercase text-zinc-500">Most Diverse Store</p>
+          <div className="rounded-2xl bg-[#0A0A0A]/60 border border-white/10 p-5">
+            <p className="text-[10px] font-bold tracking-widest uppercase text-neutral-400">Most Diverse Store</p>
             <p className="text-sm font-mono font-bold mt-1.5 text-sky-400 truncate" title={mostDiverseStore}>{shortStoreName(mostDiverseStore)}</p>
           </div>
         </div>
@@ -168,16 +168,16 @@ export default function BrandAffinity({ filters }: { filters: Filters }) {
 
       {/* SECTION B: AFFINITY HEATMAP */}
       {activeTab === 'heatmap' && (
-        <div className="rounded-2xl bg-zinc-900/60 border border-zinc-800/60 p-6 shadow-xl shadow-zinc-800/20 overflow-x-auto">
+        <div className="rounded-2xl bg-[#0A0A0A]/60 border border-white/10 p-6 shadow-xl shadow-zinc-800/20 overflow-x-auto">
           <table className="w-full border-collapse">
             <thead>
               <tr>
-                <th className="p-2 border-b border-zinc-800"></th>
+                <th className="p-2 border-b border-white/5"></th>
                 {data.brands.map(brand => (
-                  <th key={brand} className="p-2 border-b border-zinc-800 h-32 align-bottom">
+                  <th key={brand} className="p-2 border-b border-white/5 h-32 align-bottom">
                     <div className="flex flex-col items-center justify-end h-full gap-2">
-                      <span className="text-xs font-bold text-zinc-300 whitespace-nowrap" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>{brand}</span>
-                      <span className="text-[9px] text-zinc-500 font-mono">{data.network_shares[brand]}%</span>
+                      <span className="text-xs font-bold text-neutral-300 whitespace-nowrap" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>{brand}</span>
+                      <span className="text-[9px] text-neutral-400 font-mono">{data.network_shares[brand]}%</span>
                     </div>
                   </th>
                 ))}
@@ -185,22 +185,22 @@ export default function BrandAffinity({ filters }: { filters: Filters }) {
             </thead>
             <tbody>
               {data.stores.map((store, i) => {
-                let nameColor = 'text-zinc-500';
+                let nameColor = 'text-neutral-400';
                 if (i < 4) nameColor = 'text-amber-400';
                 else if (i < 7) nameColor = 'text-sky-400';
 
                 return (
-                  <tr key={store} className="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors">
+                  <tr key={store} className="border-b border-white/5 hover:bg-white/[0.03] transition-colors">
                     <td className="p-3 whitespace-nowrap">
                       <div className="flex justify-between items-center gap-4">
                         <span className={`text-xs font-bold ${nameColor}`}>{shortStoreName(store)}</span>
-                        <span className="text-xs text-zinc-400 font-mono">{data.store_totals[store]}</span>
+                        <span className="text-xs text-neutral-400 font-mono">{data.store_totals[store]}</span>
                       </div>
                     </td>
                     {data.brands.map(brand => {
                       const cell = data.cells.find(c => c.store === store && c.brand === brand);
                       if (!cell) {
-                        return <td key={brand} className="p-1"><div className="w-full h-10 bg-zinc-900 rounded-lg flex items-center justify-center text-zinc-700 text-xs">—</div></td>;
+                        return <td key={brand} className="p-1"><div className="w-full h-10 bg-[#0A0A0A]/60 rounded-lg flex items-center justify-center text-zinc-700 text-xs">—</div></td>;
                       }
                       const score = cell.affinity_score;
                       const pct = cell.share_pct;
@@ -221,7 +221,7 @@ export default function BrandAffinity({ filters }: { filters: Filters }) {
               })}
             </tbody>
           </table>
-          <div className="flex gap-4 mt-6 text-[10px] font-mono text-zinc-400 items-center justify-center">
+          <div className="flex gap-4 mt-6 text-[10px] font-mono text-neutral-400 items-center justify-center">
             
             <div className="flex items-center gap-1.5 ml-4"><span className="text-amber-400">★</span> Store's dominant brand</div>
           </div>
@@ -231,13 +231,13 @@ export default function BrandAffinity({ filters }: { filters: Filters }) {
       {/* SECTION C: STORE PROFILE */}
       {activeTab === 'profile' && (
         <div className="flex gap-6 h-[700px]">
-          <div className="w-80 shrink-0 flex flex-col rounded-2xl bg-zinc-900/60 border border-zinc-800/60 overflow-hidden shadow-xl shadow-zinc-800/20">
-            <div className="p-4 border-b border-zinc-800/60 bg-zinc-900">
-              <h2 className="text-xs font-bold tracking-widest uppercase text-zinc-500">Select Store</h2>
+          <div className="w-80 shrink-0 flex flex-col rounded-2xl bg-[#0A0A0A]/60 border border-white/10 overflow-hidden shadow-xl shadow-zinc-800/20">
+            <div className="p-4 border-b border-white/5/60 bg-[#0A0A0A]/60">
+              <h2 className="text-xs font-bold tracking-widest uppercase text-neutral-400">Select Store</h2>
             </div>
             <div className="flex-1 overflow-y-auto p-2 flex flex-col gap-1">
               {data.stores.map((store, i) => {
-                let nameColor = 'text-zinc-500';
+                let nameColor = 'text-neutral-400';
                 if (i < 4) nameColor = 'text-amber-400';
                 else if (i < 7) nameColor = 'text-sky-400';
                 
@@ -247,15 +247,15 @@ export default function BrandAffinity({ filters }: { filters: Filters }) {
 
                 return (
                   <button key={store} onClick={() => setSelectedStore(store)}
-                    className={`flex flex-col gap-1.5 p-3 text-left rounded-xl transition-all border-l-2 ${isActive ? 'bg-zinc-800 border-amber-400' : 'border-transparent hover:bg-zinc-800/40'}`}>
+                    className={`flex flex-col gap-1.5 p-3 text-left rounded-xl transition-all border-l-2 ${isActive ? 'bg-white/5 border-amber-400' : 'border-transparent hover:bg-white/5'}`}>
                     <div className="flex justify-between items-start gap-2">
                       <span className={`text-xs font-bold truncate ${nameColor}`}>{shortStoreName(store)}</span>
-                      <span className="text-[10px] font-mono text-zinc-400">{data.store_totals[store]}</span>
+                      <span className="text-[10px] font-mono text-neutral-400">{data.store_totals[store]}</span>
                     </div>
                     {domBrand && (
                       <div className="flex items-center gap-1.5">
                         <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: domColor }} />
-                        <span className="text-[9px] font-mono text-zinc-500 truncate" style={{ color: domColor }}>{domBrand}</span>
+                        <span className="text-[9px] font-mono text-neutral-400 truncate" style={{ color: domColor }}>{domBrand}</span>
                       </div>
                     )}
                   </button>
@@ -265,14 +265,14 @@ export default function BrandAffinity({ filters }: { filters: Filters }) {
           </div>
 
           <div className="flex-1 flex flex-col gap-5 overflow-y-auto">
-            <div className="rounded-2xl bg-zinc-900/60 border border-zinc-800/60 p-5 shadow-xl shadow-zinc-800/20">
-              <h2 className="text-lg font-bold text-zinc-100">{selectedStore}</h2>
-              <p className="text-xs text-zinc-400 font-mono mt-1">Total Units: {data.store_totals[selectedStore]}</p>
+            <div className="glass-card p-5">
+              <h2 className="text-lg font-bold text-white">{selectedStore}</h2>
+              <p className="text-xs text-neutral-400 font-mono mt-1">Total Units: {data.store_totals[selectedStore]}</p>
             </div>
 
             <div className="grid grid-cols-2 gap-5">
-              <div className="rounded-2xl bg-zinc-900/60 border border-zinc-800/60 p-5 shadow-xl shadow-zinc-800/20 flex flex-col">
-                <h3 className="text-xs font-bold tracking-widest uppercase text-zinc-500 mb-4">Units by Brand</h3>
+              <div className="glass-card p-5 flex flex-col">
+                <h3 className="text-xs font-bold tracking-widest uppercase text-neutral-400 mb-4">Units by Brand</h3>
                 <div className="flex-1 min-h-[280px]">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={data.store_profiles[selectedStore] || []} layout="vertical" margin={{top:0, right:40, left:20, bottom:0}}>
@@ -290,8 +290,8 @@ export default function BrandAffinity({ filters }: { filters: Filters }) {
                 </div>
               </div>
 
-              <div className="rounded-2xl bg-zinc-900/60 border border-zinc-800/60 p-5 shadow-xl shadow-zinc-800/20 flex flex-col items-center">
-                <h3 className="text-xs font-bold tracking-widest uppercase text-zinc-500 mb-2 w-full text-left">Brand Mix</h3>
+              <div className="glass-card p-5 flex flex-col items-center">
+                <h3 className="text-xs font-bold tracking-widest uppercase text-neutral-400 mb-2 w-full text-left">Brand Mix</h3>
                 <div className="w-full h-[260px] relative">
                   <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
@@ -304,47 +304,47 @@ export default function BrandAffinity({ filters }: { filters: Filters }) {
                     </PieChart>
                   </ResponsiveContainer>
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <span className="text-xs font-bold text-zinc-500 uppercase tracking-widest">Brand<br/>Mix</span>
+                    <span className="text-xs font-bold text-neutral-400 uppercase tracking-widest">Brand<br/>Mix</span>
                   </div>
                 </div>
                 <div className="flex flex-wrap justify-center gap-3 mt-2">
                   {(data.store_profiles[selectedStore] || []).map(p => (
                     <div key={p.brand} className="flex items-center gap-1.5 text-[10px] font-mono">
                       <div className="w-2 h-2 rounded-full" style={{backgroundColor: getBrandColor(p.brand)}} />
-                      <span className="text-zinc-300">{p.brand}</span>
-                      <span className="text-zinc-500">{p.share_pct}%</span>
+                      <span className="text-neutral-300">{p.brand}</span>
+                      <span className="text-neutral-400">{p.share_pct}%</span>
                     </div>
                   ))}
                 </div>
               </div>
             </div>
 
-            <div className="rounded-2xl bg-zinc-900/60 border border-zinc-800/60 shadow-xl shadow-zinc-800/20 overflow-hidden">
+            <div className="rounded-2xl bg-[#0A0A0A]/60 border border-white/10 shadow-xl shadow-zinc-800/20 overflow-hidden">
               <table className="w-full text-left text-sm border-collapse">
-                <thead className="bg-zinc-900">
+                <thead className="bg-[#0A0A0A]/60">
                   <tr>
-                    <th className="px-4 py-3 text-[10px] font-bold tracking-widest uppercase text-zinc-500 border-b border-zinc-800">Brand</th>
-                    <th className="px-4 py-3 text-[10px] font-bold tracking-widest uppercase text-zinc-500 border-b border-zinc-800">Units</th>
-                    <th className="px-4 py-3 text-[10px] font-bold tracking-widest uppercase text-zinc-500 border-b border-zinc-800">Share %</th>
-                    <th className="px-4 py-3 text-[10px] font-bold tracking-widest uppercase text-zinc-500 border-b border-zinc-800">Affinity Score</th>
-                    <th className="px-4 py-3 text-[10px] font-bold tracking-widest uppercase text-zinc-500 border-b border-zinc-800">Rank in Network</th>
-                    <th className="px-4 py-3 text-[10px] font-bold tracking-widest uppercase text-zinc-500 border-b border-zinc-800">Status</th>
+                    <th className="px-4 py-3 text-[10px] font-bold tracking-widest uppercase text-neutral-400 border-b border-white/5">Brand</th>
+                    <th className="px-4 py-3 text-[10px] font-bold tracking-widest uppercase text-neutral-400 border-b border-white/5">Units</th>
+                    <th className="px-4 py-3 text-[10px] font-bold tracking-widest uppercase text-neutral-400 border-b border-white/5">Share %</th>
+                    <th className="px-4 py-3 text-[10px] font-bold tracking-widest uppercase text-neutral-400 border-b border-white/5">Affinity Score</th>
+                    <th className="px-4 py-3 text-[10px] font-bold tracking-widest uppercase text-neutral-400 border-b border-white/5">Rank in Network</th>
+                    <th className="px-4 py-3 text-[10px] font-bold tracking-widest uppercase text-neutral-400 border-b border-white/5">Status</th>
                   </tr>
                 </thead>
                 <tbody>
                   {(data.store_profiles[selectedStore] || []).map(p => {
-                    let status = { text: 'Weak', cls: 'text-zinc-600' };
+                    let status = { text: 'Weak', cls: 'text-neutral-500' };
                     if (p.affinity_score >= 70) status = { text: '★ Strong', cls: 'text-amber-400 font-bold' };
                     else if (p.affinity_score >= 50) status = { text: 'Above Avg', cls: 'text-sky-400' };
-                    else if (p.affinity_score >= 30) status = { text: 'Average', cls: 'text-zinc-400' };
+                    else if (p.affinity_score >= 30) status = { text: 'Average', cls: 'text-neutral-400' };
 
                     return (
-                      <tr key={p.brand} className={`border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors ${p.dominant ? 'bg-amber-500/5' : ''}`}>
-                        <td className="px-4 py-3 font-bold text-zinc-200" style={{color: getBrandColor(p.brand)}}>{p.brand}</td>
-                        <td className="px-4 py-3 font-mono text-zinc-300">{p.units}</td>
-                        <td className="px-4 py-3 font-mono text-zinc-400">{p.share_pct}%</td>
-                        <td className="px-4 py-3 font-mono font-bold text-zinc-100">{p.affinity_score.toFixed(1)}</td>
-                        <td className="px-4 py-3 font-mono text-zinc-500">#{p.rank}</td>
+                      <tr key={p.brand} className={`border-b border-white/5 hover:bg-white/[0.03] transition-colors ${p.dominant ? 'bg-amber-500/5' : ''}`}>
+                        <td className="px-4 py-3 font-bold text-neutral-200" style={{color: getBrandColor(p.brand)}}>{p.brand}</td>
+                        <td className="px-4 py-3 font-mono text-neutral-300">{p.units}</td>
+                        <td className="px-4 py-3 font-mono text-neutral-400">{p.share_pct}%</td>
+                        <td className="px-4 py-3 font-mono font-bold text-white">{p.affinity_score.toFixed(1)}</td>
+                        <td className="px-4 py-3 font-mono text-neutral-400">#{p.rank}</td>
                         <td className={`px-4 py-3 text-xs ${status.cls}`}>{status.text}</td>
                       </tr>
                     );
@@ -364,7 +364,7 @@ export default function BrandAffinity({ filters }: { filters: Filters }) {
               const isActive = brand === selectedBrand;
               return (
                 <button key={brand} onClick={() => setSelectedBrand(brand)}
-                  className={`px-4 py-2 rounded-xl border flex flex-col items-center transition-all ${isActive ? 'bg-zinc-800 text-zinc-100 border-zinc-600 shadow-md' : 'bg-zinc-900/50 text-zinc-500 border-zinc-800/50 hover:bg-zinc-800/50 hover:text-zinc-300'}`}>
+                  className={`px-4 py-2 rounded-xl border flex flex-col items-center transition-all ${isActive ? 'bg-white/5 text-white border-white/30 shadow-md' : 'bg-[#0A0A0A]/60 text-neutral-400 border-white/10 hover:bg-white/5 hover:text-neutral-300'}`}>
                   <span className="font-bold">{brand}</span>
                   <span className="text-[10px] font-mono mt-0.5 opacity-70">{data.network_totals[brand]} units</span>
                 </button>
@@ -373,17 +373,17 @@ export default function BrandAffinity({ filters }: { filters: Filters }) {
           </div>
 
           {selectedBrand && (
-            <div className="rounded-2xl bg-zinc-900/60 border border-zinc-800/60 p-6 shadow-xl shadow-zinc-800/20 flex flex-col gap-6">
-              <div className="flex items-center gap-6 pb-4 border-b border-zinc-800/50">
+            <div className="rounded-2xl bg-[#0A0A0A]/60 border border-white/10 p-6 shadow-xl shadow-zinc-800/20 flex flex-col gap-6">
+              <div className="flex items-center gap-6 pb-4 border-b border-white/5/50">
                 <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl font-black shadow-lg" style={{ backgroundColor: getBrandColor(selectedBrand)+'20', color: getBrandColor(selectedBrand) }}>
                   {selectedBrand.charAt(0)}
                 </div>
                 <div>
-                  <h2 className="text-2xl font-black text-zinc-100 tracking-wide">{selectedBrand}</h2>
-                  <div className="flex gap-4 mt-1 text-xs font-mono text-zinc-400">
-                    <span>Network Total: <b className="text-zinc-200">{data.network_totals[selectedBrand]}</b></span>
-                    <span>Network Share: <b className="text-zinc-200">{data.network_shares[selectedBrand]}%</b></span>
-                    <span>Sold across <b className="text-zinc-200">{data.brand_leaderboard[selectedBrand]?.length || 0}</b> stores</span>
+                  <h2 className="text-2xl font-black text-white tracking-wide">{selectedBrand}</h2>
+                  <div className="flex gap-4 mt-1 text-xs font-mono text-neutral-400">
+                    <span>Network Total: <b className="text-neutral-200">{data.network_totals[selectedBrand]}</b></span>
+                    <span>Network Share: <b className="text-neutral-200">{data.network_shares[selectedBrand]}%</b></span>
+                    <span>Sold across <b className="text-neutral-200">{data.brand_leaderboard[selectedBrand]?.length || 0}</b> stores</span>
                   </div>
                 </div>
               </div>
@@ -406,31 +406,31 @@ export default function BrandAffinity({ filters }: { filters: Filters }) {
                 </ResponsiveContainer>
               </div>
 
-              <div className="overflow-hidden rounded-xl border border-zinc-800/50 mt-4">
+              <div className="overflow-hidden rounded-xl border border-white/10 mt-4">
                 <table className="w-full text-left text-sm border-collapse">
-                  <thead className="bg-zinc-900">
+                  <thead className="bg-[#0A0A0A]/60">
                     <tr>
-                      <th className="px-4 py-3 text-[10px] font-bold tracking-widest uppercase text-zinc-500 border-b border-zinc-800">Rank</th>
-                      <th className="px-4 py-3 text-[10px] font-bold tracking-widest uppercase text-zinc-500 border-b border-zinc-800">Store</th>
-                      <th className="px-4 py-3 text-[10px] font-bold tracking-widest uppercase text-zinc-500 border-b border-zinc-800">Units</th>
-                      <th className="px-4 py-3 text-[10px] font-bold tracking-widest uppercase text-zinc-500 border-b border-zinc-800">Store Share %</th>
-                      <th className="px-4 py-3 text-[10px] font-bold tracking-widest uppercase text-zinc-500 border-b border-zinc-800">Affinity Score</th>
-                      <th className="px-4 py-3 text-[10px] font-bold tracking-widest uppercase text-zinc-500 border-b border-zinc-800">Volume Tier</th>
+                      <th className="px-4 py-3 text-[10px] font-bold tracking-widest uppercase text-neutral-400 border-b border-white/5">Rank</th>
+                      <th className="px-4 py-3 text-[10px] font-bold tracking-widest uppercase text-neutral-400 border-b border-white/5">Store</th>
+                      <th className="px-4 py-3 text-[10px] font-bold tracking-widest uppercase text-neutral-400 border-b border-white/5">Units</th>
+                      <th className="px-4 py-3 text-[10px] font-bold tracking-widest uppercase text-neutral-400 border-b border-white/5">Store Share %</th>
+                      <th className="px-4 py-3 text-[10px] font-bold tracking-widest uppercase text-neutral-400 border-b border-white/5">Affinity Score</th>
+                      <th className="px-4 py-3 text-[10px] font-bold tracking-widest uppercase text-neutral-400 border-b border-white/5">Volume Tier</th>
                     </tr>
                   </thead>
                   <tbody>
                     {(data.brand_leaderboard[selectedBrand] || []).map((entry, idx) => {
-                      let tier = { text: 'Low Volume', cls: 'text-zinc-500' };
+                      let tier = { text: 'Low Volume', cls: 'text-neutral-400' };
                       if (idx < 4) tier = { text: 'High Volume', cls: 'text-amber-400' };
                       else if (idx < 7) tier = { text: 'Mid Volume', cls: 'text-sky-400' };
 
                       return (
-                        <tr key={entry.store} className={`border-b border-zinc-800/30 hover:bg-zinc-800/50 transition-colors ${idx === 0 ? 'bg-amber-500/10' : idx % 2 === 0 ? 'bg-zinc-800/20' : ''}`}>
-                          <td className="px-4 py-3 font-mono font-bold text-zinc-300">{idx === 0 ? '🏆 ' : ''}{entry.rank}</td>
-                          <td className="px-4 py-3 font-bold text-zinc-200">{shortStoreName(entry.store)}</td>
-                          <td className="px-4 py-3 font-mono text-zinc-300">{entry.units}</td>
-                          <td className="px-4 py-3 font-mono text-zinc-400">{entry.share_pct}%</td>
-                          <td className="px-4 py-3 font-mono font-bold text-zinc-100">{entry.affinity_score.toFixed(1)}</td>
+                        <tr key={entry.store} className={`border-b border-white/5/30 hover:bg-white/5 transition-colors ${idx === 0 ? 'bg-amber-500/10' : idx % 2 === 0 ? 'bg-white/5' : ''}`}>
+                          <td className="px-4 py-3 font-mono font-bold text-neutral-300">{idx === 0 ? '🏆 ' : ''}{entry.rank}</td>
+                          <td className="px-4 py-3 font-bold text-neutral-200">{shortStoreName(entry.store)}</td>
+                          <td className="px-4 py-3 font-mono text-neutral-300">{entry.units}</td>
+                          <td className="px-4 py-3 font-mono text-neutral-400">{entry.share_pct}%</td>
+                          <td className="px-4 py-3 font-mono font-bold text-white">{entry.affinity_score.toFixed(1)}</td>
                           <td className={`px-4 py-3 text-xs font-bold ${tier.cls}`}>{tier.text}</td>
                         </tr>
                       );

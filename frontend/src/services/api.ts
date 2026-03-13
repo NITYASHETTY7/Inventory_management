@@ -73,4 +73,5 @@ export const api = {
     if (req?.model) p.set('model', req.model);
     return get(`/price-affinity${p.toString() ? `?${p.toString()}` : ''}`);
   },
+  getAsmData: (): Promise<any[]> => get('/asm'),
 };

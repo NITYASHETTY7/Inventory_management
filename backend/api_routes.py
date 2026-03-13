@@ -14,6 +14,21 @@ from model_affinity import compute_model_affinity
 from price_affinity import compute_price_affinity
 from festival_calendar import festival_calendar_dict
 from price_range_accuracy import get_accuracy_for_price_ranges
+from asm_service import get_asm_data
+from shuffle_service import (
+    recommend_asm_shuffle,
+    recommend_hub_shuffle,
+    detect_cross_asm_xmc,
+    get_branch_shuffle_summary,
+    compute_store_positions,
+    load_closing_stock as load_closing_stock_shuffle,
+    load_asm_mapping as load_asm_mapping_shuffle
+)
+from otb_service import (
+    build_otb_table, load_closing_stock, load_asm_mapping,
+    rank_stores_for_allocation, build_staggered_schedule
+)
+from data_processing import load_clean_data
 
 router = APIRouter()
 
@@ -181,3 +196,446 @@ def price_range_accuracy(branch: str = None, brand: str = None):
         return get_accuracy_for_price_ranges(branch=branch, brand=brand)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/asm")
+def asm_list():
+    try:
+        return get_asm_data()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+# ── Advanced Shuffle & OTB Endpoints ────────────────────────────────────────
+
+from datetime import date
+from shuffle_otb_service import build_full_asm_report
+from closing_stock_loader import get_available_stock_dates, get_model_list_for_asm
+
+class ShuffleRunRequest(BaseModel):
+    asm_name: str
+    brand: str
+    im_code: str
+    prediction_date: str
+    w1: float = 0.5
+    w2: float = 0.3
+    w3: float = 0.2
+    apply_brand_affinity: bool = True
+    apply_price_affinity: bool = True
+    apply_dow: bool = True
+    apply_festival: bool = True
+
+@router.get("/shuffle/asm-list")
+def api_shuffle_asm_list() -> list[dict]:
+    try:
+        asm_mapping_df = load_asm_mapping_shuffle()
+        if asm_mapping_df.empty:
+            return []
+            
+        asms = []
+        grouped = asm_mapping_df.groupby("asm_name")
+        for asm_name, group in grouped:
+            if str(asm_name).strip() in ["", "nan", "None"]:
+                continue
+            hub_name = str(group["hub_name"].iloc[0]) if "hub_name" in group.columns else ""
+            branches = group["branch"].dropna().unique().tolist()
+            asms.append({
+                "asm_name": str(asm_name),
+                "hub_name": hub_name,
+                "branches": branches
+            })
+        return asms
+    except Exception as e:
+        import logging
+        logging.getLogger(__name__).error(f"Error in /shuffle/asm-list: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/shuffle/stock-dates")
+def api_shuffle_stock_dates() -> dict:
+    try:
+        from main import DATA
+        sheets = DATA.get("closing_stock_sheets", {})
+        dates = get_available_stock_dates(sheets)
+        return {"dates": dates}
+    except Exception as e:
+        return {"dates": []}
+
+@router.get("/shuffle/models")
+def api_shuffle_models(asm_name: str, prediction_date: str) -> list[dict]:
+    try:
+        from main import DATA
+        sheets = DATA.get("closing_stock_sheets", {})
+        
+        # Get branches for this ASM
+        asm_mapping_df = load_asm_mapping_shuffle()
+        mask = asm_mapping_df["asm_name"].astype(str).str.strip().str.lower() == asm_name.lower()
+        branches = asm_mapping_df[mask]["branch"].tolist()
+        
+        dt = date.fromisoformat(prediction_date)
+        models = get_model_list_for_asm(sheets, branches, dt)
+        
+        for m in models:
+            m["display_label"] = f"{m['item_model']} — {m['brand']}"
+            
+        return models
+    except Exception as e:
+        import logging
+        logging.getLogger(__name__).error(f"Error in /shuffle/models: {e}")
+        return []
+
+@router.post("/shuffle/run")
+def api_shuffle_run(req: ShuffleRunRequest) -> dict:
+    try:
+        from main import DATA
+        sheets = DATA.get("closing_stock_sheets", {})
+        sales_df = load_clean_data()
+        asm_mapping_df = load_asm_mapping_shuffle()
+        
+        dt = date.fromisoformat(req.prediction_date)
+        
+        mask = asm_mapping_df["asm_name"].astype(str).str.strip().str.lower() == req.asm_name.lower()
+        branches = asm_mapping_df[mask]["branch"].tolist()
+        
+        item_model = "Unknown Model"
+        if req.im_code.strip().lower() != "all":
+            models = get_model_list_for_asm(sheets, branches, dt)
+            for m in models:
+                if m["im_code"] == req.im_code:
+                    item_model = m["item_model"]
+                    break
+                    
+            report = build_full_asm_report(
+                asm_name=req.asm_name,
+                brand=req.brand,
+                im_code=req.im_code,
+                item_model=item_model,
+                prediction_date=dt,
+                sales_df=sales_df,
+                closing_stock_sheets=sheets,
+                asm_mapping_df=asm_mapping_df,
+                distance_matrix={},
+                msp_weights={"w1": req.w1, "w2": req.w2, "w3": req.w3},
+                multiplier_flags={
+                    "apply_brand_affinity": req.apply_brand_affinity,
+                    "apply_price_affinity": req.apply_price_affinity,
+                    "apply_dow": req.apply_dow,
+                    "apply_festival": req.apply_festival
+                }
+            )
+            # Tag transfers with item_model for frontend display
+            for t in report["shuffle_result"]["transfers"]:
+                t["item_model"] = item_model
+            return report
+        else:
+            models = get_model_list_for_asm(sheets, branches, dt)
+            brand_models = [m for m in models if m["brand"].strip().lower() == req.brand.strip().lower()]
+            
+            from shuffle_otb_service import aggregate_reports
+            reports = []
+            for m in brand_models:
+                sub_report = build_full_asm_report(
+                    asm_name=req.asm_name,
+                    brand=req.brand,
+                    im_code=m["im_code"],
+                    item_model=m["item_model"],
+                    prediction_date=dt,
+                    sales_df=sales_df,
+                    closing_stock_sheets=sheets,
+                    asm_mapping_df=asm_mapping_df,
+                    distance_matrix={},
+                    msp_weights={"w1": req.w1, "w2": req.w2, "w3": req.w3},
+                    multiplier_flags={
+                        "apply_brand_affinity": req.apply_brand_affinity,
+                        "apply_price_affinity": req.apply_price_affinity,
+                        "apply_dow": req.apply_dow,
+                        "apply_festival": req.apply_festival
+                    }
+                )
+                for t in sub_report["shuffle_result"]["transfers"]:
+                    t["item_model"] = m["item_model"]
+                reports.append(sub_report)
+                
+            if not reports:
+                return {} # Fallback
+            return aggregate_reports(reports)
+            
+    except Exception as e:
+        import logging
+        logging.getLogger(__name__).error(f"Error in /shuffle/run: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/otb/run")
+def api_otb_run(req: ShuffleRunRequest) -> dict:
+    # Under the hood, it's the exact same engine
+    try:
+        res = api_shuffle_run(req)
+        return {
+            "asm_name": res["asm_name"],
+            "brand": res["brand"],
+            "im_code": res["im_code"],
+            "prediction_date": res["prediction_date"],
+            "closing_stock_date_used": res["closing_stock_date_used"],
+            "otb_table": res["shuffle_result"]["post_shuffle_positions"],
+            "otb_summary": res["otb_summary"],
+            "transfers": res["shuffle_result"]["transfers"]
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+# ── Old Shuffle Endpoints ───────────────────────────────────────────────────────
+
+class AsmShuffleRequest(BaseModel):
+    requesting_branch: str
+    im_code: str
+    brand: str
+    msp_predictions: dict
+
+class HubShuffleRequest(BaseModel):
+    im_code: str
+    brand: str
+    msp_predictions: dict
+
+class PositionsRequest(BaseModel):
+    branches: list[str]
+    im_code: str
+    brand: str
+    msp_predictions: dict
+
+@router.post("/shuffle/asm")
+def api_shuffle_asm(req: AsmShuffleRequest) -> dict:
+    try:
+        sales_df = load_clean_data()
+        closing_stock_df = load_closing_stock_shuffle()
+        asm_mapping_df = load_asm_mapping_shuffle()
+        return recommend_asm_shuffle(
+            requesting_branch=req.requesting_branch,
+            im_code=req.im_code,
+            brand=req.brand,
+            msp_predictions=req.msp_predictions,
+            closing_stock_df=closing_stock_df,
+            asm_mapping_df=asm_mapping_df,
+            sales_df=sales_df
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/shuffle/hub")
+def api_shuffle_hub(req: HubShuffleRequest) -> dict:
+    try:
+        sales_df = load_clean_data()
+        closing_stock_df = load_closing_stock_shuffle()
+        asm_mapping_df = load_asm_mapping_shuffle()
+        recommendations = recommend_hub_shuffle(
+            im_code=req.im_code,
+            brand=req.brand,
+            msp_predictions=req.msp_predictions,
+            closing_stock_df=closing_stock_df,
+            asm_mapping_df=asm_mapping_df,
+            sales_df=sales_df
+        )
+        return {
+            "recommendations": recommendations,
+            "total_transfers": len(recommendations)
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/shuffle/cross-asm-xmc")
+def api_cross_asm_xmc(lookback_days: int = 30) -> dict:
+    try:
+        sales_df = load_clean_data()
+        closing_stock_df = load_closing_stock_shuffle()
+        asm_mapping_df = load_asm_mapping_shuffle()
+        opportunities = detect_cross_asm_xmc(
+            sales_df=sales_df,
+            closing_stock_df=closing_stock_df,
+            asm_mapping_df=asm_mapping_df,
+            lookback_days=lookback_days
+        )
+        return {
+            "opportunities": opportunities,
+            "count": len(opportunities)
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/shuffle/branch-summary")
+def api_branch_shuffle_summary(branch: str, lookback_days: int = 30) -> dict:
+    try:
+        sales_df = load_clean_data()
+        closing_stock_df = load_closing_stock_shuffle()
+        asm_mapping_df = load_asm_mapping_shuffle()
+        return get_branch_shuffle_summary(
+            branch=branch,
+            sales_df=sales_df,
+            closing_stock_df=closing_stock_df,
+            asm_mapping_df=asm_mapping_df,
+            msp_predictions={}, # Note: to provide real msp_predictions, they should probably be fetched or computed
+            lookback_days=lookback_days
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/shuffle/asm-map")
+def api_shuffle_asm_map() -> dict:
+    try:
+        asm_mapping_df = load_asm_mapping_shuffle()
+        if asm_mapping_df.empty:
+            return {"asms": []}
+            
+        asms = []
+        grouped = asm_mapping_df.groupby("asm_name")
+        for asm_name, group in grouped:
+            hub_name = str(group["hub_name"].iloc[0]) if "hub_name" in group.columns else ""
+            branches = group["branch"].tolist()
+            asms.append({
+                "asm_name": str(asm_name),
+                "hub_name": hub_name,
+                "branches": branches
+            })
+        return {"asms": asms}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/shuffle/positions")
+def api_shuffle_positions(req: PositionsRequest) -> dict:
+    try:
+        sales_df = load_clean_data()
+        closing_stock_df = load_closing_stock_shuffle()
+        positions = compute_store_positions(
+            branches=req.branches,
+            im_code=req.im_code,
+            brand=req.brand,
+            msp_predictions=req.msp_predictions,
+            closing_stock_df=closing_stock_df,
+            sales_df=sales_df,
+            lookback_days=30
+        )
+        return {"positions": positions}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+# ── OTB Endpoints ──────────────────────────────────────────────────────────
+
+class OtbModelInput(BaseModel):
+    brand: str
+    im_code: str
+    item_model: str
+    msp_20d: float
+
+class OtbCalculateRequest(BaseModel):
+    branch: str
+    msp_by_model: list[OtbModelInput]
+
+class StaggerScheduleRequest(BaseModel):
+    total_units: int
+    total_budget_crore: float
+    stagger_days: int
+
+@router.post("/otb/calculate")
+def api_otb_calculate(req: OtbCalculateRequest) -> dict:
+    try:
+        closing_stock_df = load_closing_stock()
+        asm_df = load_asm_mapping()
+        
+        msp_by_model = [m.model_dump() for m in req.msp_by_model]
+        otb_table = build_otb_table(req.branch, msp_by_model, closing_stock_df, asm_df)
+        
+        summary = {
+            "total_models": len(otb_table),
+            "models_needing_po": sum(1 for r in otb_table if r["needs_purchase"]),
+            "total_raw_otb": sum(r["raw_otb"] for r in otb_table),
+            "total_shuffle_reduction": sum(r["shuffle_reduction"] for r in otb_table),
+            "total_effective_otb": sum(r["effective_otb"] for r in otb_table),
+        }
+        
+        return {
+            "branch": req.branch,
+            "otb_table": otb_table,
+            "summary": summary
+        }
+    except Exception as e:
+        import logging
+        logging.getLogger(__name__).error(f"OTB Calculate Error: {e}")
+        return {"branch": req.branch, "otb_table": [], "summary": {
+            "total_models": 0, "models_needing_po": 0, "total_raw_otb": 0, "total_shuffle_reduction": 0, "total_effective_otb": 0
+        }}
+
+@router.get("/otb/stock-snapshot")
+def api_otb_stock_snapshot(branch: str) -> dict:
+    try:
+        closing_stock_df = load_closing_stock()
+        if closing_stock_df.empty:
+            return {"branch": branch, "items": []}
+            
+        branch_mask = closing_stock_df["branch"].str.lower() == branch.lower()
+        branch_stock = closing_stock_df[branch_mask]
+        
+        items = []
+        for _, row in branch_stock.iterrows():
+            items.append({
+                "im_code": str(row.get("im_code", "")),
+                "brand": str(row.get("brand", "")),
+                "item_model": str(row.get("item_model", "")),
+                "quantity": float(row.get("quantity", 0))
+            })
+            
+        return {"branch": branch, "items": items}
+    except Exception as e:
+        import logging
+        logging.getLogger(__name__).error(f"OTB Stock Snapshot Error: {e}")
+        return {"branch": branch, "items": []}
+
+@router.get("/otb/allocation-rank")
+def api_otb_allocation_rank(brand: str, model_name: str = "") -> dict:
+    try:
+        sales_df = load_clean_data()
+        closing_stock_df = load_closing_stock()
+        
+        # Candidate branches are all branches that have the brand/model in stock or sales
+        candidate_branches = set()
+        
+        # From sales
+        brand_sales_mask = (sales_df["Brand"].str.lower() == brand.lower())
+        sales_mask = brand_sales_mask
+        if model_name and "Model" in sales_df.columns:
+            sales_mask = brand_sales_mask & (sales_df["Model"].str.lower() == model_name.lower())
+        
+        if not sales_df[sales_mask].empty:
+            candidate_branches.update(sales_df[sales_mask]["Branch"].unique().tolist())
+            
+        # From stock
+        if not closing_stock_df.empty:
+            brand_stock_mask = (closing_stock_df["brand"].str.lower() == brand.lower())
+            stock_mask = brand_stock_mask
+            if model_name and "item_model" in closing_stock_df.columns:
+                stock_mask = brand_stock_mask & (closing_stock_df["item_model"].str.lower() == model_name.lower())
+            if not closing_stock_df[stock_mask].empty:
+                candidate_branches.update(closing_stock_df[stock_mask]["branch"].unique().tolist())
+
+        # Fallback to Brand level candidates if model has no history/stock
+        if not candidate_branches and model_name:
+            if not sales_df[brand_sales_mask].empty:
+                candidate_branches.update(sales_df[brand_sales_mask]["Branch"].unique().tolist())
+            if not closing_stock_df.empty and not closing_stock_df[brand_stock_mask].empty:
+                candidate_branches.update(closing_stock_df[brand_stock_mask]["branch"].unique().tolist())
+                
+                
+        ranked_stores = rank_stores_for_allocation(sales_df, model_name, brand, list(candidate_branches))
+        return {
+            "model_name": model_name,
+            "brand": brand,
+            "ranked_stores": ranked_stores
+        }
+    except Exception as e:
+        import logging
+        logging.getLogger(__name__).error(f"OTB Allocation Rank Error: {e}")
+        return {"model_name": model_name, "brand": brand, "ranked_stores": []}
+
+@router.post("/otb/stagger-schedule")
+def api_otb_stagger_schedule(req: StaggerScheduleRequest) -> dict:
+    try:
+        schedule = build_staggered_schedule(req.total_units, req.total_budget_crore, req.stagger_days)
+        return {"schedule": schedule}
+    except Exception as e:
+        import logging
+        logging.getLogger(__name__).error(f"OTB Stagger Schedule Error: {e}")
+        return {"schedule": []}

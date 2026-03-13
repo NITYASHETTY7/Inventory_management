@@ -1,0 +1,65 @@
+INFO:     Will watch for changes in these directories: ['/Users/archhcra/Desktop/Sangeetha/phone-dashboard-5-Mar/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [22076] using WatchFiles
+INFO:     Started server process [22142]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+[data] Loading: Sales_Combined.xlsx
+Columns before normalisation: Index(['Branch', 'I/M Code', 'Item/Model', 'Date', 'Sum of Qty', 'Brand'], dtype='object')
+Columns after normalisation: Index(['Branch', 'I/M Code', 'Item/Model', 'Date', 'Qty', 'Brand'], dtype='object')
+[data] 44,137 rows loaded (2025-09-20 – 2025-12-21)
+INFO:     127.0.0.1:58625 - "GET /api/branches HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58626 - "GET /api/brands HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58627 - "GET /api/models HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58625 - "OPTIONS /api/predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58628 - "GET /api/models HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58626 - "GET /api/festivals HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58630 - "GET /api/model-affinity HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58625 - "GET /api/branches HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58627 - "GET /api/brands HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58628 - "GET /api/models HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58627 - "OPTIONS /api/predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58626 - "GET /api/models HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58628 - "GET /api/festivals HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58629 - "GET /api/price-ranges HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58625 - "GET /api/model-affinity HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58630 - "GET /api/price-ranges HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58627 - "POST /api/predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58626 - "POST /api/predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58626 - "GET /api/brand-affinity HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58625 - "GET /api/brand-affinity HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58625 - "GET /api/branches HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58626 - "GET /api/brands HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58627 - "GET /api/models HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58628 - "GET /api/models HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58626 - "OPTIONS /api/curated-msp HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58630 - "GET /api/model-affinity HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58629 - "GET /api/price-ranges HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58625 - "GET /api/branches HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58628 - "GET /api/brands HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58627 - "GET /api/models HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58625 - "OPTIONS /api/curated-msp HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58629 - "GET /api/model-affinity HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58626 - "GET /api/models HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58630 - "GET /api/price-ranges HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58625 - "POST /api/curated-msp HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58628 - "POST /api/curated-msp HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58635 - "POST /api/curated-msp HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58635 - "GET /api/brand-affinity?branch=Tirupathur++-+1+-+%28Periyar+Nagar%29 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58636 - "GET /api/price-affinity?branch=Tirupathur++-+1+-+%28Periyar+Nagar%29 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58637 - "GET /api/model-affinity?branch=Tirupathur++-+1+-+%28Periyar+Nagar%29 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58635 - "POST /api/curated-msp HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58637 - "GET /api/price-affinity?branch=Tirupathur++-+1+-+%28Periyar+Nagar%29&brand=Vivo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58638 - "GET /api/model-affinity?branch=Tirupathur++-+1+-+%28Periyar+Nagar%29&brand=Vivo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58636 - "GET /api/price-ranges?brand=Vivo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58635 - "GET /api/models?brand=Vivo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58635 - "POST /api/curated-msp HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58637 - "GET /api/model-affinity?branch=Tirupathur++-+1+-+%28Periyar+Nagar%29&brand=Vivo&price_range=Under+%E2%82%B910k HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58635 - "GET /api/models?brand=Vivo&price_range=Under+%E2%82%B910k HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58636 - "GET /api/price-ranges?brand=Vivo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58635 - "POST /api/curated-msp HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58644 - "GET /api/model-affinity?branch=Tirupathur++-+1+-+%28Periyar+Nagar%29&brand=Vivo&price_range=%E2%82%B920k+%E2%80%93+%E2%82%B930k HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58643 - "GET /api/price-ranges?brand=Vivo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58642 - "GET /api/models?brand=Vivo&price_range=%E2%82%B920k+%E2%80%93+%E2%82%B930k HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58642 - "POST /api/curated-msp HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58642 - "POST /api/curated-msp HTTP/1.1" 200 OK

@@ -9,8 +9,8 @@ const PALETTE = ['#38bdf8','#34d399','#f59e0b','#a78bfa','#fb7185','#22d3ee',
 function Tip({ active, payload, label }: any) {
   if (!active || !payload?.length) return null;
   return (
-    <div className="px-3 py-2.5 rounded-lg bg-zinc-900/95 border border-zinc-700/60 shadow-xl text-xs max-w-xs">
-      <p className="text-zinc-400 mb-2 font-mono">{label}</p>
+    <div className="px-3 py-2.5 rounded-lg bg-black/80 backdrop-blur-xl border border-white/10 shadow-glass text-xs max-w-xs">
+      <p className="text-neutral-400 mb-2 font-mono">{label}</p>
       {[...payload].sort((a,b)=>b.value-a.value).map((p:any) => (
         <div key={p.dataKey} className="flex justify-between items-center gap-4">
           <span style={{color:p.color}} className="font-medium truncate max-w-[140px]">{p.name}</span>
@@ -72,15 +72,15 @@ export default function ModelComparisonChart({ models, futureDates, actualSales 
     return actualSales.filter(s => futureDates.includes(s.date)).reduce((a, b) => a + b.qty, 0);
   }, [actualSales, futureDates]);
 
-  if (!models.length) return <div className="flex items-center justify-center h-48 text-zinc-600 text-sm">Run a comparison</div>;
+  if (!models.length) return <div className="flex items-center justify-center h-48 text-neutral-500 text-sm">Run a comparison</div>;
 
   const actualHidden = hidden.has('actual_sales');
 
   return (
     <div className="flex flex-col gap-3 relative">
       {actualSales.length > 0 && (
-        <div className="absolute top-1 right-3 z-10 flex flex-col gap-1 text-[10px] font-mono bg-zinc-900/90 px-3 py-2 rounded-lg border border-zinc-800/80 shadow-md backdrop-blur-sm pointer-events-none">
-          <div className="text-zinc-500 font-bold border-b border-zinc-800 pb-1 mb-1 tracking-widest uppercase">Totals ({futureDates.length}d)</div>
+        <div className="absolute top-1 right-3 z-10 flex flex-col gap-1 text-[10px] font-mono bg-[#0A0A0A]/60 px-3 py-2 rounded-lg border border-white/10 shadow-md backdrop-blur-sm pointer-events-none">
+          <div className="text-neutral-400 font-bold border-b border-white/5 pb-1 mb-1 tracking-widest uppercase">Totals ({futureDates.length}d)</div>
           <div className="flex justify-between gap-4 text-sky-400">
             <span>Actual</span>
             <span className="font-bold text-sm">{actualTargetSum.toFixed(0)}</span>
@@ -94,15 +94,15 @@ export default function ModelComparisonChart({ models, futureDates, actualSales 
         </div>
       )}
       <div className="flex flex-wrap gap-1.5 items-center">
-        <button onClick={()=>setHidden(new Set())} className="text-xs px-2 py-0.5 rounded bg-zinc-700/50 text-zinc-400 hover:bg-zinc-600/60">All</button>
-        <button onClick={()=>setHidden(new Set(models.map(m=>m.name).concat('actual_sales')))} className="text-xs px-2 py-0.5 rounded bg-zinc-700/50 text-zinc-400 hover:bg-zinc-600/60">None</button>
-        <div className="w-px h-4 bg-zinc-700 mx-1"/>
+        <button onClick={()=>setHidden(new Set())} className="text-xs px-2 py-0.5 rounded bg-white/10 text-neutral-400 hover:bg-white/20">All</button>
+        <button onClick={()=>setHidden(new Set(models.map(m=>m.name).concat('actual_sales')))} className="text-xs px-2 py-0.5 rounded bg-white/10 text-neutral-400 hover:bg-white/20">None</button>
+        <div className="w-px h-4 bg-white/10 mx-1"/>
         
         {actualSales.length > 0 && (
           <button
             onClick={() => toggle('actual_sales')}
             className={`text-xs px-2.5 py-0.5 rounded-full border transition-all font-medium ${
-              !actualHidden ? 'bg-sky-500/20 border-sky-500/40 text-sky-400' : 'bg-zinc-900 opacity-40 text-zinc-500 border-zinc-700'
+              !actualHidden ? 'bg-sky-500/20 border-sky-500/40 text-sky-400' : 'bg-[#0A0A0A]/60 opacity-40 text-neutral-400 border-white/20'
             }`}
           >
             Actual Sales
@@ -114,14 +114,14 @@ export default function ModelComparisonChart({ models, futureDates, actualSales 
           const acc = correctnessMap[m.name];
           return (
             <button key={m.name} onClick={()=>toggle(m.name)} onDoubleClick={()=>isolate(m.name)}
-              className={`text-xs px-2.5 py-0.5 rounded-full border transition-all font-medium flex items-center gap-1.5 ${vis?'bg-zinc-800':'bg-zinc-900 opacity-40'}`}
+              className={`text-xs px-2.5 py-0.5 rounded-full border transition-all font-medium flex items-center gap-1.5 ${vis?'bg-white/5':'bg-[#0A0A0A]/60 opacity-40'}`}
               style={{color:vis?c:'#71717a', borderColor:vis?c+'60':undefined}}>
               <span>{m.label}</span>
               {acc && <span className="opacity-70 text-[10px] bg-black/20 px-1 rounded">{acc}</span>}
             </button>
           );
         })}
-        <span className="text-[10px] text-zinc-600 ml-1">dbl-click isolates</span>
+        <span className="text-[10px] text-neutral-500 ml-1">dbl-click isolates</span>
       </div>
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={chartData} margin={{top:10,right:20,left:-10,bottom:0}}>

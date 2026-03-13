@@ -60,11 +60,8 @@ def run_curated_msp_window(branch: str, brand: str, model: str, price_range: str
     df_actual = filter_actual_data(branch=branch, brand=brand, model=model, price_range=price_range)
     daily_actual, _ = build_daily_series(df_actual)
     
-    # Automatically detect earliest available sales date
-    if not daily.empty:
-        start_date = daily.index.min().date()
-    else:
-        start_date = date(2025, 9, 1)
+    # Always start from the beginning of the sales data for consistency
+    start_date = date(2025, 9, 1)
         
     end_date = date(2026, 2, 10)
     

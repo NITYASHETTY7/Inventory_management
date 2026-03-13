@@ -69,7 +69,7 @@ export default function PriceAffinity({ filters }: { filters: Filters }) {
           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
         </svg>
-        <span className="text-zinc-500 font-mono text-sm">Loading price affinity data…</span>
+        <span className="text-neutral-400 font-mono text-sm">Loading price affinity data…</span>
       </div>
     );
   }
@@ -107,8 +107,8 @@ export default function PriceAffinity({ filters }: { filters: Filters }) {
           <div className="flex items-center gap-3">
             <div className="w-1.5 h-8 rounded-full bg-emerald-400" />
             <div>
-              <h1 className="text-2xl font-black text-zinc-100">Price Affinity</h1>
-              <p className="text-xs text-zinc-500 font-mono mt-0.5">Store sales distribution across price bands</p>
+              <h1 className="text-2xl font-black text-white">Price Affinity</h1>
+              <p className="text-xs text-neutral-400 font-mono mt-0.5">Store sales distribution across price bands</p>
             </div>
           </div>
           <button
@@ -116,47 +116,47 @@ export default function PriceAffinity({ filters }: { filters: Filters }) {
             className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold border transition-all ${
               showInfo
                 ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-400'
-                : 'bg-zinc-800/60 border-zinc-700/40 text-zinc-400 hover:border-emerald-500/30 hover:text-emerald-400'
+                : 'bg-white/5 border-white/20 text-neutral-400 hover:border-emerald-500/30 hover:text-emerald-400'
             }`}
             title="How is this calculated?"
-          >ℹ</button>
+          >i</button>
         </div>
 
         {showInfo && (
-          <div className="p-4 border-l-2 border-emerald-400 bg-zinc-800/80 rounded-r-lg text-xs text-zinc-300 leading-relaxed shadow-lg">
+          <div className="p-4 border-l-2 border-emerald-400 bg-white/5 rounded-r-lg text-xs text-neutral-300 leading-relaxed shadow-lg">
             <p className="font-bold text-emerald-400 mb-2 uppercase tracking-widest text-[10px]">Price Affinity Metrics</p>
             <p className="mb-2">Shows the percentage of total sales of a store that fall into each price band.</p>
             <p>Calculated based on actual units sold in historical data.</p>
           </div>
         )}
 
-        <div className="flex gap-2 p-1 rounded-xl bg-zinc-900/50 border border-zinc-800/50 w-fit">
-          <button onClick={() => setActiveTab('heatmap')} className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTab==='heatmap'?'bg-zinc-800 text-zinc-100 border border-zinc-700':'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/40'}`}>
+        <div className="flex gap-2 p-1 rounded-xl bg-[#0A0A0A]/60 border border-white/10 w-fit">
+          <button onClick={() => setActiveTab('heatmap')} className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTab==='heatmap'?'bg-white/5 text-white border border-white/20':'text-neutral-400 hover:text-neutral-300 hover:bg-white/5'}`}>
             🔥 Affinity Heatmap
           </button>
-          <button onClick={() => setActiveTab('profile')} className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTab==='profile'?'bg-zinc-800 text-zinc-100 border border-zinc-700':'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/40'}`}>
+          <button onClick={() => setActiveTab('profile')} className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTab==='profile'?'bg-white/5 text-white border border-white/20':'text-neutral-400 hover:text-neutral-300 hover:bg-white/5'}`}>
             🏪 Store Profile
           </button>
-          <button onClick={() => setActiveTab('leaderboard')} className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTab==='leaderboard'?'bg-zinc-800 text-zinc-100 border border-zinc-700':'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/40'}`}>
+          <button onClick={() => setActiveTab('leaderboard')} className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTab==='leaderboard'?'bg-white/5 text-white border border-white/20':'text-neutral-400 hover:text-neutral-300 hover:bg-white/5'}`}>
             🏆 Price Band Leaderboard
           </button>
         </div>
 
         <div className="grid grid-cols-4 gap-4">
-          <div className="rounded-2xl bg-zinc-900/60 border border-zinc-800/60 p-5">
-            <p className="text-[10px] font-bold tracking-widest uppercase text-zinc-500">Total Stores</p>
-            <p className="text-2xl font-mono font-black mt-1 text-zinc-300">{data.stores.length}</p>
+          <div className="rounded-2xl bg-[#0A0A0A]/60 border border-white/10 p-5">
+            <p className="text-[10px] font-bold tracking-widest uppercase text-neutral-400">Total Stores</p>
+            <p className="text-2xl font-mono font-black mt-1 text-neutral-300">{data.stores.length}</p>
           </div>
-          <div className="rounded-2xl bg-zinc-900/60 border border-zinc-800/60 p-5">
-            <p className="text-[10px] font-bold tracking-widest uppercase text-zinc-500">Price Bands</p>
-            <p className="text-2xl font-mono font-black mt-1 text-zinc-300">{data.bands.length}</p>
+          <div className="rounded-2xl bg-[#0A0A0A]/60 border border-white/10 p-5">
+            <p className="text-[10px] font-bold tracking-widest uppercase text-neutral-400">Price Bands</p>
+            <p className="text-2xl font-mono font-black mt-1 text-neutral-300">{data.bands.length}</p>
           </div>
-          <div className="rounded-2xl bg-zinc-900/60 border border-zinc-800/60 p-5">
-            <p className="text-[10px] font-bold tracking-widest uppercase text-zinc-500">Top Band (Network)</p>
+          <div className="rounded-2xl bg-[#0A0A0A]/60 border border-white/10 p-5">
+            <p className="text-[10px] font-bold tracking-widest uppercase text-neutral-400">Top Band (Network)</p>
             <p className="text-xl font-mono font-black mt-1 text-emerald-400">{topBand}</p>
           </div>
-          <div className="rounded-2xl bg-zinc-900/60 border border-zinc-800/60 p-5">
-            <p className="text-[10px] font-bold tracking-widest uppercase text-zinc-500">Most Diverse Store</p>
+          <div className="rounded-2xl bg-[#0A0A0A]/60 border border-white/10 p-5">
+            <p className="text-[10px] font-bold tracking-widest uppercase text-neutral-400">Most Diverse Store</p>
             <p className="text-sm font-mono font-bold mt-1.5 text-sky-400 truncate" title={mostDiverseStore}>{shortStoreName(mostDiverseStore)}</p>
           </div>
         </div>
@@ -164,16 +164,16 @@ export default function PriceAffinity({ filters }: { filters: Filters }) {
 
       {/* SECTION B: AFFINITY HEATMAP */}
       {activeTab === 'heatmap' && (
-        <div className="rounded-2xl bg-zinc-900/60 border border-zinc-800/60 p-6 shadow-xl shadow-zinc-800/20 overflow-x-auto">
+        <div className="rounded-2xl bg-[#0A0A0A]/60 border border-white/10 p-6 shadow-xl shadow-zinc-800/20 overflow-x-auto">
           <table className="w-full border-collapse">
             <thead>
               <tr>
-                <th className="p-2 border-b border-zinc-800"></th>
+                <th className="p-2 border-b border-white/5"></th>
                 {data.bands.map((band:string) => (
-                  <th key={band} className="p-2 border-b border-zinc-800 h-32 align-bottom">
+                  <th key={band} className="p-2 border-b border-white/5 h-32 align-bottom">
                     <div className="flex flex-col items-center justify-end h-full gap-2">
-                      <span className="text-xs font-bold text-zinc-300 whitespace-nowrap" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>{band}</span>
-                      <span className="text-[9px] text-zinc-500 font-mono">{data.network_shares[band]}%</span>
+                      <span className="text-xs font-bold text-neutral-300 whitespace-nowrap" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>{band}</span>
+                      <span className="text-[9px] text-neutral-400 font-mono">{data.network_shares[band]}%</span>
                     </div>
                   </th>
                 ))}
@@ -181,22 +181,22 @@ export default function PriceAffinity({ filters }: { filters: Filters }) {
             </thead>
             <tbody>
               {data.stores.map((store:string, i:number) => {
-                let nameColor = 'text-zinc-500';
+                let nameColor = 'text-neutral-400';
                 if (i < 4) nameColor = 'text-emerald-400';
                 else if (i < 7) nameColor = 'text-sky-400';
 
                 return (
-                  <tr key={store} className="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors">
+                  <tr key={store} className="border-b border-white/5 hover:bg-white/[0.03] transition-colors">
                     <td className="p-3 whitespace-nowrap">
                       <div className="flex justify-between items-center gap-4">
                         <span className={`text-xs font-bold ${nameColor}`}>{shortStoreName(store)}</span>
-                        <span className="text-xs text-zinc-400 font-mono">{data.store_totals[store]}</span>
+                        <span className="text-xs text-neutral-400 font-mono">{data.store_totals[store]}</span>
                       </div>
                     </td>
                     {data.bands.map((band:string) => {
                       const cell = data.cells.find((c:any) => c.store === store && c.band === band);
                       if (!cell) {
-                        return <td key={band} className="p-1"><div className="w-full h-10 bg-zinc-900 rounded-lg flex items-center justify-center text-zinc-700 text-xs">—</div></td>;
+                        return <td key={band} className="p-1"><div className="w-full h-10 bg-[#0A0A0A]/60 rounded-lg flex items-center justify-center text-zinc-700 text-xs">—</div></td>;
                       }
                       const pct = cell.share_pct;
                       const bg = getHeatmapBg(pct);
@@ -216,7 +216,7 @@ export default function PriceAffinity({ filters }: { filters: Filters }) {
               })}
             </tbody>
           </table>
-          <div className="flex gap-4 mt-6 text-[10px] font-mono text-zinc-400 items-center justify-center">
+          <div className="flex gap-4 mt-6 text-[10px] font-mono text-neutral-400 items-center justify-center">
             <div className="flex items-center gap-1.5 ml-4"><span className="text-emerald-400">★</span> Store's dominant price band</div>
           </div>
         </div>
@@ -225,13 +225,13 @@ export default function PriceAffinity({ filters }: { filters: Filters }) {
       {/* SECTION C: STORE PROFILE */}
       {activeTab === 'profile' && (
         <div className="flex gap-6 h-[700px]">
-          <div className="w-80 shrink-0 flex flex-col rounded-2xl bg-zinc-900/60 border border-zinc-800/60 overflow-hidden shadow-xl shadow-zinc-800/20">
-            <div className="p-4 border-b border-zinc-800/60 bg-zinc-900">
-              <h2 className="text-xs font-bold tracking-widest uppercase text-zinc-500">Select Store</h2>
+          <div className="w-80 shrink-0 flex flex-col rounded-2xl bg-[#0A0A0A]/60 border border-white/10 overflow-hidden shadow-xl shadow-zinc-800/20">
+            <div className="p-4 border-b border-white/5/60 bg-[#0A0A0A]/60">
+              <h2 className="text-xs font-bold tracking-widest uppercase text-neutral-400">Select Store</h2>
             </div>
             <div className="flex-1 overflow-y-auto p-2 flex flex-col gap-1">
               {data.stores.map((store:string, i:number) => {
-                let nameColor = 'text-zinc-500';
+                let nameColor = 'text-neutral-400';
                 if (i < 4) nameColor = 'text-emerald-400';
                 else if (i < 7) nameColor = 'text-sky-400';
                 
@@ -241,15 +241,15 @@ export default function PriceAffinity({ filters }: { filters: Filters }) {
 
                 return (
                   <button key={store} onClick={() => setSelectedStore(store)}
-                    className={`flex flex-col gap-1.5 p-3 text-left rounded-xl transition-all border-l-2 ${isActive ? 'bg-zinc-800 border-emerald-400' : 'border-transparent hover:bg-zinc-800/40'}`}>
+                    className={`flex flex-col gap-1.5 p-3 text-left rounded-xl transition-all border-l-2 ${isActive ? 'bg-white/5 border-emerald-400' : 'border-transparent hover:bg-white/5'}`}>
                     <div className="flex justify-between items-start gap-2">
                       <span className={`text-xs font-bold truncate ${nameColor}`}>{shortStoreName(store)}</span>
-                      <span className="text-[10px] font-mono text-zinc-400">{data.store_totals[store]}</span>
+                      <span className="text-[10px] font-mono text-neutral-400">{data.store_totals[store]}</span>
                     </div>
                     {domBand && (
                       <div className="flex items-center gap-1.5">
                         <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: domColor }} />
-                        <span className="text-[9px] font-mono text-zinc-500 truncate" style={{ color: domColor }}>{domBand}</span>
+                        <span className="text-[9px] font-mono text-neutral-400 truncate" style={{ color: domColor }}>{domBand}</span>
                       </div>
                     )}
                   </button>
@@ -259,14 +259,14 @@ export default function PriceAffinity({ filters }: { filters: Filters }) {
           </div>
 
           <div className="flex-1 flex flex-col gap-5 overflow-y-auto">
-            <div className="rounded-2xl bg-zinc-900/60 border border-zinc-800/60 p-5 shadow-xl shadow-zinc-800/20">
-              <h2 className="text-lg font-bold text-zinc-100">{selectedStore}</h2>
-              <p className="text-xs text-zinc-400 font-mono mt-1">Total Units: {data.store_totals[selectedStore]}</p>
+            <div className="glass-card p-5">
+              <h2 className="text-lg font-bold text-white">{selectedStore}</h2>
+              <p className="text-xs text-neutral-400 font-mono mt-1">Total Units: {data.store_totals[selectedStore]}</p>
             </div>
 
             <div className="grid grid-cols-2 gap-5">
-              <div className="rounded-2xl bg-zinc-900/60 border border-zinc-800/60 p-5 shadow-xl shadow-zinc-800/20 flex flex-col">
-                <h3 className="text-xs font-bold tracking-widest uppercase text-zinc-500 mb-4">Units by Price Band</h3>
+              <div className="glass-card p-5 flex flex-col">
+                <h3 className="text-xs font-bold tracking-widest uppercase text-neutral-400 mb-4">Units by Price Band</h3>
                 <div className="flex-1 min-h-[280px]">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={data.store_profiles[selectedStore] || []} layout="vertical" margin={{top:0, right:40, left:20, bottom:0}}>
@@ -284,8 +284,8 @@ export default function PriceAffinity({ filters }: { filters: Filters }) {
                 </div>
               </div>
 
-              <div className="rounded-2xl bg-zinc-900/60 border border-zinc-800/60 p-5 shadow-xl shadow-zinc-800/20 flex flex-col items-center">
-                <h3 className="text-xs font-bold tracking-widest uppercase text-zinc-500 mb-2 w-full text-left">Price Mix</h3>
+              <div className="glass-card p-5 flex flex-col items-center">
+                <h3 className="text-xs font-bold tracking-widest uppercase text-neutral-400 mb-2 w-full text-left">Price Mix</h3>
                 <div className="w-full h-[260px] relative">
                   <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
@@ -298,29 +298,29 @@ export default function PriceAffinity({ filters }: { filters: Filters }) {
                     </PieChart>
                   </ResponsiveContainer>
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <span className="text-xs font-bold text-zinc-500 uppercase tracking-widest">Price<br/>Mix</span>
+                    <span className="text-xs font-bold text-neutral-400 uppercase tracking-widest">Price<br/>Mix</span>
                   </div>
                 </div>
               </div>
             </div>
             
-            <div className="rounded-2xl bg-zinc-900/60 border border-zinc-800/60 shadow-xl shadow-zinc-800/20 overflow-hidden">
+            <div className="rounded-2xl bg-[#0A0A0A]/60 border border-white/10 shadow-xl shadow-zinc-800/20 overflow-hidden">
               <table className="w-full text-left text-sm border-collapse">
-                <thead className="bg-zinc-900">
+                <thead className="bg-[#0A0A0A]/60">
                   <tr>
-                    <th className="px-4 py-3 text-[10px] font-bold tracking-widest uppercase text-zinc-500 border-b border-zinc-800">Price Band</th>
-                    <th className="px-4 py-3 text-[10px] font-bold tracking-widest uppercase text-zinc-500 border-b border-zinc-800">Units</th>
-                    <th className="px-4 py-3 text-[10px] font-bold tracking-widest uppercase text-zinc-500 border-b border-zinc-800">Share %</th>
-                    <th className="px-4 py-3 text-[10px] font-bold tracking-widest uppercase text-zinc-500 border-b border-zinc-800">Rank in Network</th>
+                    <th className="px-4 py-3 text-[10px] font-bold tracking-widest uppercase text-neutral-400 border-b border-white/5">Price Band</th>
+                    <th className="px-4 py-3 text-[10px] font-bold tracking-widest uppercase text-neutral-400 border-b border-white/5">Units</th>
+                    <th className="px-4 py-3 text-[10px] font-bold tracking-widest uppercase text-neutral-400 border-b border-white/5">Share %</th>
+                    <th className="px-4 py-3 text-[10px] font-bold tracking-widest uppercase text-neutral-400 border-b border-white/5">Rank in Network</th>
                   </tr>
                 </thead>
                 <tbody>
                   {(data.store_profiles[selectedStore] || []).map((p:any) => (
-                    <tr key={p.band} className={`border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors ${p.dominant ? 'bg-emerald-500/5' : ''}`}>
-                      <td className="px-4 py-3 font-bold text-zinc-200" style={{color: getBandColor(p.band)}}>{p.band}</td>
-                      <td className="px-4 py-3 font-mono text-zinc-300">{p.units}</td>
-                      <td className="px-4 py-3 font-mono text-zinc-400">{p.share_pct}%</td>
-                      <td className="px-4 py-3 font-mono text-zinc-500">#{p.rank}</td>
+                    <tr key={p.band} className={`border-b border-white/5 hover:bg-white/[0.03] transition-colors ${p.dominant ? 'bg-emerald-500/5' : ''}`}>
+                      <td className="px-4 py-3 font-bold text-neutral-200" style={{color: getBandColor(p.band)}}>{p.band}</td>
+                      <td className="px-4 py-3 font-mono text-neutral-300">{p.units}</td>
+                      <td className="px-4 py-3 font-mono text-neutral-400">{p.share_pct}%</td>
+                      <td className="px-4 py-3 font-mono text-neutral-400">#{p.rank}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -338,7 +338,7 @@ export default function PriceAffinity({ filters }: { filters: Filters }) {
               const isActive = band === selectedBand;
               return (
                 <button key={band} onClick={() => setSelectedBand(band)}
-                  className={`px-4 py-2 rounded-xl border flex flex-col items-center transition-all ${isActive ? 'bg-zinc-800 text-zinc-100 border-zinc-600 shadow-md' : 'bg-zinc-900/50 text-zinc-500 border-zinc-800/50 hover:bg-zinc-800/50 hover:text-zinc-300'}`}>
+                  className={`px-4 py-2 rounded-xl border flex flex-col items-center transition-all ${isActive ? 'bg-white/5 text-white border-white/30 shadow-md' : 'bg-[#0A0A0A]/60 text-neutral-400 border-white/10 hover:bg-white/5 hover:text-neutral-300'}`}>
                   <span className="font-bold">{band}</span>
                   <span className="text-[10px] font-mono mt-0.5 opacity-70">{data.network_totals[band]} units</span>
                 </button>
@@ -347,17 +347,17 @@ export default function PriceAffinity({ filters }: { filters: Filters }) {
           </div>
 
           {selectedBand && (
-            <div className="rounded-2xl bg-zinc-900/60 border border-zinc-800/60 p-6 shadow-xl shadow-zinc-800/20 flex flex-col gap-6">
-              <div className="flex items-center gap-6 pb-4 border-b border-zinc-800/50">
+            <div className="rounded-2xl bg-[#0A0A0A]/60 border border-white/10 p-6 shadow-xl shadow-zinc-800/20 flex flex-col gap-6">
+              <div className="flex items-center gap-6 pb-4 border-b border-white/5/50">
                 <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl font-black shadow-lg" style={{ backgroundColor: getBandColor(selectedBand)+'20', color: getBandColor(selectedBand) }}>
                   ₹
                 </div>
                 <div>
-                  <h2 className="text-2xl font-black text-zinc-100 tracking-wide">{selectedBand}</h2>
-                  <div className="flex gap-4 mt-1 text-xs font-mono text-zinc-400">
-                    <span>Network Total: <b className="text-zinc-200">{data.network_totals[selectedBand]}</b></span>
-                    <span>Network Share: <b className="text-zinc-200">{data.network_shares[selectedBand]}%</b></span>
-                    <span>Sold across <b className="text-zinc-200">{data.band_leaderboard[selectedBand]?.length || 0}</b> stores</span>
+                  <h2 className="text-2xl font-black text-white tracking-wide">{selectedBand}</h2>
+                  <div className="flex gap-4 mt-1 text-xs font-mono text-neutral-400">
+                    <span>Network Total: <b className="text-neutral-200">{data.network_totals[selectedBand]}</b></span>
+                    <span>Network Share: <b className="text-neutral-200">{data.network_shares[selectedBand]}%</b></span>
+                    <span>Sold across <b className="text-neutral-200">{data.band_leaderboard[selectedBand]?.length || 0}</b> stores</span>
                   </div>
                 </div>
               </div>

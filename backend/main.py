@@ -42,8 +42,24 @@ app.add_middleware(
 app.include_router(router, prefix="/api")
 
 
+from closing_stock_loader import load_all_closing_stock_sheets
+
+DATA = {}
+
 @app.on_event("startup")
 def startup_event():
+    global DATA
+    # Load closing stock
+    closing_stock_path = os.path.join(os.path.dirname(__file__), 'data', 'CLOSING STOCK FINAL.xlsx')
+    if not os.path.exists(closing_stock_path):
+        closing_stock_path = os.path.join(os.path.dirname(__file__), 'CLOSING STOCK FINAL.xlsx')
+        
+    try:
+        DATA["closing_stock_sheets"] = load_all_closing_stock_sheets(closing_stock_path)
+    except Exception as e:
+        print(f"Failed to load closing stock sheets: {e}")
+        DATA["closing_stock_sheets"] = {}
+
     profiles_path = os.path.join(os.path.dirname(__file__), 'store_profiles.json')
     needs_build = False
     if not os.path.exists(profiles_path):
