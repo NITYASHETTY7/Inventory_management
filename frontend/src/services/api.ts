@@ -74,4 +74,5 @@ export const api = {
     return get(`/price-affinity${p.toString() ? `?${p.toString()}` : ''}`);
   },
   getAsmData: (): Promise<any[]> => get('/asm'),
+  getStoreCoordinates: (): Promise<Record<string, {lat: number, lng: number}>> => get('/store-coordinates'),
 };

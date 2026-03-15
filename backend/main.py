@@ -21,7 +21,7 @@ from api_routes import router
 # ---------------------------------------------------------------------------
 
 app = FastAPI(
-    title="Phone Retail Sales Prediction API",
+    title="Sangeetha Analytics API",
     description=(
         "Statistical demand-forecasting API for phone retail branches. "
         "Uses median baseline + day-of-week multipliers + festival scaling."

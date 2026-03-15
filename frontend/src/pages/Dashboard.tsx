@@ -19,15 +19,17 @@ import PriceAffinity        from './PriceAffinity';
 import OtbManagement        from './OtbManagement';
 import ShuffleEngine        from './ShuffleEngine';
 import AsmDashboard         from './AsmDashboard';
+import LookalikePage        from './LookalikePage';
+import ThemeToggle          from '../components/ThemeToggle';
 
 import { ShuffleRunResult } from '../types/shuffle_otb_types';
 
 import { 
-  LayoutDashboard, BarChart3, Target, Crosshair, 
+  Link, LayoutDashboard, BarChart3, Target, Crosshair, 
   HeartHandshake, Tags, Layers, RefreshCw, Box, 
   Search, Bell, Settings, User, ChevronLeft, ChevronRight, 
   Menu, ChevronDown, ChevronRight as ChevronRightIcon,
-  Activity, AlertCircle, CheckCircle2
+  Activity, AlertCircle, CheckCircle2, Filter
 } from 'lucide-react';
 
 // ── Shared UI pieces ──────────────────────────────────────────────────────────
@@ -106,7 +108,7 @@ const MODEL_LABELS: Record<string,string> = {
 
 // ── Dashboard Layout ─────────────────────────────────────────────────────────────────
 
-type TabId = 'prediction' | 'comparison' | 'accuracy' | 'curated_accuracy' | 'brand_affinity' | 'price_affinity' | 'otb_management' | 'shuffle_engine' | 'asm';
+type TabId = 'prediction' | 'comparison' | 'accuracy' | 'curated_accuracy' | 'brand_affinity' | 'price_affinity' | 'otb_management' | 'shuffle_engine' | 'asm' | 'lookalike';
 const DEFAULT: Filters = { branch:'', brand:'', model:'', priceRange:'', days:41, festivalMultiplier:1.0 };
 
 export default function Dashboard() {
@@ -123,6 +125,7 @@ export default function Dashboard() {
   const db = useRef<ReturnType<typeof setTimeout>|null>(null);
   
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [filtersOpen, setFiltersOpen] = useState(true);
   const [analyticsExpanded, setAnalyticsExpanded] = useState(true);
   const [affinityExpanded, setAffinityExpanded] = useState(false);
 
@@ -225,7 +228,7 @@ export default function Dashboard() {
             </div>
             {sidebarOpen && (
               <div className="flex flex-col">
-                <span className="font-bold text-white text-sm tracking-tight leading-tight">MSP Analytics</span>
+                <span className="font-bold text-white text-sm tracking-tight leading-tight">Sangeetha Analytics</span>
                 <span className="text-[10px] text-neutral-500 font-medium">Enterprise Edition</span>
               </div>
             )}
@@ -278,6 +281,7 @@ export default function Dashboard() {
           <NavItem icon={Layers} label="OTB Management" id="otb_management" isActive={activeTab === 'otb_management'} onClick={() => handleTabChange('otb_management')} />
           <NavItem icon={RefreshCw} label="Shuffle Engine" id="shuffle_engine" isActive={activeTab === 'shuffle_engine'} onClick={() => handleTabChange('shuffle_engine')} />
           <NavItem icon={Box} label="ASM Mapping" id="asm" isActive={activeTab === 'asm'} onClick={() => handleTabChange('asm')} />
+          <NavItem icon={Link} label="Lookalike" id="lookalike" isActive={activeTab === 'lookalike'} onClick={() => handleTabChange('lookalike')} />
         </div>
 
         <div className="p-4 border-t border-white/5 shrink-0">
@@ -288,7 +292,7 @@ export default function Dashboard() {
             {sidebarOpen && (
               <div className="flex flex-col items-start overflow-hidden text-left">
                 <span className="text-sm font-medium text-white truncate w-full">Administrator</span>
-                <span className="text-xs text-neutral-500 truncate w-full">admin@mspanalytics.com</span>
+                <span className="text-xs text-neutral-500 truncate w-full">admin@sangeethaanalytics.com</span>
               </div>
             )}
           </button>
@@ -335,6 +339,8 @@ export default function Dashboard() {
 
             <div className="h-6 w-px bg-white/10 mx-1 hidden md:block"></div>
 
+            <ThemeToggle />
+
             <button className="relative p-2 text-neutral-400 hover:text-white hover:bg-white/5 rounded-full transition-colors hidden md:block">
               <Bell size={18} />
               <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-blue-500 border-2 border-[#0A0A0A]"></span>
@@ -349,22 +355,36 @@ export default function Dashboard() {
         <div className="flex-1 overflow-y-auto">
           
           {/* Full bleed tabs (own scrolling inside components or full height) */}
-          {['accuracy', 'curated_accuracy', 'otb_management', 'shuffle_engine', 'asm'].includes(activeTab) && (
-            <div className="h-full">
-              {activeTab==='accuracy' && <MspAccuracy />}
-              {activeTab==='curated_accuracy' && <CuratedMspAccuracy />}
-              {activeTab==='otb_management' && <OtbManagement lastShuffleResult={lastShuffleResult} />}
-              {activeTab==='shuffle_engine' && <ShuffleEngine onShuffleComplete={(res) => setLastShuffleResult(res)} />}
-              {activeTab==='asm' && <AsmDashboard />}
+          <div className={`h-full ${['accuracy', 'curated_accuracy', 'otb_management', 'shuffle_engine', 'asm', 'lookalike'].includes(activeTab) ? 'block' : 'hidden'}`}>
+            <div className={`h-full ${activeTab === 'accuracy' ? 'block' : 'hidden'}`}>
+              <MspAccuracy />
             </div>
-          )}
+            <div className={`h-full ${activeTab === 'curated_accuracy' ? 'block' : 'hidden'}`}>
+              <CuratedMspAccuracy />
+            </div>
+            <div className={`h-full ${activeTab === 'otb_management' ? 'block' : 'hidden'}`}>
+              <OtbManagement lastShuffleResult={lastShuffleResult} />
+            </div>
+            <div className={`h-full ${activeTab === 'shuffle_engine' ? 'block' : 'hidden'}`}>
+              <ShuffleEngine onShuffleComplete={(res) => setLastShuffleResult(res)} />
+            </div>
+            <div className={`h-full ${activeTab === 'asm' ? 'block' : 'hidden'}`}>
+              <AsmDashboard />
+            </div>
+            <div className={`h-full ${activeTab === 'lookalike' ? 'block' : 'hidden'}`}>
+              <LookalikePage onOtbGenerated={(res) => setLastShuffleResult(res)} />
+            </div>
+          </div>
 
           {/* Grid Layout tabs (Prediction, Comparison, Affinity) */}
-          {['prediction', 'comparison', 'brand_affinity', 'price_affinity'].includes(activeTab) && (
-            <div className="flex h-full">
-              {/* Inner Sidebar for Filters */}
-              <aside className="w-[300px] shrink-0 border-r border-white/5 overflow-y-auto bg-black/20 backdrop-blur-md hidden xl:block z-10 custom-scrollbar">
-                <div className="p-5 flex flex-col gap-6">
+          <div className={`h-full relative ${['prediction', 'comparison', 'brand_affinity', 'price_affinity'].includes(activeTab) ? 'flex' : 'hidden'}`}>
+            {/* Inner Sidebar for Filters */}
+            {filtersOpen && (
+              <aside className="w-[300px] shrink-0 border-r border-white/5 overflow-y-auto bg-black/20 backdrop-blur-md hidden xl:block z-10 custom-scrollbar relative">
+                <button onClick={() => setFiltersOpen(false)} className="absolute top-4 right-4 p-1.5 text-neutral-400 hover:text-white bg-white/5 hover:bg-white/10 rounded-md transition-colors" title="Collapse Filters">
+                  <ChevronLeft size={16} />
+                </button>
+                <div className="p-5 flex flex-col gap-6 mt-6">
                   <FiltersPanel filters={filters} onChange={handleChange} />
                   <div className="h-px bg-white/5 w-full"></div>
                   <PredictionControls filters={filters} onChange={handleChange} modelStats={predResult?.model_stats??null} />
@@ -376,13 +396,20 @@ export default function Dashboard() {
                   )}
                 </div>
               </aside>
+            )}
 
-              <main className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 flex flex-col gap-6 custom-scrollbar relative">
-                
-                {/* PREDICTION TAB */}
-                {activeTab==='prediction' && (
-                  <div className="max-w-7xl mx-auto w-full flex flex-col gap-6 animate-in fade-in duration-500">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <main className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 flex flex-col gap-6 custom-scrollbar relative">
+              {!filtersOpen && (
+                <div className="hidden xl:flex mb-2">
+                  <button onClick={() => setFiltersOpen(true)} className="p-2 text-neutral-400 hover:text-white bg-white/5 hover:bg-white/10 rounded-md shadow-sm border border-white/10 transition-colors flex items-center gap-2" title="Expand Filters">
+                    <Filter size={16} /> <span className="text-xs font-medium">Filters</span>
+                  </button>
+                </div>
+              )}
+              
+              {/* PREDICTION TAB */}
+              <div className={`max-w-7xl mx-auto w-full flex-col gap-6 animate-in fade-in duration-500 ${activeTab === 'prediction' ? 'flex' : 'hidden'}`}>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                       <KpiCard label="Training Data"     value={predResult?.historical_sales.length.toLocaleString()??'—'} sub="Sep–Dec 2025" icon={Box} trend="neutral"/>
                       <KpiCard label="Avg Daily Sales"   value={avgHist>0?avgHist.toFixed(1):'—'} sub="Units per day" icon={Activity} trend="neutral"/>
                       <KpiCard label={`${filters.days}-Day Forecast`} value={totalPred>0?totalPred.toLocaleString():'—'} sub="Predicted total units" icon={Target} trend="up"/>
@@ -419,11 +446,9 @@ export default function Dashboard() {
                       </div>
                     </div>
                   </div>
-                )}
 
                 {/* COMPARISON TAB */}
-                {activeTab==='comparison' && (
-                  <div className="max-w-7xl mx-auto w-full flex flex-col gap-6 animate-in fade-in duration-500">
+                  <div className={`max-w-7xl mx-auto w-full flex-col gap-6 animate-in fade-in duration-500 ${activeTab === 'comparison' ? 'flex' : 'hidden'}`}>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                       <KpiCard label="Models Analyzed" value="12" sub="Statistical algorithms" icon={Layers} trend="neutral" />
                       <KpiCard label="Forecast Horizon" value={`${filters.days}d`} sub="Uniform projection period" icon={Target} trend="neutral" />
@@ -463,23 +488,17 @@ export default function Dashboard() {
                       </div>
                     </div>
                   </div>
-                )}
 
                 {/* AFFINITY TABS */}
-                {activeTab === 'brand_affinity' && (
-                  <div className="max-w-7xl mx-auto w-full animate-in fade-in duration-500">
+                  <div className={`max-w-7xl mx-auto w-full animate-in fade-in duration-500 ${activeTab === 'brand_affinity' ? 'block' : 'hidden'}`}>
                     <BrandAffinity filters={filters} />
                   </div>
-                )}
-                {activeTab === 'price_affinity' && (
-                  <div className="max-w-7xl mx-auto w-full animate-in fade-in duration-500">
+                  <div className={`max-w-7xl mx-auto w-full animate-in fade-in duration-500 ${activeTab === 'price_affinity' ? 'block' : 'hidden'}`}>
                     <PriceAffinity filters={filters} />
                   </div>
-                )}
 
               </main>
             </div>
-          )}
         </div>
       </div>
       

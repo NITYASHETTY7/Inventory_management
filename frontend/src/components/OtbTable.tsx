@@ -152,7 +152,7 @@ export const OtbTable: React.FC<OtbTableProps> = ({
                   </td>
                   <td className="px-4 py-3 text-right font-mono text-sky-400">
                     {row.shuffle_reduction > 0
-                      ? `−${row.shuffle_reduction.toLocaleString("en-IN")}`
+                      ? `${Math.round(Number(row.shuffle_reduction)).toLocaleString("en-IN")}`
                       : "—"}
                   </td>
                   <td
