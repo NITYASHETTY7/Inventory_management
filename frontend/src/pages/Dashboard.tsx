@@ -6,41 +6,26 @@ import DailyBarChart from '../components/DailyBarChart';
 import { FestivalCalendarPanel } from '../components/FestivalBadge';
 import FiltersPanel from '../components/FiltersPanel';
 import ModelComparisonChart from '../components/ModelComparisonChart';
-import ModelSpreadChart from '../components/ModelSpreadChart';
-import ModelSummaryTable from '../components/ModelSummaryTable';
-import ThemeToggle from '../components/ThemeToggle';
-import AsmDashboard from './AsmDashboard';
-import BrandAffinity from './BrandAffinity';
-import CuratedMspAccuracy from './CuratedMspAccuracy';
-import LookalikePage from './LookalikePage';
-import MspAccuracy from './MspAccuracy';
-import OtbManagement from './OtbManagement';
-import PriceAffinity from './PriceAffinity';
-import ShuffleEngine from './ShuffleEngine';
+import ModelSummaryTable    from '../components/ModelSummaryTable';
+import ModelSpreadChart     from '../components/ModelSpreadChart';
+import MspAccuracy          from './MspAccuracy';
+import CuratedMspAccuracy   from './CuratedMspAccuracy';
+import BrandAffinity        from './BrandAffinity';
+import PriceAffinity        from './PriceAffinity';
+import OtbManagement        from './OtbManagement';
+import ShuffleEngine        from './ShuffleEngine';
+import AsmDashboard         from './AsmDashboard';
+import LookalikePage        from './LookalikePage';
+import ThemeToggle          from '../components/ThemeToggle';
 
 import { ShuffleRunResult } from '../types/shuffle_otb_types';
 
-import {
-  Activity, AlertCircle,
-  BarChart3,
-  Bell,
-  Box,
-  CheckCircle2,
-  ChevronDown,
-  ChevronLeft,
-  ChevronRight as ChevronRightIcon,
-  Crosshair,
-  Filter,
-  HeartHandshake,
-  Layers,
-  LayoutDashboard,
-  Link,
-  Menu,
-  RefreshCw,
-  Settings,
-  Tags,
-  Target,
-  User
+import { 
+  Link, LayoutDashboard, BarChart3, Target, Crosshair, 
+  HeartHandshake, Tags, Layers, RefreshCw, Box, 
+  Search, Bell, Settings, User, ChevronLeft, ChevronRight, 
+  Menu, ChevronDown, ChevronRight as ChevronRightIcon,
+  Activity, AlertCircle, CheckCircle2, Filter
 } from 'lucide-react';
 
 // ── Shared UI pieces ──────────────────────────────────────────────────────────
