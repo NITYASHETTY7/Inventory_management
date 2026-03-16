@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { Package, RefreshCw, AlertCircle, TrendingUp, Search, List } from "lucide-react";
+import { AlertCircle, List, Package, RefreshCw, TrendingUp } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import CustomSelect from "../components/CustomSelect";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Legend, Cell, ResponsiveContainer } from "recharts";
 import { api } from "../services/api";
 import {
-  fetchAsmList,
-  fetchStockDates,
-  fetchModelsForAsm,
-  runOtb,
   fetchAllocationRank,
+  fetchAsmList,
+  fetchModelsForAsm,
+  fetchStockDates,
+  runOtb,
   RunShuffleParams
 } from "../services/shuffle_otb_api";
-import { AsmGroup, ModelOption, ShuffleRunResult, OtbRunResult, AllocationRankedStore } from "../types/shuffle_otb_types";
+import { AllocationRankedStore, AsmGroup, ModelOption, OtbRunResult, ShuffleRunResult } from "../types/shuffle_otb_types";
 
 interface OtbManagementProps {
   lastShuffleResult?: ShuffleRunResult | null;

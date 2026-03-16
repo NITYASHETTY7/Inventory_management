@@ -127,6 +127,149 @@ def list_festivals():
     """Returns the full Tamil Nadu festival calendar with tier info."""
     return festival_calendar_dict()
 
+@router.get("/geocoded-stores")
+def get_geocoded_stores():
+    import pandas as pd
+    path = os.path.join(os.path.dirname(__file__), 'data', 'geocoded_stores.csv')
+    if not os.path.exists(path):
+        path = os.path.join(os.path.dirname(__file__), 'geocoded_stores.csv')
+    df = pd.read_csv(path)
+    return df[['branch_name', 'latitude', 'longitude']].to_dict(orient='records')
+
+@router.get("/shuffling/asms")
+def shuffling_asms():
+    try:
+        asm_mapping_df = load_asm_mapping_shuffle()
+        return sorted(asm_mapping_df["asm_name"].dropna().unique().tolist())
+    except Exception as e:
+        raise HTTPException(500, str(e))
+
+@router.get("/shuffling/deficit-surplus")
+def shuffling_deficit_surplus(asm_name: str, week_date: str):
+    try:
+        from main import DATA
+        from closing_stock_loader import get_sheet_for_date
+        from datetime import datetime
+        sheets = DATA.get("closing_stock_sheets", {})
+        
+        # Parse date — format is DD.MM.YYYY from old dashboard
+        try:
+            dt = datetime.strptime(week_date, "%d.%m.%Y").date()
+        except:
+            dt = datetime.fromisoformat(week_date).date()
+
+        _, closing_df = get_sheet_for_date(sheets, dt) if hasattr(__import__('closing_stock_loader'), 'get_sheet_for_date') else (None, get_most_recent_sheet(sheets, dt)[1])
+        
+        asm_mapping_df = load_asm_mapping_shuffle()
+        sales_df = load_clean_data()
+        
+        # Get branches for this ASM
+        mask = asm_mapping_df["asm_name"].astype(str).str.strip().str.lower() == asm_name.strip().lower()
+        branches = asm_mapping_df[mask]["branch"].tolist()
+        
+        if not branches or closing_df is None or closing_df.empty:
+            return []
+
+        qty_col = "Qty." if "Qty." in sales_df.columns else "Qty"
+        im_code_col = "im_code" if "im_code" in sales_df.columns else "I/M Code"
+
+        results = []
+        # Get all models for these branches
+        branch_stock = closing_df[closing_df["branch"].isin(branches)]
+        
+        for _, row in branch_stock.iterrows():
+            branch = row["branch"]
+            im_code = str(row.get("im_code", ""))
+            brand = str(row.get("brand", ""))
+            itemmodel = str(row.get("item_model", ""))
+            qty = float(row.get("quantity", 0))
+            
+            # Compute MSP (20-day avg sales)
+            s_mask = (
+                (sales_df["Branch"].str.lower() == branch.lower()) &
+                (sales_df[im_code_col].astype(str).str.lower() == im_code.lower())
+            )
+            recent_sales = sales_df[s_mask]
+            if not recent_sales.empty:
+                avg_daily = float(recent_sales[qty_col].sum()) / 20
+            else:
+                avg_daily = 0.0
+            msp = round(avg_daily * 20, 3)
+            
+            position = qty - msp
+            deficit = max(0, -position)
+            surplus = max(0, position)
+            
+            results.append({
+                "branch": branch,
+                "itemmodel": itemmodel,
+                "im_code": im_code,
+                "brand": brand,
+                "qty": qty,
+                "msp": round(msp, 3),
+                "position": round(position, 3),
+                "deficit": round(deficit, 3),
+                "surplus": round(surplus, 3),
+            })
+        
+        return results
+    except Exception as e:
+        import logging
+        logging.getLogger(__name__).error(f"deficit-surplus error: {e}")
+        raise HTTPException(500, str(e))
+
+@router.get("/shuffling/classifications")
+def shuffling_classifications(week_date: str, asm_name: str = None):
+    try:
+        sales_df = load_clean_data()
+        im_code_col = "im_code" if "im_code" in sales_df.columns else "I/M Code"
+        qty_col = "Qty." if "Qty." in sales_df.columns else "Qty"
+        
+        if im_code_col not in sales_df.columns:
+            return []
+
+        # Aggregate total sales per model
+        model_sales = (
+            sales_df.groupby(im_code_col)[qty_col]
+            .sum()
+            .reset_index()
+            .rename(columns={im_code_col: "im_code", qty_col: "total_qty"})
+            .sort_values("total_qty", ascending=False)
+        )
+        
+        total = model_sales["total_qty"].sum()
+        if total == 0:
+            return []
+            
+        model_sales["cumulative_pct"] = model_sales["total_qty"].cumsum() / total * 100
+        
+        # Get brand map
+        brand_map = {}
+        try:
+            from pathlib import Path
+            import pandas as pd
+            bp = Path(__file__).parent / "data" / "Brand Item-Model MOP.xlsx"
+            if not bp.exists():
+                bp = Path(__file__).parent / "Brand Item-Model MOP.xlsx"
+            bdf = pd.read_excel(bp)
+            brand_map = dict(zip(bdf["Code"].astype(str).str.strip().str.lower(), bdf["Brand"].astype(str).str.strip()))
+        except:
+            pass
+
+        results = []
+        for _, row in model_sales.iterrows():
+            cls = "XMC" if row["cumulative_pct"] <= 80 else "YMC"
+            results.append({
+                "itemmodel": str(row["im_code"]),
+                "im_code": str(row["im_code"]),
+                "brand": brand_map.get(str(row["im_code"]).lower(), ""),
+                "total_qty": int(row["total_qty"]),
+                "classification": cls,
+            })
+        
+        return results
+    except Exception as e:
+        raise HTTPException(500, str(e))
 
 # ── Prediction endpoints ───────────────────────────────────────────────────
 

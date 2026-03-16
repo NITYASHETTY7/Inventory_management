@@ -1,15 +1,21 @@
 // pages/MspAccuracy.tsx
 // MSP Accuracy tab — three model cards, overlay chart, accuracy table, cross-check panel
 
-import { useCallback, useEffect, useRef, useState, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
-  ResponsiveContainer, ComposedChart, Line, XAxis, YAxis,
-  CartesianGrid, Tooltip, Legend, ReferenceLine,
+  CartesianGrid,
+  ComposedChart,
+  Legend,
+  Line,
+  ReferenceLine,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis, YAxis,
 } from 'recharts';
-import { api } from '../services/api';
-import type { Filters, MspAccuracyResponse, MspModelResult, CrossCheckEntry, FestivalEntry } from '../types';
+import { buildFestivalMap, FestivalCalendarPanel, FestivalPill, TIER_COLORS } from '../components/FestivalBadge';
 import FiltersPanel from '../components/FiltersPanel';
-import { buildFestivalMap, TIER_COLORS, FestivalPill, FestivalCalendarPanel } from '../components/FestivalBadge';
+import { api } from '../services/api';
+import type { FestivalEntry, Filters, MspAccuracyResponse, MspModelResult } from '../types';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Constants
@@ -590,7 +596,6 @@ export default function MspAccuracy({ isEmbedded, externalFilters, onExternalCha
     if (debounce.current) clearTimeout(debounce.current);
     debounce.current = setTimeout(() => fetch(next), 200);
   }
-
   useEffect(() => {
     fetch(filters);
     api.getFestivals().then(setFestivals).catch(() => {});

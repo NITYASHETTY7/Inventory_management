@@ -1,23 +1,202 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { RefreshCw, Package, Search, AlertCircle, Settings2, MapPin, CheckCircle, ArrowRight, Map as MapIcon } from "lucide-react";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Legend, Cell, ResponsiveContainer } from "recharts";
+import { AlertCircle, ArrowRight, MapPin, Package, RefreshCw, Settings2 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import CustomSelect from "../components/CustomSelect";
+import ShuffleMap from "../components/ShuffleMap";
 import { api } from "../services/api";
 import {
   fetchAsmList,
-  fetchStockDates,
   fetchModelsForAsm,
+  fetchStockDates,
   runShuffle,
   RunShuffleParams
 } from "../services/shuffle_otb_api";
 import { AsmGroup, ModelOption, ShuffleRunResult } from "../types/shuffle_otb_types";
-import ShuffleMap from "../components/ShuffleMap";
-import CustomSelect from "../components/CustomSelect";
 
 interface ShuffleEngineProps {
   onShuffleComplete?: (result: ShuffleRunResult) => void;
+  onSwitchToOtb?: () => void;
 }
 
-export default function ShuffleEngine({ onShuffleComplete }: ShuffleEngineProps) {
+// ─── Cross-ASM Tab ───────────────────────────────────────────────────────────
+function CrossAsmPanel({ selectedAsm, predictionDate, asmList }: {
+  selectedAsm: string; predictionDate: string; asmList: AsmGroup[];
+}) {
+  const [crossRecs, setCrossRecs] = useState<any[]>([]);
+  const [loading, setLoading]     = useState(false);
+  const [loaded, setLoaded]       = useState(false);
+  const [error, setError]         = useState<string | null>(null);
+
+  useEffect(() => { setLoaded(false); setCrossRecs([]); }, [selectedAsm, predictionDate]);
+
+  const fetchAll = async () => {
+  if (!selectedAsm) { setError('Please select an ASM first.'); return; }
+  setLoading(true); setError(null);
+  try {
+    const BASE = (import.meta as any).env?.VITE_API_URL ?? 'http://localhost:8000/api';
+    const weekParam = 'week_date=' + encodeURIComponent(predictionDate);
+    const otherAsms = asmList.map(a => a.asm_name).filter(a => a !== selectedAsm);
+
+    // Fetch MY ASM deficit-surplus
+    const myRaw = await fetch(
+      `${BASE}/shuffling/deficit-surplus?asm_name=${encodeURIComponent(selectedAsm)}&${weekParam}`
+    ).then(r => r.json()).catch(() => []);
+    const myData: any[] = Array.isArray(myRaw) ? myRaw : [];
+
+    // Fetch all other ASMs
+    const results = await Promise.all(
+      otherAsms.map(asm =>
+        Promise.all([
+          fetch(`${BASE}/shuffling/deficit-surplus?asm_name=${encodeURIComponent(asm)}&${weekParam}`).then(r => r.json()).catch(() => []),
+          fetch(`${BASE}/shuffling/classifications?asm_name=${encodeURIComponent(asm)}&${weekParam}`).then(r => r.json()).catch(() => []),
+        ]).then(([rows, classes]) => ({
+          asm,
+          rows: Array.isArray(rows) ? rows : [],
+          xmcModels: new Set((Array.isArray(classes) ? classes : []).filter((c: any) => c.classification === 'XMC').map((c: any) => c.im_code)),
+        }))
+      )
+    );
+
+    // Build surplus from MY ASM
+    const surplusRows = myData.filter((r: any) => (r.surplus ?? 0) > 0);
+
+    // Build deficit map from other ASMs
+    const deficitMap: Record<string, any[]> = {};
+    results.forEach(({ asm, rows, xmcModels }) => {
+      rows.filter((r: any) => (r.deficit ?? 0) > 0).forEach((r: any) => {
+        if (!deficitMap[r.im_code]) deficitMap[r.im_code] = [];
+        deficitMap[r.im_code].push({ ...r, asm_name: asm, xmc_models: xmcModels });
+      });
+    });
+
+    // Match surplus → deficit
+    const recs: any[] = [];
+    surplusRows.forEach((s: any) => {
+      const matches = deficitMap[s.im_code];
+      if (!matches?.length) return;
+      matches.forEach((d: any) => {
+        recs.push({
+          from_branch: s.branch, from_asm: selectedAsm,
+          to_branch: d.branch,   to_asm: d.asm_name,
+          itemmodel: s.itemmodel, brand: s.brand,
+          surplus_units: Math.ceil(s.surplus),
+          deficit_units: Math.ceil(d.deficit),
+          suggested_units: Math.min(Math.ceil(s.surplus), Math.ceil(d.deficit)),
+          xmc_opportunity: d.xmc_models?.has(s.im_code) ?? false,
+        });
+      });
+    });
+
+    recs.sort((a, b) => {
+      if (a.xmc_opportunity && !b.xmc_opportunity) return -1;
+      if (!a.xmc_opportunity && b.xmc_opportunity) return 1;
+      return b.suggested_units - a.suggested_units;
+    });
+
+    setCrossRecs(recs);
+    setLoaded(true);
+  } catch (e: any) {
+    setError('Failed to load cross-ASM data: ' + e.message);
+  } finally {
+    setLoading(false);
+  }
+};
+
+  const exportCsv = () => {
+    if (!crossRecs.length) return;
+    const keys = Object.keys(crossRecs[0]);
+    const csv = [keys.join(','), ...crossRecs.map(r => keys.map(k => r[k] ?? '').join(','))].join('\n');
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+    a.download = 'cross_asm_opportunities.csv'; a.click();
+  };
+
+  if (!loaded && !loading) return (
+    <div className="flex flex-col items-center justify-center py-20 gap-4">
+      <div className="text-4xl">🔀</div>
+      <p className="text-neutral-400 text-sm text-center max-w-md">
+        Detect models with surplus in one ASM that have high demand (XMC) in another ASM
+      </p>
+      {error && <p className="text-red-400 text-xs">{error}</p>}
+      <button onClick={fetchAll}
+        className="px-6 py-2.5 rounded-lg bg-purple-500/20 border border-purple-500/40 text-purple-400 font-bold text-sm hover:bg-purple-500/30 transition-colors">
+        🔍 Analyse Cross-ASM Opportunities
+      </button>
+    </div>
+  );
+
+  if (loading) return (
+    <div className="flex flex-col items-center justify-center py-20 gap-3">
+      <div className="w-8 h-8 border-2 border-white/10 border-t-purple-400 rounded-full animate-spin"/>
+      <p className="text-neutral-500 text-xs">Scanning all ASMs for cross-ASM opportunities...</p>
+    </div>
+  );
+
+  if (crossRecs.length === 0) return (
+    <div className="flex flex-col items-center justify-center py-20 gap-3">
+      <div className="text-4xl">✓</div>
+      <p className="text-neutral-400 text-sm">No cross-ASM opportunities found in the last 30 days</p>
+      <button onClick={() => { setLoaded(false); setCrossRecs([]); }}
+        className="text-xs px-4 py-1.5 rounded-lg border border-white/10 text-neutral-400 hover:bg-white/5">
+        ↺ Refresh
+      </button>
+    </div>
+  );
+
+  return (
+    <div className="flex flex-col gap-4">
+      {/* Summary bar */}
+      <div className="flex flex-wrap gap-3 items-center">
+        <span className="px-3 py-1.5 rounded-lg bg-purple-500/15 border border-purple-500/30 text-purple-400 text-xs font-bold">
+          🔀 {crossRecs.length} Cross-ASM Opportunities
+        </span>
+        <div className="ml-auto flex gap-2">
+          <button onClick={() => { setLoaded(false); setCrossRecs([]); }}
+            className="text-xs px-3 py-1.5 rounded-lg border border-white/10 text-neutral-400 hover:bg-white/5 transition-colors">
+            ↺ Refresh
+          </button>
+          <button onClick={exportCsv}
+            className="text-xs px-3 py-1.5 rounded-lg border border-amber-500/30 text-amber-400 bg-amber-500/10 hover:bg-amber-500/20 font-bold transition-colors">
+            Export CSV ↓
+          </button>
+        </div>
+      </div>
+
+      {/* Fixed columns table */}
+      <div className="overflow-x-auto rounded-xl border border-white/10">
+        <table className="w-full text-sm border-collapse">
+          <thead className="bg-[#0A0A0A]/90 sticky top-0">
+            <tr>
+              {['From Branch','From ASM','To Branch','To ASM','Model','Brand','Surplus','Deficit','Move'].map(h => (
+                <th key={h} className="px-4 py-3 text-left text-[10px] font-bold tracking-widest uppercase text-neutral-500 border-b border-white/10 whitespace-nowrap">{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {crossRecs.map((r, i) => (
+              <tr key={i} className={`border-b border-white/5 hover:bg-white/[0.03] transition-colors ${r.xmc_opportunity ? 'bg-purple-500/[0.04]' : ''}`}>
+                <td className="px-4 py-3 text-xs text-neutral-200">{r.from_branch}</td>
+                <td className="px-4 py-3 text-xs text-amber-400 font-bold">{r.from_asm}</td>
+                <td className="px-4 py-3 text-xs text-neutral-200">{r.to_branch}</td>
+                <td className="px-4 py-3 text-xs text-purple-400 font-bold">{r.to_asm}</td>
+                <td className="px-4 py-3 text-xs text-neutral-200 font-mono">{r.itemmodel}</td>
+                <td className="px-4 py-3 text-xs text-neutral-400">{r.brand}</td>
+                <td className="px-4 py-3 text-xs text-emerald-400 font-bold font-mono">{r.surplus_units}</td>
+                <td className="px-4 py-3 text-xs text-red-400 font-bold font-mono">{r.deficit_units}</td>
+                <td className="px-4 py-3 text-xs">
+                  <span className="text-sky-400 font-black font-mono text-sm">{r.suggested_units}</span>
+                  {r.xmc_opportunity && <span className="ml-2 text-[9px] px-1.5 py-0.5 rounded-full bg-purple-500/20 text-purple-400 border border-purple-500/30 font-bold">XMC</span>}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+export default function ShuffleEngine({ onShuffleComplete, onSwitchToOtb }: ShuffleEngineProps) {
   // Global App State Options
   const [engineMode, setEngineMode] = useState<'asm'|'hub'>('asm');
   const [allBrands, setAllBrands] = useState<string[]>([]);
@@ -47,6 +226,7 @@ export default function ShuffleEngine({ onShuffleComplete }: ShuffleEngineProps)
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<ShuffleRunResult | null>(null);
+  const [shuffleTab, setShuffleTab] = useState<'shuffle' | 'positions'| 'crossasm'>('shuffle');
 
   // Load initial filter data
   useEffect(() => {
@@ -482,18 +662,91 @@ export default function ShuffleEngine({ onShuffleComplete }: ShuffleEngineProps)
         <div className="mt-8 animate-in fade-in slide-in-from-bottom-4">
           {renderResultHeader()}
           <div className="mb-6 border-b border-white/5 flex gap-1">
-            <button className="px-4 py-3 text-sm font-medium border-b-2 border-emerald-500 text-emerald-400">
-              Shuffle Plan
-            </button>
-            <div className="px-4 py-3 text-sm font-medium text-neutral-400 border-b-2 border-transparent">
-              OTB Results → Switch to OTB Tab
+  <button
+    onClick={() => setShuffleTab('shuffle')}
+    className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
+      shuffleTab === 'shuffle' ? 'border-emerald-500 text-emerald-400' : 'border-transparent text-neutral-400 hover:text-neutral-200'
+    }`}
+  >
+    Shuffle Plan
+  </button>
+  <button
+  onClick={() => onSwitchToOtb?.()}
+  className="px-4 py-3 text-sm font-medium border-b-2 border-transparent text-neutral-400 hover:text-amber-400 transition-colors"
+>
+  OTB Results → Switch to OTB Tab
+</button>
+  <button
+    onClick={() => setShuffleTab('positions')}
+    className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
+      shuffleTab === 'positions' ? 'border-emerald-500 text-emerald-400' : 'border-transparent text-neutral-400 hover:text-neutral-200'
+    }`}
+  >
+    Positions View
+  </button>
+  
+<button
+  onClick={() => setShuffleTab('crossasm')}
+  className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
+    shuffleTab === 'crossasm' ? 'border-purple-500 text-purple-400' : 'border-transparent text-neutral-400 hover:text-neutral-200'
+  }`}
+>
+  🔀 Cross-ASM
+</button>
+</div>
+
+{shuffleTab === 'shuffle' && renderShufflePlan()}
+{shuffleTab === 'shuffle' && renderPositionsGraph()}
+{shuffleTab === 'positions' && result && (
+  <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
+    {result.positions.map((p, i) => {
+      const borderColor = p.shortage > 0
+        ? 'border-red-500/30'
+        : p.excess > 0
+        ? 'border-emerald-500/30'
+        : 'border-white/10';
+      return (
+        <div key={i} className={`bg-transparent rounded p-3 border ${borderColor}`}>
+          <div className="text-xs font-medium mb-2 truncate text-neutral-300" title={p.branch}>{p.branch}</div>
+          <div className="grid grid-cols-2 gap-2 text-xs mb-2">
+            <div>
+              <div className="text-neutral-500 text-[10px] uppercase">Stock</div>
+              <div className="font-mono text-neutral-400">{Number(p.closing_stock).toFixed(1)}</div>
             </div>
-            <div className="px-4 py-3 text-sm font-medium text-neutral-400 border-b-2 border-transparent">
-              Positions View
+            <div>
+              <div className="text-neutral-500 text-[10px] uppercase">MSP</div>
+              <div className="font-mono text-neutral-400">{Number(p.msp_20d).toFixed(2)}</div>
             </div>
           </div>
-          {renderShufflePlan()}
-          {renderPositionsGraph()}
+          <div className="mt-1">
+            {p.excess > 0 ? (
+              <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-emerald-500/10 text-emerald-400">
+                +{p.excess.toLocaleString('en-IN')} Excess
+              </span>
+            ) : p.shortage > 0 ? (
+              <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-red-500/10 text-red-400">
+                -{p.shortage.toLocaleString('en-IN')} Short
+              </span>
+            ) : (
+              <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-white/5 text-neutral-400">
+                Balanced
+              </span>
+            )}
+          </div>
+        </div>
+      );
+    })}
+  </div>
+)}
+
+{shuffleTab === 'crossasm' && (
+  <CrossAsmPanel
+    selectedAsm={selectedAsm}
+    predictionDate={predictionDate}
+    asmList={asmList}
+  />
+)}
+  
         </div>
       )}
         </>
