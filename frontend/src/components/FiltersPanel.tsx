@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { api } from '../services/api';
 import type { Filters } from '../types';
 import { Filter, ChevronDown, Calendar, Store, Tag, Box, IndianRupee } from 'lucide-react';
+import CustomSelect from './CustomSelect';
 
 interface Props {
   filters:  Filters;
@@ -247,7 +248,7 @@ export default function FiltersPanel({ filters, onChange, hideDays }: Props) {
       </div>
 
       <div className="flex flex-col gap-4">
-        <Select label="Branch" value={filters.branch} options={branches} icon={Store}
+        <CustomSelect label="Branch" value={filters.branch} options={branches} icon={Store}
           onChange={v => onChange({ branch: v })} placeholder="All Branches"
           formatLabel={o => STORE_TIERS[o] ? `[${STORE_TIERS[o]}] ${o}` : o}
           groupedOptions={[
@@ -255,17 +256,17 @@ export default function FiltersPanel({ filters, onChange, hideDays }: Props) {
             { groupName: "Other Branches", items: branches.filter(b => !STORE_TIERS[b]) }
           ]} />
           
-        <Select label="Brand" value={filters.brand} options={sortedBrands} icon={Tag}
+        <CustomSelect label="Brand" value={filters.brand} options={sortedBrands} icon={Tag}
           onChange={v => onChange({ brand: v, model: '', priceRange: '' })} placeholder="All Brands"
           formatLabel={getBrandShareLabel} />
           
         {priceRanges.length > 0 && (
-          <Select label="Price Range" value={filters.priceRange} options={priceRanges} icon={IndianRupee}
+          <CustomSelect label="Price Range" value={filters.priceRange} options={priceRanges} icon={IndianRupee}
               onChange={v => onChange({ priceRange: v, model: '' })} placeholder="All Prices"
               formatLabel={getPriceRangeLabel} />
         )}
         
-        <Select label="Device Model" value={filters.model} options={models} icon={Box}
+        <CustomSelect label="Device Model" value={filters.model} options={models} icon={Box}
           onChange={v => onChange({ model: v })} placeholder="All Models"
           groupedOptions={groupedModelsOptions}
           formatLabel={getModelLabel} />

@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap');
+@import 'leaflet/dist/leaflet.css';
 
 @tailwind base;
 @tailwind components;
@@ -11,6 +12,7 @@
 
   html {
     scroll-behavior: smooth;
+    background-color: #0A0A0A;
   }
 
   body {
@@ -84,12 +86,20 @@
   }
 }
 
+/* Light Theme Implementation */
 html.light-theme {
-  filter: invert(1) hue-rotate(180deg);
+  /* Invert all colors to make it light */
+  /* Hue-rotate 180 keeps colors (red stays red, blue stays blue) */
+  /* Contrast and brightness boost for legibility and crispness */
+  filter: invert(1) hue-rotate(180deg) brightness(1.05) contrast(1.15);
+  /* This dark blue-black will invert to a cool white/light blue-gray #F4F7FB */
+  background-color: #0B0804;
 }
 
-/* Revert images and some elements to normal if needed */
-html.light-theme img, 
-html.light-theme video {
+/* Revert images, charts, and maps to normal so they don't look weird */
+html.light-theme img,
+html.light-theme video,
+html.light-theme .recharts-surface,
+html.light-theme .leaflet-container {
   filter: invert(1) hue-rotate(180deg);
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { RefreshCw, Package, Search, AlertCircle, Settings2, MapPin, CheckCircle, ArrowRight } from "lucide-react";
+import { RefreshCw, Package, Search, AlertCircle, Settings2, MapPin, CheckCircle, ArrowRight, Map as MapIcon } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Legend, Cell, ResponsiveContainer } from "recharts";
 import { api } from "../services/api";
 import {
@@ -10,6 +10,8 @@ import {
   RunShuffleParams
 } from "../services/shuffle_otb_api";
 import { AsmGroup, ModelOption, ShuffleRunResult } from "../types/shuffle_otb_types";
+import ShuffleMap from "../components/ShuffleMap";
+import CustomSelect from "../components/CustomSelect";
 
 interface ShuffleEngineProps {
   onShuffleComplete?: (result: ShuffleRunResult) => void;
@@ -17,6 +19,7 @@ interface ShuffleEngineProps {
 
 export default function ShuffleEngine({ onShuffleComplete }: ShuffleEngineProps) {
   // Global App State Options
+  const [engineMode, setEngineMode] = useState<'asm'|'hub'>('asm');
   const [allBrands, setAllBrands] = useState<string[]>([]);
   const [asmList, setAsmList] = useState<AsmGroup[]>([]);
   const [stockDates, setStockDates] = useState<string[]>([]);
@@ -35,10 +38,10 @@ export default function ShuffleEngine({ onShuffleComplete }: ShuffleEngineProps)
   const [w1, setW1] = useState(0.5);
   const [w2, setW2] = useState(0.3);
   const [w3, setW3] = useState(0.2);
-  const [applyBrandAffinity, setApplyBrandAffinity] = useState(true);
-  const [applyPriceAffinity, setApplyPriceAffinity] = useState(true);
-  const [applyDow, setApplyDow] = useState(true);
-  const [applyFestival, setApplyFestival] = useState(true);
+  const [applyBrandAffinity, setApplyBrandAffinity] = useState(false);
+  const [applyPriceAffinity, setApplyPriceAffinity] = useState(false);
+  const [applyDow, setApplyDow] = useState(false);
+  const [applyFestival, setApplyFestival] = useState(false);
 
   // Run State
   const [loading, setLoading] = useState(false);
@@ -126,77 +129,61 @@ export default function ShuffleEngine({ onShuffleComplete }: ShuffleEngineProps)
     }
   };
 
+
   const renderFilters = () => (
-    <div className="glass-panel p-5 mb-6">
+    <div className="glass-panel p-5 mb-6 relative z-50">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
         {/* ASM */}
-        <div>
-          <label className="block text-xs font-bold text-neutral-500 font-semibold tracking-wider uppercase tracking-wider mb-1">ASM</label>
-          <select
-            value={selectedAsm}
-            onChange={(e) => setSelectedAsm(e.target.value)}
-            className="w-full bg-transparent border border-white/10 text-neutral-200 text-sm rounded focus:ring-emerald-500 focus:border-emerald-500 p-2"
-          >
-            <option value="">Select ASM</option>
-            {asmList.map((a) => <option key={a.asm_name} value={a.asm_name}>{a.asm_name}</option>)}
-          </select>
-        </div>
+        <CustomSelect
+          label="ASM"
+          value={selectedAsm}
+          options={asmList.map(a => a.asm_name)}
+          onChange={setSelectedAsm}
+          placeholder="Select ASM"
+        />
 
         {/* Brand */}
-        <div>
-          <label className="block text-xs font-bold text-neutral-500 font-semibold tracking-wider uppercase tracking-wider mb-1">Brand Filter</label>
-          <select
-            value={selectedBrand}
-            onChange={(e) => {
-              setSelectedBrand(e.target.value);
-              setSelectedModelStr("");
-            }}
-            className="w-full bg-transparent border border-white/10 text-neutral-200 text-sm rounded focus:ring-emerald-500 focus:border-emerald-500 p-2"
-          >
-            <option value="">All Brands</option>
-            {allBrands.map((b) => <option key={b} value={b}>{b}</option>)}
-          </select>
-        </div>
+        <CustomSelect
+          label="Brand Filter"
+          value={selectedBrand}
+          options={allBrands}
+          onChange={(v) => { setSelectedBrand(v); setSelectedModelStr(""); }}
+          placeholder="All Brands"
+        />
 
         {/* Model */}
-        <div>
-          <label className="block text-xs font-bold text-neutral-500 font-semibold tracking-wider uppercase tracking-wider mb-1">Model</label>
-          <select
-            value={selectedModelStr}
-            onChange={(e) => setSelectedModelStr(e.target.value)}
-            className="w-full bg-transparent border border-white/10 text-neutral-200 text-sm rounded focus:ring-emerald-500 focus:border-emerald-500 p-2"
-            disabled={!selectedAsm || !predictionDate}
-          >
-            <option value="">{modelsForAsm.length > 0 ? "Select Model" : "Awaiting ASM..."}</option>
-            {selectedBrand && modelsForAsm.length > 0 && (
-              <option value={JSON.stringify({ im_code: "ALL", brand: selectedBrand, item_model: `All ${selectedBrand} Models`, display_label: `All ${selectedBrand} Models` })}>
-                All {selectedBrand} Models
-              </option>
-            )}
-            {visibleModels.map((m) => (
-              <option key={m.im_code} value={JSON.stringify(m)}>{m.display_label}</option>
-            ))}
-          </select>
-        </div>
+        <CustomSelect
+          label="Model"
+          value={selectedModelStr}
+          options={
+            selectedBrand && modelsForAsm.length > 0
+              ? [
+                  JSON.stringify({ im_code: "ALL", brand: selectedBrand, item_model: `All ${selectedBrand} Models`, display_label: `All ${selectedBrand} Models` }),
+                  ...visibleModels.map(m => JSON.stringify(m))
+                ]
+              : visibleModels.map(m => JSON.stringify(m))
+          }
+          onChange={setSelectedModelStr}
+          placeholder={modelsForAsm.length > 0 ? "Select Model" : "Awaiting ASM..."}
+          formatLabel={(val) => {
+            if (!val) return "Select Model";
+            try { return JSON.parse(val).display_label || JSON.parse(val).item_model; } catch { return val; }
+          }}
+        />
 
         {/* Prediction Date */}
-        <div>
-          <label className="block text-xs font-bold text-neutral-500 font-semibold tracking-wider uppercase tracking-wider mb-1">Prediction Date</label>
-          <select
-            value={predictionDate}
-            onChange={(e) => setPredictionDate(e.target.value)}
-            className="w-full bg-transparent border border-white/10 text-neutral-200 text-sm rounded focus:ring-emerald-500 focus:border-emerald-500 p-2"
-          >
-            <option value="">Select Date</option>
-            {stockDates.map((d) => {
-              const dObj = new Date(d);
-              return <option key={d} value={d}>{dObj.toLocaleDateString("en-IN", { day: 'numeric', month: 'short', year: 'numeric' })}</option>;
-            })}
-          </select>
-        </div>
+        <CustomSelect
+          label="Prediction Date"
+          value={predictionDate}
+          options={stockDates}
+          onChange={setPredictionDate}
+          placeholder="Select Date"
+          formatLabel={(d) => new Date(d).toLocaleDateString("en-IN", { day: 'numeric', month: 'short', year: 'numeric' })}
+        />
       </div>
 
       {activeAsmObj && (
+
         <div className="mb-4 flex flex-wrap gap-2 items-center">
           <span className="text-xs text-neutral-400">Branches in {selectedAsm}:</span>
           {activeAsmObj.branches.map(b => (
@@ -277,15 +264,41 @@ export default function ShuffleEngine({ onShuffleComplete }: ShuffleEngineProps)
     if (!result) return null;
     const dt = new Date(result.prediction_date).toLocaleDateString("en-IN", { day: 'numeric', month: 'short', year: 'numeric' });
     const stockDt = new Date(result.closing_stock_date_used).toLocaleDateString("en-IN", { day: 'numeric', month: 'short', year: 'numeric' });
+    
+    // Financial Metrics
+    const formatter = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 });
+    const moneySaved = result.otb_summary.money_saved_from_shuffle || 0;
+    const otbSaved = result.otb_summary.otb_value_saved || 0;
+    const totalUnits = result.shuffle_result.summary.total_units_moving || 0;
+    const totalRequests = result.shuffle_result.summary.total_transfers || 0;
+
     return (
-      <div className="bg-[#0A0A0A]/60 border border-white/10 rounded p-3 mb-6 flex flex-wrap justify-between items-center gap-4 text-sm">
-        <div className="flex gap-4">
-          <div><span className="text-neutral-400">ASM:</span> <span className="text-neutral-200 font-medium">{result.asm_name}</span></div>
-          <div><span className="text-neutral-400">Model:</span> <span className="text-neutral-200 font-medium">{result.item_model}</span></div>
-          <div><span className="text-neutral-400">Predicted from:</span> <span className="text-emerald-400 font-medium">{dt}</span></div>
+      <div className="mb-6 space-y-4">
+        <div className="bg-[#0A0A0A]/60 border border-white/10 rounded p-3 flex flex-wrap justify-between items-center gap-4 text-sm">
+          <div className="flex gap-4">
+            <div><span className="text-neutral-400">ASM:</span> <span className="text-neutral-200 font-medium">{result.asm_name}</span></div>
+            <div><span className="text-neutral-400">Model:</span> <span className="text-neutral-200 font-medium">{result.item_model}</span></div>
+            <div><span className="text-neutral-400">Predicted from:</span> <span className="text-emerald-400 font-medium">{dt}</span></div>
+          </div>
+          <div className="text-xs text-neutral-400">
+            Closing stock as of: <span className="text-neutral-400">{stockDt}</span> · 20-day MSP window
+          </div>
         </div>
-        <div className="text-xs text-neutral-400">
-          Closing stock as of: <span className="text-neutral-400">{stockDt}</span> · 20-day MSP window
+        
+        {/* Financial Impact Panel */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="bg-emerald-500/10 border border-emerald-500/20 rounded p-4 flex flex-col items-center justify-center text-center">
+            <span className="text-xs text-emerald-400 font-semibold uppercase tracking-wider mb-1">Total Units Shuffled</span>
+            <span className="text-2xl font-mono text-emerald-50">{totalUnits}</span>
+          </div>
+          <div className="bg-emerald-500/10 border border-emerald-500/20 rounded p-4 flex flex-col items-center justify-center text-center">
+            <span className="text-xs text-emerald-400 font-semibold uppercase tracking-wider mb-1">Transfer Requests</span>
+            <span className="text-2xl font-mono text-emerald-50">{totalRequests}</span>
+          </div>
+          <div className="bg-amber-500/10 border border-amber-500/20 rounded p-4 flex flex-col items-center justify-center text-center">
+            <span className="text-xs text-amber-400 font-semibold uppercase tracking-wider mb-1">Money Saved via Shuffle</span>
+            <span className="text-xl md:text-2xl font-mono text-amber-50">{formatter.format(moneySaved)}</span>
+          </div>
         </div>
       </div>
     );
@@ -314,19 +327,35 @@ export default function ShuffleEngine({ onShuffleComplete }: ShuffleEngineProps)
             }`}>
               <div className="font-medium text-neutral-200 mb-2 truncate" title={p.branch}>{p.branch}</div>
               <div className="flex justify-between text-xs text-neutral-400 font-mono mb-2">
-                <span>Stock: <span className="text-sky-300">{p.closing_stock}</span></span>
-                <span>MSP: <span className="text-emerald-300">{p.msp_20d}</span></span>
+                <span>Stock: <span className="text-sky-300">{Number(p.closing_stock).toFixed(1)}</span></span>
+                <span>MSP: <span className="text-emerald-300">{Number(p.msp_20d).toFixed(1)}</span></span>
               </div>
               <div className={`text-xs font-bold px-2 py-1 rounded bg-transparent inline-block mb-2 ${
                 p.shortage > 0 ? 'text-red-400' : p.excess > 0 ? 'text-emerald-400' : 'text-neutral-400'
               }`}>
-                Position: {p.position > 0 ? '+' : ''}{p.position}
+                Position: {p.position > 0 ? '+' : ''}{Number(p.position).toFixed(1)}
               </div>
               <div className="text-[10px] text-neutral-400 mt-1">
-                {p.shortage > 0 ? `Needs: ${p.shortage} units` : p.excess > 0 ? `Can donate: ${p.excess} units` : 'Balanced'}
+                {p.shortage > 0 ? `Needs: ${Number(p.shortage).toFixed(1)} units` : p.excess > 0 ? `Can donate: ${Number(p.excess).toFixed(1)} units` : 'Balanced'}
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="glass-panel p-6 mb-6">
+          <div className="flex items-center gap-2 mb-4">
+            <MapPin size={18} className="text-emerald-400" />
+            <h4 className="text-sm font-medium text-neutral-200">Geographic Shuffle Routing</h4>
+          </div>
+          <div className="h-[450px] w-full rounded-xl overflow-hidden border border-white/10 relative">
+            {shuffle_result.transfers.length > 0 ? (
+              <ShuffleMap transfers={shuffle_result.transfers} />
+            ) : (
+              <div className="absolute inset-0 flex items-center justify-center bg-black/40 text-neutral-500 italic text-sm z-10">
+                No transfers required on the map.
+              </div>
+            )}
+          </div>
         </div>
 
         <div className="bg-[#0A0A0A]/60 border border-white/10 rounded p-6">
@@ -342,8 +371,8 @@ export default function ShuffleEngine({ onShuffleComplete }: ShuffleEngineProps)
                   <div key={i} className="flex items-center gap-4 text-xs font-mono">
                     <div className="w-1/3 bg-emerald-500/10 border border-emerald-500/30 rounded p-2 text-emerald-400">
                       <div className="font-bold text-sm truncate">{t.from_branch}</div>
-                      <div>[{dPos?.closing_stock} stock | {dPos?.msp_20d} MSP]</div>
-                      <div className="mt-1 opacity-70">[+{dPos?.excess} excess]</div>
+                      <div>[{Number(dPos?.closing_stock || 0).toFixed(1)} stock | {Number(dPos?.msp_20d || 0).toFixed(1)} MSP]</div>
+                      <div className="mt-1 opacity-70">[+{Number(dPos?.excess || 0).toFixed(1)} excess]</div>
                     </div>
                     
                     <div className="w-1/3 flex flex-col items-center justify-center text-center">
@@ -362,8 +391,8 @@ export default function ShuffleEngine({ onShuffleComplete }: ShuffleEngineProps)
 
                     <div className="w-1/3 bg-red-500/10 border border-red-500/30 rounded p-2 text-red-400">
                       <div className="font-bold text-sm truncate">{t.to_branch}</div>
-                      <div>[{rPos?.closing_stock} stock | {rPos?.msp_20d} MSP]</div>
-                      <div className="mt-1 opacity-70">[−{rPos?.shortage} shortage]</div>
+                      <div>[{Number(rPos?.closing_stock || 0).toFixed(1)} stock | {Number(rPos?.msp_20d || 0).toFixed(1)} MSP]</div>
+                      <div className="mt-1 opacity-70">[−{Number(rPos?.shortage || 0).toFixed(1)} shortage]</div>
                     </div>
                   </div>
                 );
@@ -381,8 +410,8 @@ export default function ShuffleEngine({ onShuffleComplete }: ShuffleEngineProps)
 
     const chartData = positions.map(p => ({
       name: p.branch.substring(0, 15) + (p.branch.length > 15 ? '...' : ''),
-      stock: p.closing_stock,
-      msp: p.msp_20d,
+      stock: Number(p.closing_stock.toFixed(1)),
+      msp: Number(p.msp_20d.toFixed(1)),
     }));
 
     return (
@@ -405,20 +434,49 @@ export default function ShuffleEngine({ onShuffleComplete }: ShuffleEngineProps)
 
   return (
     <div className="p-6 bg-transparent min-h-screen text-neutral-200">
+
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-white flex items-center gap-3">
           <RefreshCw className="text-emerald-500" /> Advanced Shuffle Engine
         </h1>
-        <p className="text-neutral-400 mt-1 text-sm">ASM-level dynamic rebalancing pipeline.</p>
+        <p className="text-neutral-400 mt-1 text-sm">Dynamic rebalancing pipeline.</p>
+        
+        <div className="flex gap-2 mt-6 border-b border-white/10 pb-2">
+          <button 
+            onClick={() => setEngineMode('asm')}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${engineMode === 'asm' ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'text-neutral-400 hover:bg-white/5'}`}
+          >
+            ASM-Level Shuffle
+          </button>
+          <button 
+            onClick={() => setEngineMode('hub')}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${engineMode === 'hub' ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'text-neutral-400 hover:bg-white/5'}`}
+          >
+            Hub-Level Shuffle
+          </button>
+        </div>
       </div>
 
-      {error && (
-        <div className="bg-red-500/10 border border-red-500/50 text-red-400 px-4 py-3 rounded mb-6 flex items-center gap-3 text-sm">
-          <AlertCircle size={18} /> {error}
+      {engineMode === 'hub' && (
+        <div className="flex flex-col items-center justify-center py-20 px-4 glass-panel text-center">
+          <MapPin size={48} className="text-emerald-500/50 mb-4" />
+          <h2 className="text-xl font-bold text-white mb-2">Hub-Level Shuffle Engine</h2>
+          <p className="text-neutral-400 max-w-md mx-auto">
+            This module will compute broad inventory rebalancing between regional distribution hubs. Currently in development.
+          </p>
         </div>
       )}
 
-      {renderFilters()}
+      {engineMode === 'asm' && (
+        <>
+          {error && (
+            <div className="bg-red-500/10 border border-red-500/50 text-red-400 px-4 py-3 rounded mb-6 flex items-center gap-3 text-sm">
+              <AlertCircle size={18} /> {error}
+            </div>
+          )}
+
+          {renderFilters()}
+
 
       {result && (
         <div className="mt-8 animate-in fade-in slide-in-from-bottom-4">
@@ -437,6 +495,8 @@ export default function ShuffleEngine({ onShuffleComplete }: ShuffleEngineProps)
           {renderShufflePlan()}
           {renderPositionsGraph()}
         </div>
+      )}
+        </>
       )}
     </div>
   );

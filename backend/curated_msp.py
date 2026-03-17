@@ -109,7 +109,13 @@ def run_curated_msp_window(branch: str, brand: str, model: str, price_range: str
         else:
             fest_m = 1.0
             
-        final_pred = base_pred * affinity * price_affinity * dow_mult * fest_m
+        # Clamp multiplier ranges to avoid scaling errors
+        clamped_affinity = max(0.5, min(1.5, affinity))
+        clamped_price_affinity = max(0.5, min(1.5, price_affinity))
+        clamped_dow_mult = max(0.5, min(2.0, dow_mult))
+        clamped_fest_m = max(1.0, min(2.0, fest_m))
+            
+        final_pred = base_pred * clamped_affinity * clamped_price_affinity * clamped_dow_mult * clamped_fest_m
         
         if ts_d < pd.Timestamp(2026, 1, 1):
             actual_val = daily.get(ts_d, 0)
@@ -166,7 +172,12 @@ def run_curated_msp_window(branch: str, brand: str, model: str, price_range: str
         else:
             fest_m = 1.0
             
-        final_pred = base_pred * affinity * price_affinity * dow_mult * fest_m
+        clamped_affinity = max(0.5, min(1.5, affinity))
+        clamped_price_affinity = max(0.5, min(1.5, price_affinity))
+        clamped_dow_mult = max(0.5, min(2.0, dow_mult))
+        clamped_fest_m = max(1.0, min(2.0, fest_m))
+            
+        final_pred = base_pred * clamped_affinity * clamped_price_affinity * clamped_dow_mult * clamped_fest_m
         if math.isnan(final_pred): final_pred = 0
         
         # Feed prediction back into the series for future moving averages

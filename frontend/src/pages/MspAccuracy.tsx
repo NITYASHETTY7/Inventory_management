@@ -281,13 +281,13 @@ function OverlayChart({ data, filters, festivals }: { data: MspAccuracyResponse,
           );
         })}
       </div>
-    <ResponsiveContainer width="100%" height={260}>
-      <ComposedChart data={chartData} margin={{top:10,right:20,left:-10,bottom:0}}>
+    <ResponsiveContainer width="100%" height={320}>
+      <ComposedChart data={chartData} margin={{top:10,right:20,left:-10,bottom:20}}>
         <CartesianGrid strokeDasharray="3 3" stroke="#27272a" vertical={false}/>
         <XAxis dataKey="label" tick={{fill:'#71717a',fontSize:10}} axisLine={false} tickLine={false}/>
         <YAxis tick={{fill:'#71717a',fontSize:10}} axisLine={false} tickLine={false}/>
         <Tooltip content={<CustomTip/>}/>
-        <Legend wrapperStyle={{fontSize:'11px',paddingTop:'12px'}}
+        <Legend wrapperStyle={{fontSize:'11px',paddingTop:'20px', bottom:0}}
           formatter={(v)=><span className="text-neutral-300">{v}</span>}/>
         {visibleFestivals.map(f => {
           const c   = TIER_COLORS[f.tier as 1 | 2 | 3];
@@ -372,162 +372,6 @@ function AccuracyTable({ models }: { models: MspModelResult[] }) {
   );
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Manual Cross-Check Panel
-// ─────────────────────────────────────────────────────────────────────────────
-
-function CrossCheckPanel({ models }: { models: MspModelResult[] }) {
-  const [entries, setEntries] = useState<CrossCheckEntry[]>([]);
-  const [date,    setDate]    = useState('');
-  const [qty,     setQty]     = useState('');
-  const [error,   setError]   = useState('');
-
-  // Build lookup: modelName → date → predicted_qty
-  const lookup: Record<string, Record<string,number>> = {};
-  models.forEach(m => {
-    lookup[m.name] = {};
-    m.per_day.forEach(d => {
-      if (d.predicted_qty !== null) lookup[m.name][d.date] = d.predicted_qty;
-    });
-  });
-
-  function addEntry() {
-    if (!date || !qty) { setError('Enter both date and quantity.'); return; }
-    const n = parseFloat(qty);
-    if (isNaN(n) || n < 0) { setError('Quantity must be a non-negative number.'); return; }
-    setError('');
-
-    const preds: Record<string,number> = {};
-    models.forEach(m => { preds[m.name] = lookup[m.name]?.[date] ?? 0; });
-    setEntries(prev => {
-      const filtered = prev.filter(e => e.date !== date);
-      return [...filtered, { date, actualQty: n, predictions: preds }].sort((a,b)=>a.date.localeCompare(b.date));
-    });
-    setQty('');
-  }
-
-  function exportCsv() {
-    const headers = ['Date','Actual Qty', ...models.map(m=>m.label+' Pred'), ...models.map(m=>m.label+' Err%')];
-    const rows = entries.map(e => [
-      e.date, e.actualQty,
-      ...models.map(m => (e.predictions[m.name]??0).toFixed(2)),
-      ...models.map(m => {
-        const p = e.predictions[m.name]??0;
-        return e.actualQty > 0 ? (Math.abs(p-e.actualQty)/e.actualQty*100).toFixed(1)+'%' : 'N/A';
-      }),
-    ]);
-    const csv = [headers, ...rows].map(r=>r.join(',')).join('\n');
-    const blob = new Blob([csv], { type:'text/csv' });
-    const url  = URL.createObjectURL(blob);
-    const a    = document.createElement('a');
-    a.href = url; a.download = 'msp-cross-check.csv'; a.click();
-    URL.revokeObjectURL(url);
-  }
-
-  return (
-    <div className="glass-card p-5 flex flex-col gap-5">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2.5">
-          <div className="w-1.5 h-6 rounded-full bg-sky-400"/>
-          <div>
-            <h3 className="text-sm font-bold text-white">Manual Cross-Check</h3>
-            <p className="text-[10px] text-neutral-400 mt-0.5">Enter actual Jan 2026+ sales to compare against model predictions</p>
-          </div>
-        </div>
-        {entries.length > 0 && (
-          <div className="flex gap-2">
-            <button onClick={exportCsv}
-              className="text-xs px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/25 transition-colors font-medium">
-              Export CSV
-            </button>
-            <button onClick={()=>setEntries([])}
-              className="text-xs px-3 py-1.5 rounded-lg bg-white/5 border border-white/20 text-neutral-400 hover:bg-white/10 transition-colors">
-              Clear All
-            </button>
-          </div>
-        )}
-      </div>
-
-      {/* Input row */}
-      <div className="flex flex-wrap items-end gap-3">
-        <div className="flex flex-col gap-1.5">
-          <label className="text-[10px] font-bold tracking-widest uppercase text-amber-400/70">Date (Jan 2026+)</label>
-          <input type="date" value={date} min="2026-01-01"
-            onChange={e=>setDate(e.target.value)}
-            className="px-3 py-2 rounded-lg text-sm bg-white/5 border border-white/20 text-neutral-200 focus:outline-none focus:ring-2 focus:ring-amber-500/40 transition-all font-mono"/>
-        </div>
-        <div className="flex flex-col gap-1.5">
-          <label className="text-[10px] font-bold tracking-widest uppercase text-amber-400/70">Actual Qty Sold</label>
-          <input type="number" value={qty} min="0" step="1" placeholder="e.g. 5"
-            onChange={e=>setQty(e.target.value)}
-            onKeyDown={e=>e.key==='Enter'&&addEntry()}
-            className="px-3 py-2 rounded-lg text-sm bg-white/5 border border-white/20 text-neutral-200 focus:outline-none focus:ring-2 focus:ring-amber-500/40 transition-all font-mono w-36"/>
-        </div>
-        <button onClick={addEntry}
-          className="btn-primary">
-          Add Entry
-        </button>
-        {error && <p className="text-xs text-red-400">{error}</p>}
-      </div>
-
-      {/* Table */}
-      {entries.length > 0 ? (
-        <div className="overflow-auto rounded-lg">
-          <table className="w-full text-xs border-collapse">
-            <thead className="sticky top-0 bg-[#0A0A0A]/90 backdrop-blur-md z-10 border-b border-white/10">
-              <tr>
-                <th className="px-3 py-2.5 text-left text-[10px] font-bold tracking-widest uppercase text-neutral-400 border-b border-white/5">Date</th>
-                <th className="px-3 py-2.5 text-left text-[10px] font-bold tracking-widest uppercase text-neutral-400 border-b border-white/5">Actual</th>
-                {models.map(m=>(
-                  <th key={m.name+'_p'} className="px-3 py-2.5 text-left text-[10px] font-bold tracking-widest uppercase border-b border-white/5"
-                    style={{color:(MODEL_COLORS[m.name]??'#94a3b8')+'99'}}>{m.label} Pred</th>
-                ))}
-                {models.map(m=>(
-                  <th key={m.name+'_e'} className="px-3 py-2.5 text-left text-[10px] font-bold tracking-widest uppercase border-b border-white/5"
-                    style={{color:(MODEL_COLORS[m.name]??'#94a3b8')+'99'}}>{m.label} Err%</th>
-                ))}
-                <th className="px-3 py-2.5 border-b border-white/5"/>
-              </tr>
-            </thead>
-            <tbody>
-              {entries.map(e=>(
-                <tr key={e.date} className="border-b border-white/5 hover:bg-white/[0.03] transition-colors">
-                  <td className="px-3 py-2.5 font-mono text-neutral-300">
-                    {new Date(e.date).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})}
-                  </td>
-                  <td className="px-3 py-2.5 font-mono font-bold text-white">{e.actualQty}</td>
-                  {models.map(m=>(
-                    <td key={m.name+'_p'} className="px-3 py-2.5 font-mono" style={{color:MODEL_COLORS[m.name]??'#94a3b8'}}>
-                      {(e.predictions[m.name]??0).toFixed(1)}
-                    </td>
-                  ))}
-                  {models.map(m=>{
-                    const p = e.predictions[m.name]??0;
-                    const pct = e.actualQty > 0 ? Math.abs(p-e.actualQty)/e.actualQty*100 : null;
-                    return (
-                      <td key={m.name+'_e'} className={`px-3 py-2.5 font-mono font-bold ${pct!=null?errColor(pct):'text-neutral-500'}`}>
-                        {pct != null ? pct.toFixed(1)+'%' : '—'}
-                      </td>
-                    );
-                  })}
-                  <td className="px-3 py-2.5">
-                    <button onClick={()=>setEntries(p=>p.filter(x=>x.date!==e.date))}
-                      className="text-neutral-500 hover:text-red-400 transition-colors text-xs">X</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      ) : (
-        <div className="flex flex-col items-center justify-center py-10 gap-2 border border-dashed border-white/10 rounded-xl">
-          <span className="text-2xl opacity-30"></span>
-          <p className="text-xs text-neutral-500">Add entries above to compare actual vs predicted sales</p>
-        </div>
-      )}
-    </div>
-  );
-}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Single Day Predictor
@@ -741,7 +585,8 @@ export default function MspAccuracy({ isEmbedded, externalFilters, onExternalCha
 
   function handleChange(u: Partial<Filters>) {
     const next = { ...filters, ...u };
-    setFilters(next);
+    if (onExternalChange) onExternalChange(u);
+    else setLocalFilters(next);
     if (debounce.current) clearTimeout(debounce.current);
     debounce.current = setTimeout(() => fetch(next), 200);
   }
@@ -824,37 +669,41 @@ export default function MspAccuracy({ isEmbedded, externalFilters, onExternalCha
 
         {data && (
           <>
-            {/* KPI row */}
-            <div className="grid grid-cols-4 gap-4">
-              <div className="glass-card p-5">
-                <p className="text-[10px] font-bold tracking-widest uppercase text-neutral-400">Training Days</p>
-                <p className="text-2xl font-black font-mono text-white mt-1">{data.actual_sales.length}</p>
-                <p className="text-[10px] text-neutral-400">Sep–Dec 2025</p>
-              </div>
-              {data.models.map(m=>(
-                <div key={m.name} className="glass-card p-5">
-                  <p className="text-[10px] font-bold tracking-widest uppercase text-neutral-400">{m.label}</p>
-                  <p className="text-2xl font-black font-mono mt-1" style={{color:MODEL_COLORS[m.name]??'#94a3b8'}}>
-                    {(100 - m.error_metrics.mape).toFixed(1)}%
-                  </p>
-                  <p className="text-[10px] text-neutral-400">Correctness</p>
+            {/* KPI + Overlay Chart */}
+            <div className="grid grid-cols-1 xl:grid-cols-4 gap-5">
+              <div className="flex flex-col gap-4">
+                <div className="glass-card p-5">
+                  <p className="text-[10px] font-bold tracking-widest uppercase text-neutral-400">Total Training Days</p>
+                  <p className="text-2xl font-black font-mono text-white mt-1">{data.actual_sales.length}</p>
+                  <p className="text-[10px] text-neutral-400">Sep–Dec 2025</p>
                 </div>
-              ))}
+                {data.models.map(m=>(
+                  <div key={m.name} className="glass-card p-5">
+                    <p className="text-[10px] font-bold tracking-widest uppercase text-neutral-400">{m.label}</p>
+                    <p className="text-2xl font-black font-mono mt-1" style={{color:MODEL_COLORS[m.name]??'#94a3b8'}}>
+                      {(100 - m.error_metrics.mape).toFixed(1)}%
+                    </p>
+                    <p className="text-[10px] text-neutral-400">Correctness</p>
+                  </div>
+                ))}
+              </div>
+              <div className="xl:col-span-3 flex flex-col h-full">
+                <ChartCard
+                  title="All Models Overlay"
+                  subtitle={`Actual sales vs all three MSP model predictions · Last ${filters.days} days`}
+                  accent="indigo"
+                >
+                  <div className="flex-1 flex items-center justify-center min-h-[320px]">
+                    <OverlayChart data={data} filters={filters} festivals={festivals}/>
+                  </div>
+                </ChartCard>
+              </div>
             </div>
 
             {/* Three model cards */}
             <div className="grid grid-cols-3 gap-5">
               {data.models.map(m=><ModelCard key={m.name} model={m} festivals={festivals}/>)}
             </div>
-
-            {/* Overlay chart */}
-            <ChartCard
-              title="All Models Overlay"
-              subtitle={`Actual sales vs all three MSP model predictions · Last ${filters.days} days`}
-              accent="indigo"
-            >
-              <OverlayChart data={data} filters={filters} festivals={festivals}/>
-            </ChartCard>
 
             {/* Accuracy summary table */}
             <ChartCard
@@ -865,8 +714,7 @@ export default function MspAccuracy({ isEmbedded, externalFilters, onExternalCha
               <AccuracyTable models={data.models}/>
             </ChartCard>
 
-            {/* Cross-check panel */}
-            <CrossCheckPanel models={data.models}/>
+            
           </>
         )}
       </main>

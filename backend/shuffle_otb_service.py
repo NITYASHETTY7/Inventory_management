@@ -7,12 +7,49 @@ from closing_stock_loader import get_most_recent_sheet, get_closing_stock, get_a
 
 logger = logging.getLogger(__name__)
 
+from pathlib import Path
+
+def load_mop_prices():
+    mop_path = Path(__file__).parent / "Brand Item-Model MOP.xlsx"
+    if not mop_path.exists():
+        return {}
+    try:
+        df = pd.read_excel(mop_path)
+        mapping = {}
+        for _, row in df.iterrows():
+            br = str(row.get("Brand", "")).strip().lower()
+            code = str(row.get("Code", "")).strip().lower()
+            try:
+                price = float(row.get("MOP", 0.0))
+            except:
+                price = 0.0
+            mapping[(br, code)] = price
+        return mapping
+    except Exception as e:
+        logger.error(f"Error loading MOP prices: {e}")
+        return {}
+
+_mop_prices_cache = None
+def get_item_price(brand: str, im_code: str) -> float:
+    global _mop_prices_cache
+    if _mop_prices_cache is None:
+        _mop_prices_cache = load_mop_prices()
+    return _mop_prices_cache.get((brand.strip().lower(), im_code.strip().lower()), 0.0)
+
+def get_price_range_from_price(price: float):
+    from data_processing import PRICE_BINS
+    for min_v, max_v, label in PRICE_BINS:
+        if min_v <= price < max_v:
+            return label
+    return None
+
 BUFFER = 1  # minimum units a donor keeps after donating
 
 def safe(v): 
     return 0.0 if (v is None or math.isnan(v) or math.isinf(v)) else round(float(v), 3)
 
 def compute_msp_for_branches(
+    price_range: str,
     branches: list[str],
     brand: str,
     im_code: str,
@@ -22,10 +59,10 @@ def compute_msp_for_branches(
     w1: float = 0.5,
     w2: float = 0.3,
     w3: float = 0.2,
-    apply_brand_affinity: bool = True,
-    apply_price_affinity: bool = True,
-    apply_dow: bool = True,
-    apply_festival: bool = True,
+    apply_brand_affinity: bool = False,
+    apply_price_affinity: bool = False,
+    apply_dow: bool = False,
+    apply_festival: bool = False,
 ) -> dict[str, float]:
     
     msp_by_branch = {}
@@ -43,7 +80,7 @@ def compute_msp_for_branches(
                 branch=branch,
                 brand=brand,
                 model=model_str,
-                price_range=None,
+                price_range=price_range,
                 enable_dow=apply_dow,
                 enable_festival=apply_festival,
                 enable_price_affinity=apply_price_affinity,
@@ -163,6 +200,10 @@ def resolve_asm_shuffle(
                 continue
                 
             transfer = min(safe_excess, remaining_shortage)
+            
+            # Apply ceiling rounding to transfer quantities to ensure whole units
+            transfer = math.ceil(transfer)
+            
             if transfer > 0:
                 dist = 0.0
                 if distance_matrix and nb_name in distance_matrix:
@@ -259,7 +300,11 @@ def build_full_asm_report(
     used_date, _ = get_most_recent_sheet(closing_stock_sheets, prediction_date)
     closing_stock_date_used = used_date.isoformat()
     
+    item_price = get_item_price(brand, im_code)
+    computed_price_range = get_price_range_from_price(item_price)
+    
     msp_by_branch = compute_msp_for_branches(
+        price_range=computed_price_range,
         branches=branches_in_asm,
         brand=brand,
         im_code=im_code,
@@ -284,12 +329,23 @@ def build_full_asm_report(
         for p in shuffle_result["post_shuffle_positions"] if p["effective_otb"] > 0
     ]
     
+    total_units_moving = sum(t["quantity"] for t in shuffle_result["transfers"])
+    savings_from_shuffle = float(total_units_moving * item_price)
+    otb_savings = float(shuffle_result["summary"]["total_coverable_by_shuffle"] * item_price)
+
+    total_raw_otb_cost = float(shuffle_result["summary"]["total_shortage_before"] * item_price)
+    total_effective_otb_cost = float(shuffle_result["summary"]["total_effective_otb"] * item_price)
+
     otb_summary = {
         "total_raw_otb": shuffle_result["summary"]["total_shortage_before"],
         "total_shuffle_reduction": shuffle_result["summary"]["total_coverable_by_shuffle"],
         "total_effective_otb": shuffle_result["summary"]["total_effective_otb"],
         "branches_needing_po": branches_needing_po,
         "po_to_manufacturer": shuffle_result["summary"]["total_effective_otb"],
+        "money_saved_from_shuffle": savings_from_shuffle,
+        "otb_value_saved": otb_savings,
+        "total_raw_otb_cost": total_raw_otb_cost,
+        "total_effective_otb_cost": total_effective_otb_cost,
     }
     
     return {
@@ -331,7 +387,9 @@ def aggregate_reports(reports):
         },
         "otb_summary": {
             "total_raw_otb": 0, "total_shuffle_reduction": 0, "total_effective_otb": 0,
-            "branches_needing_po": [], "po_to_manufacturer": 0
+            "branches_needing_po": [], "po_to_manufacturer": 0,
+            "money_saved_from_shuffle": 0.0, "otb_value_saved": 0.0,
+            "total_raw_otb_cost": 0.0, "total_effective_otb_cost": 0.0
         }
     }
     
@@ -341,6 +399,11 @@ def aggregate_reports(reports):
     for r in reports:
         for b, v in r["msp_by_branch"].items(): agg["msp_by_branch"][b] += v
         for b, v in r["closing_stocks"].items(): agg["closing_stocks"][b] += v
+        
+        agg["otb_summary"]["money_saved_from_shuffle"] += r["otb_summary"].get("money_saved_from_shuffle", 0.0)
+        agg["otb_summary"]["otb_value_saved"] += r["otb_summary"].get("otb_value_saved", 0.0)
+        agg["otb_summary"]["total_raw_otb_cost"] += r["otb_summary"].get("total_raw_otb_cost", 0.0)
+        agg["otb_summary"]["total_effective_otb_cost"] += r["otb_summary"].get("total_effective_otb_cost", 0.0)
         
         for p in r["positions"]:
             b = p["branch"]

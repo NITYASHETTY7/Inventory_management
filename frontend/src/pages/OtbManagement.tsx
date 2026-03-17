@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Package, RefreshCw, AlertCircle, TrendingUp, Search, List } from "lucide-react";
+import CustomSelect from "../components/CustomSelect";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Legend, Cell, ResponsiveContainer } from "recharts";
 import { api } from "../services/api";
 import {
@@ -27,6 +28,11 @@ export default function OtbManagement({ lastShuffleResult }: OtbManagementProps)
   const [selectedModelStr, setSelectedModelStr] = useState<string>(""); 
   const [predictionDate, setPredictionDate] = useState<string>("");
   const [modelsForAsm, setModelsForAsm] = useState<ModelOption[]>([]);
+
+  const [applyBrandAffinity, setApplyBrandAffinity] = useState(false);
+  const [applyPriceAffinity, setApplyPriceAffinity] = useState(false);
+  const [applyDow, setApplyDow] = useState(false);
+  const [applyFestival, setApplyFestival] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -111,7 +117,7 @@ export default function OtbManagement({ lastShuffleResult }: OtbManagementProps)
     try {
       const params: RunShuffleParams = {
         asm_name: selectedAsm, brand: modelObj.brand, im_code: modelObj.im_code, prediction_date: predictionDate,
-        w1: 0.5, w2: 0.3, w3: 0.2, apply_brand_affinity: true, apply_price_affinity: true, apply_dow: true, apply_festival: true,
+        w1: 0.5, w2: 0.3, w3: 0.2, apply_brand_affinity: applyBrandAffinity, apply_price_affinity: applyPriceAffinity, apply_dow: applyDow, apply_festival: applyFestival,
       };
       const res = await runOtb(params);
       setOtbResult(res);
@@ -185,44 +191,80 @@ export default function OtbManagement({ lastShuffleResult }: OtbManagementProps)
 
     const visibleModels = selectedBrand ? modelsForAsm.filter(m => m.brand === selectedBrand) : modelsForAsm;
 
+
     return (
-      <div className="glass-panel p-5 mb-6">
+      <div className="glass-panel p-5 mb-6 relative z-50">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
-          <div>
-            <label className="block text-xs font-bold text-neutral-500 font-semibold tracking-wider uppercase mb-1">ASM</label>
-            <select value={selectedAsm} onChange={(e) => setSelectedAsm(e.target.value)} className="glass-input w-full">
-              <option value="">Select ASM</option>
-              {asmList.map(a => <option key={a.asm_name} value={a.asm_name}>{a.asm_name}</option>)}
-            </select>
-          </div>
-          <div>
-            <label className="block text-xs font-bold text-neutral-500 font-semibold tracking-wider uppercase mb-1">Brand Filter</label>
-            <select value={selectedBrand} onChange={(e) => setSelectedBrand(e.target.value)} className="glass-input w-full">
-              <option value="">All Brands</option>
-              {allBrands.map(b => <option key={b} value={b}>{b}</option>)}
-            </select>
-          </div>
-          <div>
-            <label className="block text-xs font-bold text-neutral-500 font-semibold tracking-wider uppercase mb-1">Model</label>
-            <select value={selectedModelStr} onChange={(e) => setSelectedModelStr(e.target.value)} disabled={!selectedAsm || !predictionDate} className="glass-input w-full">
-              <option value="">{modelsForAsm.length > 0 ? "Select Model" : "Awaiting ASM..."}</option>
-              {selectedBrand && modelsForAsm.length > 0 && (
-                <option value={JSON.stringify({ im_code: "ALL", brand: selectedBrand, item_model: `All ${selectedBrand} Models`, display_label: `All ${selectedBrand} Models` })}>
-                  All {selectedBrand} Models
-                </option>
-              )}
-              {visibleModels.map((m) => <option key={m.im_code} value={JSON.stringify(m)}>{m.display_label}</option>)}
-            </select>
-          </div>
-          <div>
-            <label className="block text-xs font-bold text-neutral-500 font-semibold tracking-wider uppercase mb-1">Prediction Date</label>
-            <select value={predictionDate} onChange={(e) => setPredictionDate(e.target.value)} className="glass-input w-full">
-              <option value="">Select Date</option>
-              {stockDates.map(d => <option key={d} value={d}>{new Date(d).toLocaleDateString("en-IN")}</option>)}
-            </select>
-          </div>
+          {/* ASM */}
+          <CustomSelect
+            label="ASM"
+            value={selectedAsm}
+            options={asmList.map(a => a.asm_name)}
+            onChange={setSelectedAsm}
+            placeholder="Select ASM"
+          />
+
+          {/* Brand */}
+          <CustomSelect
+            label="Brand Filter"
+            value={selectedBrand}
+            options={allBrands}
+            onChange={(v) => { setSelectedBrand(v); setSelectedModelStr(""); }}
+            placeholder="All Brands"
+          />
+
+          {/* Model */}
+          <CustomSelect
+            label="Model"
+            value={selectedModelStr}
+            options={
+              selectedBrand && modelsForAsm.length > 0
+                ? [
+                    JSON.stringify({ im_code: "ALL", brand: selectedBrand, item_model: `All ${selectedBrand} Models`, display_label: `All ${selectedBrand} Models` }),
+                    ...visibleModels.map(m => JSON.stringify(m))
+                  ]
+                : visibleModels.map(m => JSON.stringify(m))
+            }
+            onChange={setSelectedModelStr}
+            placeholder={modelsForAsm.length > 0 ? "Select Model" : "Awaiting ASM..."}
+            formatLabel={(val) => {
+              if (!val) return "Select Model";
+              try { return JSON.parse(val).display_label || JSON.parse(val).item_model; } catch { return val; }
+            }}
+          />
+
+          {/* Prediction Date */}
+          <CustomSelect
+            label="Prediction Date"
+            value={predictionDate}
+            options={stockDates}
+            onChange={setPredictionDate}
+            placeholder="Select Date"
+            formatLabel={(d) => new Date(d).toLocaleDateString("en-IN", { day: 'numeric', month: 'short', year: 'numeric' })}
+          />
         </div>
-        <button onClick={handleRunOtb} disabled={loading} className="w-full flex justify-center items-center gap-2 btn-primary bg-amber-500 hover:bg-amber-400 text-[#0A0A0A] border-none py-2.5">
+        
+        <div className="flex flex-wrap items-center gap-6 mb-4 mt-2">
+
+          <label className="flex items-center gap-2 text-sm text-neutral-300 cursor-pointer">
+            <input type="checkbox" checked={applyBrandAffinity} onChange={e => setApplyBrandAffinity(e.target.checked)} className="rounded bg-[#0A0A0A]/60 border-white/20 text-amber-500 focus:ring-amber-500" />
+            Brand Affinity
+          </label>
+          <label className="flex items-center gap-2 text-sm text-neutral-300 cursor-pointer">
+            <input type="checkbox" checked={applyPriceAffinity} onChange={e => setApplyPriceAffinity(e.target.checked)} className="rounded bg-[#0A0A0A]/60 border-white/20 text-amber-500 focus:ring-amber-500" />
+            Price Affinity
+          </label>
+          <label className="flex items-center gap-2 text-sm text-neutral-300 cursor-pointer">
+            <input type="checkbox" checked={applyDow} onChange={e => setApplyDow(e.target.checked)} className="rounded bg-[#0A0A0A]/60 border-white/20 text-amber-500 focus:ring-amber-500" />
+            Day of Week (DOW)
+          </label>
+          <label className="flex items-center gap-2 text-sm text-neutral-300 cursor-pointer">
+            <input type="checkbox" checked={applyFestival} onChange={e => setApplyFestival(e.target.checked)} className="rounded bg-[#0A0A0A]/60 border-white/20 text-amber-500 focus:ring-amber-500" />
+            Festival Multiplier
+          </label>
+        </div>
+
+        <button onClick={handleRunOtb} disabled={loading} className="w-full flex justify-center items-center gap-2 btn-primary bg-amber-500 hover:bg-amber-400 text-[#0A0A0A] border-none py-2.5 mt-4">
           {loading ? <RefreshCw size={16} className="animate-spin" /> : <Package size={16} />}
           {loading ? "Calculating..." : "Calculate OTB"}
         </button>
@@ -233,29 +275,46 @@ export default function OtbManagement({ lastShuffleResult }: OtbManagementProps)
   const renderSummary = () => {
     if (!otbResult) return null;
     const s = otbResult.otb_summary;
+    const formatter = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 });
+    
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
         <div className="glass-card p-5">
           <div className="text-neutral-400 text-xs font-bold uppercase tracking-wider mb-1">Total Raw OTB</div>
-          <div className="text-amber-400 text-2xl font-mono">{s.total_raw_otb.toLocaleString('en-IN', {minimumFractionDigits: 1, maximumFractionDigits: 1})} units</div>
+          <div className="text-amber-400 text-2xl font-mono">{s.total_raw_otb.toLocaleString('en-IN', {maximumFractionDigits: 0})} units</div>
         </div>
         <div className="glass-card p-5">
           <div className="text-neutral-400 text-xs font-bold uppercase tracking-wider mb-1">Covered by Shuffle</div>
-          <div className="text-sky-400 text-2xl font-mono">{s.total_shuffle_reduction > 0 ? `−${s.total_shuffle_reduction.toLocaleString('en-IN', {minimumFractionDigits: 1, maximumFractionDigits: 1})}` : '0.0'} units</div>
+          <div className="text-sky-400 text-2xl font-mono">{s.total_shuffle_reduction > 0 ? `${s.total_shuffle_reduction.toLocaleString('en-IN', {maximumFractionDigits: 0})}` : '0'} units</div>
         </div>
         <div className="glass-card p-5 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 to-transparent pointer-events-none" />
           <div className="text-neutral-400 text-xs font-bold uppercase tracking-wider mb-1 relative">PO to Manufacturer</div>
           <div className={`text-2xl font-mono font-black relative ${s.po_to_manufacturer > 0 ? "text-red-400" : "text-emerald-400"}`}>
-            {s.po_to_manufacturer.toLocaleString('en-IN', {minimumFractionDigits: 1, maximumFractionDigits: 1})} units
+            {s.po_to_manufacturer.toLocaleString('en-IN', {maximumFractionDigits: 0})} units
           </div>
         </div>
-        <div className="glass-card p-5">
-          <div className="text-neutral-400 text-xs font-bold uppercase tracking-wider mb-1">Shuffle Efficiency</div>
-          <div className="text-neutral-200 text-2xl font-mono">
-            {s.total_raw_otb > 0 ? ((s.total_shuffle_reduction / s.total_raw_otb) * 100).toLocaleString('en-IN', {minimumFractionDigits: 1, maximumFractionDigits: 1}) : '100.0'}%
+        
+        {s.total_raw_otb_cost !== undefined && (
+          <div className="glass-card p-5 border-amber-500/20">
+            <div className="text-neutral-400 text-xs font-bold uppercase tracking-wider mb-1">Cost Before Shuffling</div>
+            <div className="text-amber-400 text-xl font-mono">{formatter.format(s.total_raw_otb_cost)}</div>
           </div>
-        </div>
+        )}
+        
+        {s.otb_value_saved !== undefined && (
+          <div className="glass-card p-5 border-sky-500/20">
+            <div className="text-neutral-400 text-xs font-bold uppercase tracking-wider mb-1">Savings From Shuffle</div>
+            <div className="text-sky-400 text-xl font-mono">{formatter.format(s.otb_value_saved)}</div>
+          </div>
+        )}
+        
+        {s.total_effective_otb_cost !== undefined && (
+          <div className="glass-card p-5 border-red-500/20">
+            <div className="text-neutral-400 text-xs font-bold uppercase tracking-wider mb-1">Cost After Shuffling</div>
+            <div className="text-red-400 text-xl font-mono font-black">{formatter.format(s.total_effective_otb_cost)}</div>
+          </div>
+        )}
       </div>
     );
   };
@@ -280,11 +339,11 @@ export default function OtbManagement({ lastShuffleResult }: OtbManagementProps)
             {otbResult.otb_table.map((row, i) => (
               <tr key={i} className={`hover:bg-white/5 transition-colors ${row.effective_otb === 0 ? 'opacity-60' : ''}`}>
                 <td className="px-4 py-3 font-medium text-neutral-200">{row.branch}</td>
-                <td className="px-4 py-3 text-right font-mono text-sky-300">{Number(row.closing_stock).toFixed(1)}</td>
-                <td className="px-4 py-3 text-right font-mono text-emerald-300">{Number(row.msp_20d).toFixed(1)}</td>
-                <td className="px-4 py-3 text-right font-mono text-amber-400">{Number(row.original_shortage).toFixed(1)}</td>
-                <td className="px-4 py-3 text-right font-mono text-sky-400">{row.shuffle_in > 0 ? `−${Number(row.shuffle_in).toFixed(1)}` : '—'}</td>
-                <td className={`px-4 py-3 text-right font-mono font-bold ${row.effective_otb > 0 ? 'text-red-400' : 'text-neutral-400'}`}>{Number(row.effective_otb).toFixed(1)}</td>
+                <td className="px-4 py-3 text-right font-mono text-sky-300">{Math.round(Number(row.closing_stock)).toLocaleString('en-IN')}</td>
+                <td className="px-4 py-3 text-right font-mono text-emerald-300">{Math.round(Number(row.msp_20d)).toLocaleString('en-IN')}</td>
+                <td className="px-4 py-3 text-right font-mono text-amber-400">{Math.round(Number(row.original_shortage)).toLocaleString('en-IN')}</td>
+                <td className="px-4 py-3 text-right font-mono text-sky-400">{row.shuffle_in > 0 ? `${Math.round(Number(row.shuffle_in)).toLocaleString('en-IN')}` : '—'}</td>
+                <td className={`px-4 py-3 text-right font-mono font-bold ${row.effective_otb > 0 ? 'text-red-400' : 'text-neutral-400'}`}>{Math.round(Number(row.effective_otb)).toLocaleString('en-IN')}</td>
                 <td className="px-4 py-3 text-center">
                   {row.needs_purchase ? (
                     <span className="bg-red-500/10 text-red-400 border border-red-500/20 px-2.5 py-1 rounded-full text-xs font-bold">RAISE PO</span>

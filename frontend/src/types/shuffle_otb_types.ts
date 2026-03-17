@@ -80,6 +80,10 @@ export interface ShuffleRunResult {
     total_effective_otb: number;
     branches_needing_po: Array<{ branch: string; effective_otb: number }>;
     po_to_manufacturer: number;
+    money_saved_from_shuffle?: number;
+    otb_value_saved?: number;
+    total_raw_otb_cost?: number;
+    total_effective_otb_cost?: number;
   };
 }
 
