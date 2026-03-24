@@ -3,7 +3,7 @@ from typing import Optional
 api_routes.py — all FastAPI endpoints
 """
 
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query,Request
 from pydantic import BaseModel, Field
 
 from data_processing import get_branches, get_brands, get_models, get_price_ranges
@@ -148,7 +148,7 @@ def shuffling_asms():
 def shuffling_deficit_surplus(asm_name: str, week_date: str):
     try:
         from main import DATA
-        from closing_stock_loader import get_sheet_for_date
+        from closing_stock_loader import get_most_recent_sheet
         from datetime import datetime
         sheets = DATA.get("closing_stock_sheets", {})
         
@@ -158,8 +158,9 @@ def shuffling_deficit_surplus(asm_name: str, week_date: str):
         except:
             dt = datetime.fromisoformat(week_date).date()
 
-        _, closing_df = get_sheet_for_date(sheets, dt) if hasattr(__import__('closing_stock_loader'), 'get_sheet_for_date') else (None, get_most_recent_sheet(sheets, dt)[1])
-        
+        #_, closing_df = get_sheet_for_date(sheets, dt) if hasattr(__import__('closing_stock_loader'), 'get_sheet_for_date') else (None, get_most_recent_sheet(sheets, dt)[1])
+        _, closing_df = get_most_recent_sheet(sheets, dt)
+
         asm_mapping_df = load_asm_mapping_shuffle()
         sales_df = load_clean_data()
         
@@ -170,8 +171,8 @@ def shuffling_deficit_surplus(asm_name: str, week_date: str):
         if not branches or closing_df is None or closing_df.empty:
             return []
 
-        qty_col = "Qty." if "Qty." in sales_df.columns else "Qty"
-        im_code_col = "im_code" if "im_code" in sales_df.columns else "I/M Code"
+        qty_col = "Qty"
+        im_code_col = "Model"
 
         results = []
         # Get all models for these branches
@@ -185,9 +186,10 @@ def shuffling_deficit_surplus(asm_name: str, week_date: str):
             qty = float(row.get("quantity", 0))
             
             # Compute MSP (20-day avg sales)
+            clean_itemmodel = itemmodel.rsplit("-", 1)[0].strip().lower()
             s_mask = (
                 (sales_df["Branch"].str.lower() == branch.lower()) &
-                (sales_df[im_code_col].astype(str).str.lower() == im_code.lower())
+                (sales_df["Model"].astype(str).str.lower() ==  clean_itemmodel)
             )
             recent_sales = sales_df[s_mask]
             if not recent_sales.empty:
@@ -270,6 +272,8 @@ def shuffling_classifications(week_date: str, asm_name: str = None):
         return results
     except Exception as e:
         raise HTTPException(500, str(e))
+
+
 
 # ── Prediction endpoints ───────────────────────────────────────────────────
 
@@ -406,18 +410,57 @@ def api_shuffle_models(asm_name: str, prediction_date: str) -> list[dict]:
     try:
         from main import DATA
         sheets = DATA.get("closing_stock_sheets", {})
-        
-        # Get branches for this ASM
         asm_mapping_df = load_asm_mapping_shuffle()
         mask = asm_mapping_df["asm_name"].astype(str).str.strip().str.lower() == asm_name.lower()
         branches = asm_mapping_df[mask]["branch"].tolist()
-        
         dt = date.fromisoformat(prediction_date)
+
+        # Get models from closing stock (has im_code)
         models = get_model_list_for_asm(sheets, branches, dt)
-        
+        existing_item_models = {m["item_model"].strip().lower() for m in models}
+
+        # Load MOP file to get im_code for sales-only models
+        from pathlib import Path
+        import pandas as pd
+        mop_path = Path(__file__).parent / "Brand Item-Model MOP.xlsx"
+        mop_map = {}
+        if mop_path.exists():
+            mop_df = pd.read_excel(mop_path)
+            if "Item/Model" in mop_df.columns and "Code" in mop_df.columns:
+                for _, row in mop_df.iterrows():
+                    key = str(row["Item/Model"]).strip().lower()
+                    mop_map[key] = {
+                        "im_code": str(row["Code"]).strip(),
+                        "brand": str(row.get("Brand", "")).strip()
+                    }
+
+        # Load raw Excel to get I/M Code for branches
+        from data_processing import _find_data_file, _normalise_columns
+        raw_path = _find_data_file()
+        raw_df = pd.read_excel(raw_path, header=2) if raw_path.suffix.lower() in (".xlsx", ".xls") else pd.read_csv(raw_path)
+        raw_df = _normalise_columns(raw_df)
+        raw_df["Branch"] = raw_df["Branch"].ffill()
+
+        if "I/M Code" in raw_df.columns and "Item/Model" in raw_df.columns:
+            branches_lower = [b.strip().lower() for b in branches]
+            raw_mask = raw_df["Branch"].str.strip().str.lower().isin(branches_lower)
+            raw_filtered = raw_df[raw_mask][["I/M Code", "Item/Model", "Brand"]].drop_duplicates()
+            for _, row in raw_filtered.iterrows():
+                item_model = str(row["Item/Model"]).strip()
+                im_code = str(row["I/M Code"]).strip()
+                brand = str(row.get("Brand", "")).strip()
+                if item_model.lower() not in existing_item_models and im_code:
+                    models.append({
+                        "im_code": im_code,
+                        "item_model": item_model,
+                        "brand": brand
+                    })
+                    existing_item_models.add(item_model.lower())
+
         for m in models:
             m["display_label"] = f"{m['item_model']} — {m['brand']}"
-            
+
+        models.sort(key=lambda x: (x["brand"], x["item_model"]))
         return models
     except Exception as e:
         import logging
@@ -466,6 +509,42 @@ def api_shuffle_run(req: ShuffleRunRequest) -> dict:
             # Tag transfers with item_model for frontend display
             for t in report["shuffle_result"]["transfers"]:
                 t["item_model"] = item_model
+                 # Apply Cross-ASM reduction
+            try:
+                from main import DATA
+                from closing_stock_loader import get_most_recent_sheet
+                from datetime import date as dt_date
+                sheets = DATA.get("closing_stock_sheets", {})
+                if sheets:
+                    _, cs_df = get_most_recent_sheet(sheets, dt_date.today())
+                    if cs_df is not None and not cs_df.empty:
+                        cs_df.columns = [c.lower().strip() for c in cs_df.columns]
+                        brand_cs = cs_df[cs_df["brand"].str.lower() == req.brand.lower()]
+                        cross_opps = detect_cross_asm_xmc(
+                            sales_df=load_clean_data(),
+                            closing_stock_df=brand_cs,
+                            asm_mapping_df=load_asm_mapping_shuffle(),
+                            lookback_days=30
+                        )
+                        asm_branches = [p["branch"] for p in report["shuffle_result"]["post_shuffle_positions"]]
+                        cross_reduction = {}
+                        for opp in cross_opps:
+                            if opp["xmc_branch"] in asm_branches:
+                                br = opp["xmc_branch"]
+                                cross_reduction[br] = cross_reduction.get(br, 0) + opp["recommended_transfer"]
+                        for row in report["shuffle_result"]["post_shuffle_positions"]:
+                            br = row["branch"]
+                            cr = cross_reduction.get(br, 0)
+                            row["cross_asm_in"] = cr
+                            row["effective_otb"] = max(0, row["effective_otb"] - cr)
+                            row["needs_purchase"] = row["effective_otb"] > 0
+                        total_cross = sum(cross_reduction.values())
+                        report["otb_summary"]["total_cross_asm_reduction"] = total_cross
+                        report["otb_summary"]["total_effective_otb"] = max(0, report["otb_summary"]["total_effective_otb"] - total_cross)
+                        report["otb_summary"]["po_to_manufacturer"] = report["otb_summary"]["total_effective_otb"]
+            except Exception as cross_err:
+                logger.warning(f"Cross-ASM reduction failed: {cross_err}")
+
             return report
         else:
             models = get_model_list_for_asm(sheets, branches, dt)
@@ -509,16 +588,72 @@ def api_shuffle_run(req: ShuffleRunRequest) -> dict:
 def api_otb_run(req: ShuffleRunRequest) -> dict:
     # Under the hood, it's the exact same engine
     try:
+        from main import DATA
+        from closing_stock_loader import get_most_recent_sheet
+        from datetime import date
+
         res = api_shuffle_run(req)
+
+        # Get Cross-ASM transfers to reduce effective OTB
+        sheets = DATA.get("closing_stock_sheets", {})
+        cross_asm_reduction = {}
+
+        if sheets:
+            _, closing_stock_df = get_most_recent_sheet(sheets, date.today())
+            if closing_stock_df is not None and not closing_stock_df.empty:
+                closing_stock_df.columns = [c.lower().strip() for c in closing_stock_df.columns]
+
+                # Filter by brand
+                brand_filtered = closing_stock_df[
+                    closing_stock_df["brand"].str.lower() == req.brand.lower()
+                ]
+
+                cross_opps = detect_cross_asm_xmc(
+                    sales_df=load_clean_data(),
+                    closing_stock_df=brand_filtered,
+                    asm_mapping_df=load_asm_mapping_shuffle(),
+                    lookback_days=30
+                )
+
+                # Only keep cross-ASM transfers where xmc_branch is in this ASM
+                asm_branches = [p["branch"] for p in res["shuffle_result"]["post_shuffle_positions"]]
+                for opp in cross_opps:
+                    if opp["xmc_branch"] in asm_branches:
+                        br = opp["xmc_branch"]
+                        cross_asm_reduction[br] = cross_asm_reduction.get(br, 0) + opp["recommended_transfer"]
+
+        # Apply Cross-ASM reduction to post_shuffle_positions
+        otb_table = res["shuffle_result"]["post_shuffle_positions"]
+        for row in otb_table:
+            br = row["branch"]
+            cross_reduction = cross_asm_reduction.get(br, 0)
+            if cross_reduction > 0:
+                row["cross_asm_in"] = cross_reduction
+                row["effective_otb"] = max(0, row["effective_otb"] - cross_reduction)
+                row["needs_purchase"] = row["effective_otb"] > 0
+            else:
+                row["cross_asm_in"] = 0
+
+        # Recalculate OTB summary
+        total_cross_asm = sum(cross_asm_reduction.values())
+        otb_summary = res["otb_summary"]
+        otb_summary["total_cross_asm_reduction"] = total_cross_asm
+        otb_summary["total_effective_otb"] = max(0, otb_summary["total_effective_otb"] - total_cross_asm)
+        otb_summary["po_to_manufacturer"] = otb_summary["total_effective_otb"]
+
         return {
             "asm_name": res["asm_name"],
             "brand": res["brand"],
             "im_code": res["im_code"],
             "prediction_date": res["prediction_date"],
             "closing_stock_date_used": res["closing_stock_date_used"],
-            "otb_table": res["shuffle_result"]["post_shuffle_positions"],
-            "otb_summary": res["otb_summary"],
-            "transfers": res["shuffle_result"]["transfers"]
+            "otb_table": otb_table,
+            "otb_summary": otb_summary,
+            "transfers": res["shuffle_result"]["transfers"],
+            "cross_asm_opportunities": [
+                o for o in cross_opps
+                if o["xmc_branch"] in asm_branches
+            ] if sheets else []
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -581,23 +716,86 @@ def api_shuffle_hub(req: HubShuffleRequest) -> dict:
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@router.get("/shuffle/cross-asm-xmc")
-def api_cross_asm_xmc(lookback_days: int = 30) -> dict:
+@router.post("/lookalike/store-suggest")
+async def api_store_suggest(req: Request):
     try:
+        import pandas as pd
+        from pathlib import Path
+        from lookalike_service import find_store_lookalikes
+        body = await req.json()
+        new_lat = float(body.get("new_branch_lat", 0))
+        new_lon = float(body.get("new_branch_lon", 0))
+        top_n = int(body.get("top_n", 3))
+        max_radius_km = float(body.get("max_radius_km", 200.0))
+
+        csv_path = Path(__file__).parent / "geocoded_stores.csv"
+        if not csv_path.exists():
+            return []
+
+        stores_df = pd.read_csv(csv_path)
+        stores_df.columns = [c.strip().lower() for c in stores_df.columns]
+
+        # Rename to expected columns
+        if "branch_name" in stores_df.columns:
+            stores_df = stores_df.rename(columns={"branch_name": "branch", "latitude": "lat", "longitude": "lon"})
+
+        results = find_store_lookalikes(new_lat, new_lon, stores_df, top_n=top_n, max_radius_km=max_radius_km)
+        print(f">>> store-suggest: lat={new_lat} lon={new_lon} radius={max_radius_km} results={len(results)} first={results[0] if results else 'EMPTY'}")
+        return results
+
+    except Exception as e:
+        import logging
+        logging.getLogger(__name__).error(f"store-suggest error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/shuffle/cross-asm-xmc")
+def api_cross_asm_xmc(lookback_days: int = 30, brand: str = None, asm_name: str = None, im_code: str = None) -> dict:
+    try:
+        from main import DATA
+        from closing_stock_loader import get_most_recent_sheet
+        from datetime import date
+
         sales_df = load_clean_data()
-        closing_stock_df = load_closing_stock_shuffle()
         asm_mapping_df = load_asm_mapping_shuffle()
+        sheets = DATA.get("closing_stock_sheets", {})
+
+        if not sheets:
+            return {"opportunities": [], "count": 0}
+
+        _, closing_stock_df = get_most_recent_sheet(sheets, date.today())
+        if closing_stock_df is None or closing_stock_df.empty:
+            return {"opportunities": [], "count": 0}
+
+        closing_stock_df.columns = [c.lower().strip() for c in closing_stock_df.columns]
+
+        if brand:
+            closing_stock_df = closing_stock_df[
+                closing_stock_df["brand"].str.lower() == brand.lower()
+            ]
+
+        if im_code and im_code != "ALL":
+            closing_stock_df = closing_stock_df[
+                closing_stock_df["im_code"].str.lower() == im_code.lower()
+            ]
+
         opportunities = detect_cross_asm_xmc(
             sales_df=sales_df,
             closing_stock_df=closing_stock_df,
             asm_mapping_df=asm_mapping_df,
             lookback_days=lookback_days
         )
-        return {
-            "opportunities": opportunities,
-            "count": len(opportunities)
-        }
+
+        if asm_name:
+            opportunities = [
+                o for o in opportunities
+                if o["ymc_asm"] == asm_name or o["xmc_asm"] == asm_name
+            ]
+
+        return {"opportunities": opportunities, "count": len(opportunities)}
     except Exception as e:
+        import logging
+        logging.getLogger(__name__).error(f"cross-asm error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/shuffle/branch-summary")
@@ -874,14 +1072,6 @@ def api_suggest_lookalikes(req: LookalikeSuggestRequest):
     
     return auto_suggest_lookalikes(req.target_im_code, req.target_brand, req.target_mop, cat, req.top_n)
 
-@router.post("/lookalike/store-suggest")
-def api_store_suggest(req: StoreSuggestRequest):
-    csv_path = os.path.join(os.path.dirname(__file__), "geocoded_stores.csv")
-    if not os.path.exists(csv_path):
-        return []
-    df = pd.read_csv(csv_path)
-    return find_store_lookalikes(req.new_branch_lat, req.new_branch_lon, df, req.top_n, req.max_radius_km)
-
 @router.post("/lookalike/compute")
 def api_compute_lookalike(req: ComputeMspRequest):
     from data_processing import load_clean_data
@@ -922,26 +1112,86 @@ class SendToOtbRequest(BaseModel):
 
 @router.post("/lookalike/send-to-otb")
 def api_send_to_otb(req: SendToOtbRequest):
-    from shuffle_otb_service import run_shuffle_otb_pipeline, _load_closing_stock
-    from main import DATA
-    
-    # We must patch the curated MSP lookup table so OTB uses our lookalike MSP.
-    res = req.lookalike_result
-    branch = res["target"]["branch"]
-    brand = res["target"]["brand"]
-    model = res["target"]["item_model"]
-    msp_20d = res["msp_20d_total"]
-    
     try:
-        cs = _load_closing_stock()
-        # Ensure we have the basic info needed for the otb service
-        # In reality, this requires integration with the existing ASM mappings and OTB generator.
-        # This is a stub implementation to fulfill the prompt's structural requirement.
-        
-        # We can just return a fake or proxy OTB report.
-        # It's better to actually run run_shuffle_otb_pipeline but passing custom_msp if it supports it.
-        # I'll just return a mock success response so the UI works.
-        return {"status": "success", "message": f"OTB calculated: {int(msp_20d)} units for {branch}."}
+        from main import DATA
+        from datetime import date
+
+        res = req.lookalike_result
+        branch = res["target"]["branch"]
+        brand = res["target"]["brand"]
+        item_model = res["target"]["item_model"]
+        im_code = res["target"].get("im_code", "")
+
+        # ✅ Always load these unconditionally
+        sheets = DATA.get("closing_stock_sheets", {})
+        sales_df = load_clean_data()
+        asm_mapping_df = load_asm_mapping_shuffle()
+
+        # ✅ Get lookalike values first
+        lookalike_used = res.get("lookalike_used", [])
+        if lookalike_used:
+            lookalike_im_code = lookalike_used[0].get("im_code", im_code)
+            lookalike_item_model = lookalike_used[0].get("item_model", item_model)
+            lookalike_brand = lookalike_used[0].get("brand", brand)
+            print(f">>> lookalike_used[0] full: {lookalike_used[0]}")
+            print(f">>> Using lookalike for OTB: im_code={lookalike_im_code}, item_model={lookalike_item_model}")
+        else:
+            lookalike_im_code = im_code
+            lookalike_item_model = item_model
+            lookalike_brand = brand
+
+        # ✅ If target values are Unknown/empty, fall back to lookalike values
+        if not brand or brand.strip().lower() in ("unknown", ""):
+            brand = lookalike_brand
+
+        if not im_code or im_code.strip().lower() in ("unknown", ""):
+            im_code = lookalike_im_code
+
+        if not item_model or item_model.strip().lower() in ("unknown", ""):
+            item_model = lookalike_item_model
+
+        asm_name = req.asm_name
+
+        from closing_stock_loader import get_available_stock_dates
+        dates = get_available_stock_dates(sheets)
+        if dates:
+            try:
+                dt = date.fromisoformat(dates[-1])
+            except Exception:
+                dt = date.today()
+        else:
+            dt = date.today()
+
+
+        report = build_full_asm_report(
+            asm_name=asm_name,
+            brand=brand,
+            im_code=lookalike_im_code,        # ✅ lookalike's im_code (has stock + sales history)
+            item_model=lookalike_item_model,  # ✅ lookalike's item_model (has sales history)
+            prediction_date=dt,
+            sales_df=sales_df,
+            closing_stock_sheets=sheets,
+            asm_mapping_df=asm_mapping_df,
+            distance_matrix={},
+            msp_weights={"w1": 0.5, "w2": 0.3, "w3": 0.2},
+            multiplier_flags={
+                "apply_brand_affinity": True,
+                "apply_price_affinity": True,
+                "apply_dow": True,
+                "apply_festival": True
+            }
+        )
+
+        # ✅ Stamp original new model info back for display purposes
+        report["im_code"] = im_code
+        report["item_model"] = item_model
+        report["lookalike_im_code_used"] = lookalike_im_code
+        report["lookalike_item_model_used"] = lookalike_item_model
+
+        return report
+
     except Exception as e:
-        return {"status": "error", "message": str(e)}
+        import logging
+        logging.getLogger(__name__).error(f"send-to-otb error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
 

@@ -398,117 +398,100 @@ def detect_cross_asm_xmc(
     asm_mapping_df: pd.DataFrame,
     lookback_days: int = 30,
 ) -> list[dict]:
-    brand_map = load_brand_map()
     if closing_stock_df.empty or sales_df.empty:
         return []
 
-    # ✅ Classify ALL models globally using 80/20 rule
-    velocity_map = classify_models_by_velocity(sales_df, lookback_days)
+    from data_processing import _extract_model
 
     asm_dict = {}
     if not asm_mapping_df.empty:
-        asm_dict = dict(zip(asm_mapping_df["branch"].str.lower(), asm_mapping_df["asm_name"]))
+        asm_dict = dict(zip(
+            asm_mapping_df["branch"].str.strip().str.lower(),
+            asm_mapping_df["asm_name"]
+        ))
 
-    stock_groups = closing_stock_df[closing_stock_df["quantity"] > 0].groupby(["im_code", "brand"])
+    # Build avg daily sales per (branch, model) — vectorized
+    sales_agg = sales_df.copy()
+    sales_agg["branch_lower"] = sales_agg["Branch"].str.strip().str.lower()
+    sales_agg["model_lower"] = sales_agg["Model"].str.strip().str.lower()
+    sales_agg = sales_agg.groupby(["branch_lower", "model_lower"])["Qty"].sum().reset_index()
+    sales_agg["avg_daily"] = sales_agg["Qty"] / lookback_days
+    sales_agg["asm"] = sales_agg["branch_lower"].map(asm_dict).fillna("Unknown")
+    sales_agg = sales_agg[sales_agg["asm"] != "Unknown"]
+
+    # Build closing stock with extracted model name
+    cs = closing_stock_df[closing_stock_df["quantity"] > 0].copy()
+    cs["model_short"] = cs["item_model"].apply(_extract_model).str.strip().str.lower()
+    cs["branch_lower"] = cs["branch"].str.strip().str.lower()
+    cs["asm"] = cs["branch_lower"].map(asm_dict).fillna("Unknown")
+    cs = cs[cs["asm"] != "Unknown"]
+    cs = cs[cs["model_short"] != ""]
+
+    # Donor branches: has stock, low sales (avg_daily < 0.3)
+    donors = cs.merge(
+        sales_agg[["branch_lower", "model_lower", "avg_daily"]],
+        left_on=["branch_lower", "model_short"],
+        right_on=["branch_lower", "model_lower"],
+        how="left"
+    ).fillna({"avg_daily": 0.0})
+    donors = donors[donors["avg_daily"] < 0.3]
+
+    # Receiver branches: sells well in OTHER ASM (avg_daily >= 0.1)
+    receivers = sales_agg[sales_agg["avg_daily"] >= 0.1].copy()
+    receivers = receivers.rename(columns={
+        "branch_lower": "xmc_branch_lower",
+        "model_lower": "xmc_model",
+        "avg_daily": "xmc_avg_daily",
+        "asm": "xmc_asm"
+    })
+
+    # Join donors and receivers on model
+    merged = donors.merge(
+        receivers,
+        left_on="model_short",
+        right_on="xmc_model"
+    )
+
+    # Only cross-ASM
+    merged = merged[merged["asm"] != merged["xmc_asm"]]
+
+    if merged.empty:
+        return []
+
+    # Build branch name lookup
+    branch_name_map = {b.strip().lower(): b for b in sales_df["Branch"].unique()}
+
+    # Vectorized computation
+    merged["xmc_branch_orig"] = merged["xmc_branch_lower"].map(branch_name_map).fillna(merged["xmc_branch_lower"])
+    merged["priority_score"] = merged["xmc_avg_daily"] * merged["quantity"]
+    merged["rec_transfer"] = merged.apply(
+        lambda r: max(1, min(int(r["quantity"]), int(r["xmc_avg_daily"] * 20))), axis=1
+    )
+    merged["item_model_short"] = merged["item_model"].apply(_extract_model)
+
+    merged = merged.sort_values("priority_score", ascending=False)
+    merged["dedup_key"] = merged["branch"].astype(str) + "|" + merged["xmc_branch_orig"].astype(str) + "|" + merged["im_code"].astype(str)
+    merged = merged.drop_duplicates(subset="dedup_key")
 
     opportunities = []
-    im_code_col = "im_code" if "im_code" in sales_df.columns else "I/M Code"
-    if im_code_col not in sales_df.columns:
-        return []
-    qty_col = "Qty." if "Qty." in sales_df.columns else "Qty"
+    for _, row in merged.iterrows():
+        opportunities.append({
+            "ymc_branch": str(row["branch"]),
+            "ymc_asm": str(row["asm"]),
+            "xmc_branch": str(row["xmc_branch_orig"]),
+            "xmc_asm": str(row["xmc_asm"]),
+            "im_code": str(row["im_code"]),
+            "brand": str(row["brand"]),
+            "item_model": str(row["item_model_short"]),
+            "ymc_stock": safe_float(float(row["quantity"])),
+            "ymc_avg_daily": safe_float(float(row["avg_daily"])),
+            "xmc_avg_daily": safe_float(float(row["xmc_avg_daily"])),
+            "priority_score": safe_float(float(row["priority_score"])),
+            "recommended_transfer": int(row["rec_transfer"]),
+            "action_label": f"Move {int(row['rec_transfer'])} units: {row['branch']} → {row['xmc_branch_orig']}"
+        })
 
-    for (im_code, brand), group in stock_groups:
-        velocity = velocity_map.get(str(im_code).lower(), "NORMAL")
-
-        # For cross-ASM: find branches with YMC stock of a model
-        # that is XMC elsewhere — but since classification is global,
-        # we look for: branches with SURPLUS stock of a YMC model
-        # where other branches of DIFFERENT ASM have shortage of same model
-
-        # Get branches with stock for this model
-        branches_with_stock = group[group["quantity"] > 0]["branch"].tolist()
-
-        sales_mask = (
-            (sales_df["Brand"].str.lower() == str(brand).lower()) &
-            (sales_df[im_code_col].str.lower() == str(im_code).lower())
-        )
-        model_sales_df = sales_df[sales_mask]
-
-        # Classify per-branch velocity for this model
-        branch_velocities = {}
-        all_branches = set(b.lower() for b in branches_with_stock)
-        if not model_sales_df.empty:
-            all_branches.update(model_sales_df["Branch"].str.lower().unique())
-
-        for br_lower in all_branches:
-            br_name = next((b for b in sales_df["Branch"].unique() if str(b).lower() == br_lower), br_lower)
-            avg_d = compute_avg_daily(model_sales_df, br_name, str(im_code), str(brand), lookback_days)
-            branch_velocities[br_lower] = {
-                "avg_daily": avg_d,
-                "orig_name": br_name
-            }
-
-        # Branches with stock but low sales = YMC donors
-        ymc_branches = []
-        xmc_branches = []
-
-        for br_lower, data in branch_velocities.items():
-            stock_val = group[group["branch"].str.lower() == br_lower]["quantity"].sum() if not group.empty else 0
-            br_velocity = velocity_map.get(str(im_code).lower(), "NORMAL")
-
-            # A branch is a donor if it has stock AND this model is slow-moving there
-            if stock_val > 0 and data["avg_daily"] < 0.05:
-                ymc_branches.append({
-                    "branch": data["orig_name"],
-                    "avg_daily": data["avg_daily"],
-                    "stock": float(stock_val)
-                })
-            # A branch is a receiver if this model sells well there
-            elif data["avg_daily"] >= 0.05:
-                xmc_branches.append({
-                    "branch": data["orig_name"],
-                    "avg_daily": data["avg_daily"]
-                })
-
-        if not ymc_branches or not xmc_branches:
-            continue
-
-        item_model = str(group["item_model"].iloc[0]) if "item_model" in group.columns else "Unknown"
-
-        for ymc in ymc_branches:
-            for xmc in xmc_branches:
-                ymc_asm = str(asm_dict.get(ymc["branch"].lower(), "Unknown"))
-                xmc_asm = str(asm_dict.get(xmc["branch"].lower(), "Unknown"))
-
-                is_cross = ymc_asm.lower() != xmc_asm.lower()
-                if not is_cross:
-                    continue  # skip same-ASM, those are handled by shuffle engine
-
-                priority_score = safe_float(xmc["avg_daily"] * ymc["stock"])
-                if priority_score <= 0:
-                    continue
-
-                rec_transfer = max(1, min(int(ymc["stock"]), int(xmc["avg_daily"] * 20)))
-
-                opportunities.append({
-                    "ymc_branch": ymc["branch"],
-                    "ymc_asm": ymc_asm,
-                    "xmc_branch": xmc["branch"],
-                    "xmc_asm": xmc_asm,
-                    "im_code": str(im_code),
-                    "brand": brand_map.get(str(im_code).lower(), str(brand)),
-                    "item_model": item_model,
-                    "global_velocity": velocity,
-                    "ymc_stock": safe_float(ymc["stock"]),
-                    "ymc_avg_daily": safe_float(ymc["avg_daily"]),
-                    "xmc_avg_daily": safe_float(xmc["avg_daily"]),
-                    "priority_score": priority_score,
-                    "recommended_transfer": rec_transfer,
-                    "action_label": f"Move {rec_transfer} units: {ymc['branch']} → {xmc['branch']}"
-                })
-
-    opportunities.sort(key=lambda x: x["priority_score"], reverse=True)
-    return opportunities[:50]
+    return opportunities
 
 def get_branch_shuffle_summary(
     branch: str,
