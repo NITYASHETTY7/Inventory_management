@@ -177,7 +177,7 @@ export default function OtbManagement({ lastShuffleResult }: OtbManagementProps)
       return (
         <div className="bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 p-4 rounded-lg flex flex-col md:flex-row items-start md:items-center justify-between mb-6 gap-3">
           <div className="text-sm font-medium">
-            Showing OTB results from last shuffle run — {lastShuffleResult.asm_name} · {lastShuffleResult.item_model}
+            Showing OTB results from last shuffle run — {lastShuffleResult.asm_name} · {(lastShuffleResult as any).item_model ?? lastShuffleResult.im_code}
           </div>
           <button 
             onClick={() => { setIsCustomMode(true); setOtbResult(null); }} 
@@ -331,6 +331,7 @@ export default function OtbManagement({ lastShuffleResult }: OtbManagementProps)
               <th className="px-4 py-3 text-right">MSP 20d</th>
               <th className="px-4 py-3 text-right">Raw OTB</th>
               <th className="px-4 py-3 text-right">Shuffle In</th>
+              <th className="px-4 py-3">Cross-ASM In</th>
               <th className="px-4 py-3 text-right">Net OTB</th>
               <th className="px-4 py-3 text-center">Action</th>
             </tr>
@@ -340,9 +341,10 @@ export default function OtbManagement({ lastShuffleResult }: OtbManagementProps)
               <tr key={i} className={`hover:bg-white/5 transition-colors ${row.effective_otb === 0 ? 'opacity-60' : ''}`}>
                 <td className="px-4 py-3 font-medium text-neutral-200">{row.branch}</td>
                 <td className="px-4 py-3 text-right font-mono text-sky-300">{Math.round(Number(row.closing_stock)).toLocaleString('en-IN')}</td>
-                <td className="px-4 py-3 text-right font-mono text-emerald-300">{Math.round(Number(row.msp_20d)).toLocaleString('en-IN')}</td>
+                <td className="px-4 py-3 text-right font-mono text-emerald-300">{Number(row.msp_20d) < 1 ? Number(row.msp_20d).toFixed(2) : Math.round(Number(row.msp_20d)).toLocaleString('en-IN')}</td>
                 <td className="px-4 py-3 text-right font-mono text-amber-400">{Math.round(Number(row.original_shortage)).toLocaleString('en-IN')}</td>
                 <td className="px-4 py-3 text-right font-mono text-sky-400">{row.shuffle_in > 0 ? `${Math.round(Number(row.shuffle_in)).toLocaleString('en-IN')}` : '—'}</td>
+                <td className="px-4 py-3 text-right font-mono text-purple-400">{(row as any).cross_asm_in > 0 ? `${Math.round(Number((row as any).cross_asm_in)).toLocaleString('en-IN')}` : '—'}</td>
                 <td className={`px-4 py-3 text-right font-mono font-bold ${row.effective_otb > 0 ? 'text-red-400' : 'text-neutral-400'}`}>{Math.round(Number(row.effective_otb)).toLocaleString('en-IN')}</td>
                 <td className="px-4 py-3 text-center">
                   {row.needs_purchase ? (

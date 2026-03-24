@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { Rocket, Store, BarChart3 } from 'lucide-react';
-import { LookalikScenario, ModelCatalogItem, LookalikeSuggestion, StoreProximitySuggestion, LookalikeMspResult, LookalikeMspRequest } from '../types/lookalike_types';
-import { fetchModelCatalog, suggestLookalikes, suggestStoreProximity, computeLookalikeMsp, sendToOtb } from '../services/lookalike_api';
-import { LookalikeSuggestionCard } from '../components/LookalikeSuggestionCard';
-import { HypeCurvePreview } from '../components/HypeCurvePreview';
-import { ComposedChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { api } from '../services/api';
+import { BarChart3, Rocket, Store } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Bar, BarChart, CartesianGrid, ComposedChart, Legend, Line, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import CustomSelect from '../components/CustomSelect';
+import { HypeCurvePreview } from '../components/HypeCurvePreview';
+import { LookalikeSuggestionCard } from '../components/LookalikeSuggestionCard';
+import { api } from '../services/api';
+import { computeLookalikeMsp, fetchModelCatalog, sendToOtb, suggestLookalikes, suggestStoreProximity } from '../services/lookalike_api';
 import { fetchAsmList, fetchStockDates } from '../services/shuffle_otb_api';
+import { LookalikeMspRequest, LookalikeMspResult, LookalikeSuggestion, LookalikScenario, ModelCatalogItem, StoreProximitySuggestion } from '../types/lookalike_types';
 
-export const LookalikePage: React.FC<{ onOtbGenerated?: (res: any) => void }> = ({ onOtbGenerated }) => {
-  const [scenario, setScenario] = useState<LookalikScenario>('new_model');
+export const LookalikePage: React.FC<{ onOtbGenerated?: (res: any) => void; initialScenario?: 'new_model' | 'new_store' | 'sparse_data' }> = ({ onOtbGenerated, initialScenario }) => {
+  const [scenario, setScenario] = useState<LookalikScenario>(initialScenario || 'new_model');
   const [catalog, setCatalog] = useState<ModelCatalogItem[]>([]);
   const [branches, setBranches] = useState<string[]>([]);
   const [brands, setBrands] = useState<string[]>([]);
@@ -28,8 +28,8 @@ export const LookalikePage: React.FC<{ onOtbGenerated?: (res: any) => void }> = 
   const [targetBranch, setTargetBranch] = useState('');
   
   // New Store Form
-  const [newStoreLat, setNewStoreLat] = useState<number>(13.0827);
-  const [newStoreLon, setNewStoreLon] = useState<number>(80.2707);
+  const [newStoreLat, setNewStoreLat] = useState<number>(11.0168);
+  const [newStoreLon, setNewStoreLon] = useState<number>(76.9558);
   
   // Sparse Data Form
   const [sparseTolerance, setSparseTolerance] = useState<number>(5000);
@@ -58,6 +58,7 @@ export const LookalikePage: React.FC<{ onOtbGenerated?: (res: any) => void }> = 
   // Result
   const [result, setResult] = useState<LookalikeMspResult | null>(null);
   const [selectedAsm, setSelectedAsm] = useState('');
+  const [asmGroups, setAsmGroups] = useState<any[]>([]);
   const [otbSent, setOtbSent] = useState(false);
 
   useEffect(() => {
@@ -65,13 +66,21 @@ export const LookalikePage: React.FC<{ onOtbGenerated?: (res: any) => void }> = 
     api.getBranches().then(b => { setBranches(b); if(b.length) setTargetBranch(b[0]); }).catch(console.error);
     api.getBrands().then(b => { setBrands(b); if(b.length) setTargetBrand(b[0]); }).catch(console.error);
     fetchStockDates().then(d => { setStockDates(d.dates); if(d.dates.length) setPredictionDate(d.dates[0]); }).catch(console.error);
-    fetchAsmList().then(a => { const names = a.map(x => x.asm_name); setAsmList(names); if(names.length) setSelectedAsm(names[0]); }).catch(console.error);
+    fetchAsmList().then(a => { const names = a.map(x => x.asm_name); setAsmList(names); if(names.length) setSelectedAsm(names[0]); setAsmGroups(a); }).catch(console.error);
   }, []);
 
   useEffect(() => {
     if (['Apple', 'Samsung'].includes(targetBrand)) setBrandTier('premium');
     else setBrandTier('budget');
   }, [targetBrand]);
+
+  useEffect(() => {
+    if (!targetBranch || asmGroups.length === 0) return;
+    const match = asmGroups.find(a =>
+      a.branches && a.branches.some((b: string) => b.trim().toLowerCase() === targetBranch.trim().toLowerCase())
+    );
+    if (match) setSelectedAsm(match.asm_name);
+  }, [targetBranch, asmGroups]);
 
   const handleScenarioSwitch = (s: LookalikScenario) => {
     setScenario(s);
@@ -183,27 +192,19 @@ export const LookalikePage: React.FC<{ onOtbGenerated?: (res: any) => void }> = 
         <p className="text-zinc-400">Predict sales for new models and stores using historical pattern matching.</p>
       </header>
 
-      {/* Scenario Cards */}
-      <div className="grid grid-cols-3 gap-4">
-        {[
-          { id: 'new_model', icon: Rocket, title: 'New Model Launch', desc: 'No history for this model yet. Use a predecessor.' },
-          { id: 'new_store', icon: Store, title: 'New Store Opening', desc: 'Brand new branch, borrow pattern from nearby stores.' },
-          { id: 'sparse_data', icon: BarChart3, title: 'Sparse Data Fallback', desc: 'Model exists but < 14 days of sales. Use price+brand similar models.' }
-        ].map(s => (
-          <div 
-            key={s.id}
-            onClick={() => handleScenarioSwitch(s.id as LookalikScenario)}
-            className={`p-5 rounded-xl border cursor-pointer transition-all ${
-              scenario === s.id ? 'bg-sky-950/30 border-sky-500 ring-1 ring-sky-500' : 'bg-zinc-900 border-zinc-800 hover:border-zinc-700'
-            }`}
-          >
-            <div className={`p-2 w-10 h-10 rounded-lg flex items-center justify-center mb-3 ${scenario === s.id ? 'bg-sky-500/20 text-sky-400' : 'bg-zinc-800 text-zinc-400'}`}>
-              <s.icon size={20} />
-            </div>
-            <h3 className="font-bold text-lg mb-1">{s.title}</h3>
-            <p className="text-sm text-zinc-400">{s.desc}</p>
-          </div>
-        ))}
+      {/* Scenario Header - no switching cards */}
+      <div className="flex items-center gap-3 p-4 rounded-xl border bg-sky-950/30 border-sky-500 ring-1 ring-sky-500 w-fit">
+        <div className="p-2 w-10 h-10 rounded-lg flex items-center justify-center bg-sky-500/20 text-sky-400">
+          {scenario === 'new_model' ? <Rocket size={20} /> : scenario === 'new_store' ? <Store size={20} /> : <BarChart3 size={20} />}
+        </div>
+        <div>
+          <h3 className="font-bold text-lg">
+            {scenario === 'new_model' ? 'New Model Launch' : scenario === 'new_store' ? 'New Store Opening' : 'Sparse Data Fallback'}
+          </h3>
+          <p className="text-sm text-zinc-400">
+            {scenario === 'new_model' ? 'No history for this model yet. Use a predecessor.' : scenario === 'new_store' ? 'Brand new branch, borrow pattern from nearby stores.' : 'Model exists but < 14 days of sales. Use price+brand similar models.'}
+          </p>
+        </div>
       </div>
 
       <div className="grid grid-cols-12 gap-6">
@@ -214,7 +215,7 @@ export const LookalikePage: React.FC<{ onOtbGenerated?: (res: any) => void }> = 
           {scenario !== 'new_store' && (
             <>
               <div>
-                <label className="block text-xs text-zinc-400 mb-1">Target Branch</label>
+                <label className="block text-xs text-zinc-400 mb-1">Launch Branch <span className="text-zinc-600">(used to identify ASM territory)</span></label>
                 <CustomSelect label="" value={targetBranch} options={branches} onChange={setTargetBranch} placeholder="Select Branch" />
               </div>
               <div>
@@ -224,7 +225,7 @@ export const LookalikePage: React.FC<{ onOtbGenerated?: (res: any) => void }> = 
               {scenario === 'sparse_data' ? (
                 <div>
                   <label className="block text-xs text-zinc-400 mb-1">Model (Sparse)</label>
-                  <CustomSelect label="" value={targetModel} options={catalog.filter(c => c.brand === targetBrand && c.days_of_data < 14).map(c => c.im_code)} onChange={(v) => {
+                  <CustomSelect label="" value={targetModel} options={[...new Map(catalog.filter(c => c.brand === targetBrand && c.days_of_data < 14).map(c => [c.item_model, c.im_code])).values()]} onChange={(v) => {
                     setTargetModel(v);
                     const cat = catalog.find(c => c.im_code === v);
                     if(cat) setTargetMop(cat.mop);
@@ -279,7 +280,7 @@ export const LookalikePage: React.FC<{ onOtbGenerated?: (res: any) => void }> = 
                 <label className="block text-xs text-zinc-400 mb-1">Brand</label>
                 <div className="mb-3"><CustomSelect label="" value={targetBrand} options={brands} onChange={setTargetBrand} placeholder="Select Brand" /></div>
                 <label className="block text-xs text-zinc-400 mb-1">Model to predict</label>
-                <CustomSelect label="" value={targetModel} options={catalog.filter(c => c.brand === targetBrand).map(c => c.im_code)} onChange={(v) => {
+                <CustomSelect label="" value={targetModel} options={[...new Map(catalog.filter(c => c.brand === targetBrand).map(c => [c.item_model, c.im_code])).values()]} onChange={(v) => {
                     setTargetModel(v);
                     const cat = catalog.find(c => c.im_code === v);
                     if(cat) setTargetMop(cat.mop);

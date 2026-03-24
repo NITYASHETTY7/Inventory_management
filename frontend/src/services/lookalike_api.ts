@@ -1,9 +1,9 @@
-import { 
-  ModelCatalogItem, 
-  LookalikeSuggestion, 
-  StoreProximitySuggestion, 
-  LookalikeMspRequest, 
-  LookalikeMspResult 
+import {
+  LookalikeMspRequest,
+  LookalikeMspResult,
+  LookalikeSuggestion,
+  ModelCatalogItem,
+  StoreProximitySuggestion
 } from '../types/lookalike_types';
 
 const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000/api";
@@ -46,6 +46,7 @@ export const suggestStoreProximity = async (params: {
   return res.json();
 };
 
+
 export const computeLookalikeMsp = async (
   request: LookalikeMspRequest
 ): Promise<LookalikeMspResult> => {
@@ -61,6 +62,7 @@ export const computeLookalikeMsp = async (
 export const sendToOtb = async (params: {
   lookalike_result: LookalikeMspResult;
   asm_name: string;
+  prediction_date?: string;  // ← ADD THIS
 }): Promise<any> => {
   const res = await fetch(`${BASE_URL}/lookalike/send-to-otb`, {
     method: "POST",

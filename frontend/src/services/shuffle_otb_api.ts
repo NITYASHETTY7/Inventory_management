@@ -1,9 +1,9 @@
 import {
+  AllocationRankedStore,
   AsmGroup,
   ModelOption,
-  ShuffleRunResult,
   OtbRunResult,
-  AllocationRankedStore,
+  ShuffleRunResult,
 } from "../types/shuffle_otb_types";
 
 const BASE_URL = (import.meta as any).env?.VITE_API_URL ?? "http://localhost:8000/api";

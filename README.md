@@ -9,14 +9,14 @@ Training window: **Sep 1 – Dec 31 2025** → Predictions: **Jan 1 2026 onwards
 
 ### Terminal 1 — Backend
 ```bash
-cd phone-dashboard/backend
+cd MSP-Visualizer/backend
 pip install -r requirements.txt
 uvicorn main:app --reload --port 8000
 ```
 
 ### Terminal 2 — Frontend
 ```bash
-cd phone-dashboard/frontend
+cd MSP-Visualizer/frontend
 npm install
 npm run dev
 # → open http://localhost:5173

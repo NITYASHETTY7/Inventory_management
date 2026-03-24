@@ -16,11 +16,12 @@ import { AsmGroup, ModelOption, ShuffleRunResult } from "../types/shuffle_otb_ty
 interface ShuffleEngineProps {
   onShuffleComplete?: (result: ShuffleRunResult) => void;
   onSwitchToOtb?: () => void;
+  initialMode?: 'asm' | 'hub';
 }
 
 // ─── Cross-ASM Tab ───────────────────────────────────────────────────────────
-function CrossAsmPanel({ selectedAsm, predictionDate, asmList }: {
-  selectedAsm: string; predictionDate: string; asmList: AsmGroup[];
+function CrossAsmPanel({ selectedAsm, predictionDate, asmList, selectedBrand, selectedModelStr }: {
+  selectedAsm: string; predictionDate: string; asmList: AsmGroup[]; selectedBrand: string; selectedModelStr: string;
 }) {
   const [crossRecs, setCrossRecs] = useState<any[]>([]);
   const [loading, setLoading]     = useState(false);
@@ -30,77 +31,48 @@ function CrossAsmPanel({ selectedAsm, predictionDate, asmList }: {
   useEffect(() => { setLoaded(false); setCrossRecs([]); }, [selectedAsm, predictionDate]);
 
   const fetchAll = async () => {
-  if (!selectedAsm) { setError('Please select an ASM first.'); return; }
-  setLoading(true); setError(null);
-  try {
-    const BASE = (import.meta as any).env?.VITE_API_URL ?? 'http://localhost:8000/api';
-    const weekParam = 'week_date=' + encodeURIComponent(predictionDate);
-    const otherAsms = asmList.map(a => a.asm_name).filter(a => a !== selectedAsm);
+    if (!selectedAsm) { setError('Please select an ASM first.'); return; }
+    setLoading(true); setError(null);
+    try {
+      const BASE = (import.meta as any).env?.VITE_API_URL ?? 'http://localhost:8000/api';
+      const brandParam = selectedBrand ? `&brand=${encodeURIComponent(selectedBrand)}` : '';
+      const asmParam = selectedAsm ? `&asm_name=${encodeURIComponent(selectedAsm)}` : '';
+      const modelObj = selectedModelStr ? (() => { try { return JSON.parse(selectedModelStr); } catch { return null; } })() : null;
+      const modelParam = modelObj && modelObj.im_code !== 'ALL' ? `&im_code=${encodeURIComponent(modelObj.im_code)}` : '';
+      const res = await fetch(`${BASE}/shuffle/cross-asm-xmc?lookback_days=30${brandParam}${asmParam}${modelParam}`);
 
-    // Fetch MY ASM deficit-surplus
-    const myRaw = await fetch(
-      `${BASE}/shuffling/deficit-surplus?asm_name=${encodeURIComponent(selectedAsm)}&${weekParam}`
-    ).then(r => r.json()).catch(() => []);
-    const myData: any[] = Array.isArray(myRaw) ? myRaw : [];
+      if (!res.ok) throw new Error(await res.text());
+      const json = await res.json();
+      const data: any[] = json.opportunities || [];
+      
+      const filtered = data.filter(d => 
+        (d.ymc_asm === selectedAsm || d.xmc_asm === selectedAsm) &&
+        (!selectedBrand || d.brand.toLowerCase() === selectedBrand.toLowerCase())
+      );
 
-    // Fetch all other ASMs
-    const results = await Promise.all(
-      otherAsms.map(asm =>
-        Promise.all([
-          fetch(`${BASE}/shuffling/deficit-surplus?asm_name=${encodeURIComponent(asm)}&${weekParam}`).then(r => r.json()).catch(() => []),
-          fetch(`${BASE}/shuffling/classifications?asm_name=${encodeURIComponent(asm)}&${weekParam}`).then(r => r.json()).catch(() => []),
-        ]).then(([rows, classes]) => ({
-          asm,
-          rows: Array.isArray(rows) ? rows : [],
-          xmcModels: new Set((Array.isArray(classes) ? classes : []).filter((c: any) => c.classification === 'XMC').map((c: any) => c.im_code)),
-        }))
-      )
-    );
+      const recs = filtered.map(d => ({
+        from_branch: d.ymc_branch,
+        from_asm: d.ymc_asm,
+        to_branch: d.xmc_branch,
+        to_asm: d.xmc_asm,
+        itemmodel: d.item_model,
+        brand: d.brand,
+        surplus_units: d.ymc_stock,
+        deficit_units: Math.ceil(d.xmc_avg_daily * 20),
+        suggested_units: d.recommended_transfer,
+        xmc_opportunity: true,
+        priority_score: d.priority_score,
+      }));
 
-    // Build surplus from MY ASM
-    const surplusRows = myData.filter((r: any) => (r.surplus ?? 0) > 0);
-
-    // Build deficit map from other ASMs
-    const deficitMap: Record<string, any[]> = {};
-    results.forEach(({ asm, rows, xmcModels }) => {
-      rows.filter((r: any) => (r.deficit ?? 0) > 0).forEach((r: any) => {
-        if (!deficitMap[r.im_code]) deficitMap[r.im_code] = [];
-        deficitMap[r.im_code].push({ ...r, asm_name: asm, xmc_models: xmcModels });
-      });
-    });
-
-    // Match surplus → deficit
-    const recs: any[] = [];
-    surplusRows.forEach((s: any) => {
-      const matches = deficitMap[s.im_code];
-      if (!matches?.length) return;
-      matches.forEach((d: any) => {
-        recs.push({
-          from_branch: s.branch, from_asm: selectedAsm,
-          to_branch: d.branch,   to_asm: d.asm_name,
-          itemmodel: s.itemmodel, brand: s.brand,
-          surplus_units: Math.ceil(s.surplus),
-          deficit_units: Math.ceil(d.deficit),
-          suggested_units: Math.min(Math.ceil(s.surplus), Math.ceil(d.deficit)),
-          xmc_opportunity: d.xmc_models?.has(s.im_code) ?? false,
-        });
-      });
-    });
-
-    recs.sort((a, b) => {
-      if (a.xmc_opportunity && !b.xmc_opportunity) return -1;
-      if (!a.xmc_opportunity && b.xmc_opportunity) return 1;
-      return b.suggested_units - a.suggested_units;
-    });
-
-    setCrossRecs(recs);
-    setLoaded(true);
-  } catch (e: any) {
-    setError('Failed to load cross-ASM data: ' + e.message);
-  } finally {
-    setLoading(false);
-  }
-};
+      recs.sort((a, b) => b.priority_score - a.priority_score);
+      setCrossRecs(recs);
+      setLoaded(true);
+    } catch (e: any) {
+      setError('Failed to load cross-ASM data: ' + e.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const exportCsv = () => {
     if (!crossRecs.length) return;
@@ -196,9 +168,8 @@ function CrossAsmPanel({ selectedAsm, predictionDate, asmList }: {
   );
 }
 
-export default function ShuffleEngine({ onShuffleComplete, onSwitchToOtb }: ShuffleEngineProps) {
-  // Global App State Options
-  const [engineMode, setEngineMode] = useState<'asm'|'hub'>('asm');
+export default function ShuffleEngine({ onShuffleComplete, onSwitchToOtb, initialMode }: ShuffleEngineProps) {
+  const [engineMode, setEngineMode] = useState<'asm'|'hub'>(initialMode || 'asm');
   const [allBrands, setAllBrands] = useState<string[]>([]);
   const [asmList, setAsmList] = useState<AsmGroup[]>([]);
   const [stockDates, setStockDates] = useState<string[]>([]);
@@ -622,18 +593,6 @@ export default function ShuffleEngine({ onShuffleComplete, onSwitchToOtb }: Shuf
         <p className="text-neutral-400 mt-1 text-sm">Dynamic rebalancing pipeline.</p>
         
         <div className="flex gap-2 mt-6 border-b border-white/10 pb-2">
-          <button 
-            onClick={() => setEngineMode('asm')}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${engineMode === 'asm' ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'text-neutral-400 hover:bg-white/5'}`}
-          >
-            ASM-Level Shuffle
-          </button>
-          <button 
-            onClick={() => setEngineMode('hub')}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${engineMode === 'hub' ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'text-neutral-400 hover:bg-white/5'}`}
-          >
-            Hub-Level Shuffle
-          </button>
         </div>
       </div>
 
@@ -661,7 +620,7 @@ export default function ShuffleEngine({ onShuffleComplete, onSwitchToOtb }: Shuf
       {result && (
         <div className="mt-8 animate-in fade-in slide-in-from-bottom-4">
           {renderResultHeader()}
-          <div className="mb-6 border-b border-white/5 flex gap-1">
+  <div className="mb-6 border-b border-white/5 flex gap-1">
   <button
     onClick={() => setShuffleTab('shuffle')}
     className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
@@ -671,79 +630,32 @@ export default function ShuffleEngine({ onShuffleComplete, onSwitchToOtb }: Shuf
     Shuffle Plan
   </button>
   <button
-  onClick={() => onSwitchToOtb?.()}
-  className="px-4 py-3 text-sm font-medium border-b-2 border-transparent text-neutral-400 hover:text-amber-400 transition-colors"
->
-  OTB Results → Switch to OTB Tab
-</button>
-  <button
-    onClick={() => setShuffleTab('positions')}
+    onClick={() => setShuffleTab('crossasm')}
     className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
-      shuffleTab === 'positions' ? 'border-emerald-500 text-emerald-400' : 'border-transparent text-neutral-400 hover:text-neutral-200'
+      shuffleTab === 'crossasm' ? 'border-purple-500 text-purple-400' : 'border-transparent text-neutral-400 hover:text-neutral-200'
     }`}
   >
-    Positions View
+    🔀 Cross-ASM
   </button>
-  
-<button
-  onClick={() => setShuffleTab('crossasm')}
-  className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
-    shuffleTab === 'crossasm' ? 'border-purple-500 text-purple-400' : 'border-transparent text-neutral-400 hover:text-neutral-200'
-  }`}
->
-  🔀 Cross-ASM
-</button>
+  <button
+    onClick={() => onSwitchToOtb?.()}
+    className="px-4 py-3 text-sm font-medium border-b-2 border-transparent text-neutral-400 hover:text-amber-400 transition-colors"
+  >
+    OTB Results → Switch to OTB Tab
+  </button>
 </div>
 
 {shuffleTab === 'shuffle' && renderShufflePlan()}
 {shuffleTab === 'shuffle' && renderPositionsGraph()}
-{shuffleTab === 'positions' && result && (
-  <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
-    {result.positions.map((p, i) => {
-      const borderColor = p.shortage > 0
-        ? 'border-red-500/30'
-        : p.excess > 0
-        ? 'border-emerald-500/30'
-        : 'border-white/10';
-      return (
-        <div key={i} className={`bg-transparent rounded p-3 border ${borderColor}`}>
-          <div className="text-xs font-medium mb-2 truncate text-neutral-300" title={p.branch}>{p.branch}</div>
-          <div className="grid grid-cols-2 gap-2 text-xs mb-2">
-            <div>
-              <div className="text-neutral-500 text-[10px] uppercase">Stock</div>
-              <div className="font-mono text-neutral-400">{Number(p.closing_stock).toFixed(1)}</div>
-            </div>
-            <div>
-              <div className="text-neutral-500 text-[10px] uppercase">MSP</div>
-              <div className="font-mono text-neutral-400">{Number(p.msp_20d).toFixed(2)}</div>
-            </div>
-          </div>
-          <div className="mt-1">
-            {p.excess > 0 ? (
-              <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-emerald-500/10 text-emerald-400">
-                +{p.excess.toLocaleString('en-IN')} Excess
-              </span>
-            ) : p.shortage > 0 ? (
-              <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-red-500/10 text-red-400">
-                -{p.shortage.toLocaleString('en-IN')} Short
-              </span>
-            ) : (
-              <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-white/5 text-neutral-400">
-                Balanced
-              </span>
-            )}
-          </div>
-        </div>
-      );
-    })}
-  </div>
-)}
+
 
 {shuffleTab === 'crossasm' && (
   <CrossAsmPanel
     selectedAsm={selectedAsm}
     predictionDate={predictionDate}
     asmList={asmList}
+    selectedBrand={selectedBrand}
+    selectedModelStr={selectedModelStr}
   />
 )}
   

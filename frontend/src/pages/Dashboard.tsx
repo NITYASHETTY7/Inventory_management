@@ -6,26 +6,48 @@ import DailyBarChart from '../components/DailyBarChart';
 import { FestivalCalendarPanel } from '../components/FestivalBadge';
 import FiltersPanel from '../components/FiltersPanel';
 import ModelComparisonChart from '../components/ModelComparisonChart';
-import ModelSummaryTable    from '../components/ModelSummaryTable';
-import ModelSpreadChart     from '../components/ModelSpreadChart';
-import MspAccuracy          from './MspAccuracy';
-import CuratedMspAccuracy   from './CuratedMspAccuracy';
-import BrandAffinity        from './BrandAffinity';
-import PriceAffinity        from './PriceAffinity';
-import OtbManagement        from './OtbManagement';
-import ShuffleEngine        from './ShuffleEngine';
-import AsmDashboard         from './AsmDashboard';
-import LookalikePage        from './LookalikePage';
-import ThemeToggle          from '../components/ThemeToggle';
-
+import ModelSpreadChart from '../components/ModelSpreadChart';
+import ModelSummaryTable from '../components/ModelSummaryTable';
+import PredictionChart from '../components/PredictionChart';
+import PredictionControls from '../components/PredictionControls';
+import PredictionTable from '../components/PredictionTable';
+import SalesChart from '../components/SalesChart';
+import ThemeToggle from '../components/ThemeToggle';
 import { ShuffleRunResult } from '../types/shuffle_otb_types';
+import AsmDashboard from './AsmDashboard';
+import BrandAffinity from './BrandAffinity';
+import CuratedMspAccuracy from './CuratedMspAccuracy';
+import LookalikePage from './LookalikePage';
+import MspAccuracy from './MspAccuracy';
+import OtbManagement from './OtbManagement';
+import PriceAffinity from './PriceAffinity';
+import ShuffleEngine from './ShuffleEngine';
 
-import { 
-  Link, LayoutDashboard, BarChart3, Target, Crosshair, 
-  HeartHandshake, Tags, Layers, RefreshCw, Box, 
-  Search, Bell, Settings, User, ChevronLeft, ChevronRight, 
-  Menu, ChevronDown, ChevronRight as ChevronRightIcon,
-  Activity, AlertCircle, CheckCircle2, Filter
+
+import {
+  Activity, AlertCircle,
+  BarChart3,
+  Bell,
+  Box,
+  CheckCircle2,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight as ChevronRightIcon,
+  Crosshair,
+  Filter,
+  HeartHandshake,
+  Layers,
+  LayoutDashboard,
+  Link,
+  MapPin,
+  Menu,
+  RefreshCw,
+  Rocket,
+  Settings,
+  Store,
+  Tags,
+  Target,
+  User
 } from 'lucide-react';
 
 // ── Shared UI pieces ──────────────────────────────────────────────────────────
@@ -104,7 +126,7 @@ const MODEL_LABELS: Record<string,string> = {
 
 // ── Dashboard Layout ─────────────────────────────────────────────────────────────────
 
-type TabId = 'prediction' | 'comparison' | 'accuracy' | 'curated_accuracy' | 'brand_affinity' | 'price_affinity' | 'otb_management' | 'shuffle_engine' | 'asm' | 'lookalike';
+type TabId = 'prediction' | 'comparison' | 'accuracy' | 'curated_accuracy' | 'brand_affinity' | 'price_affinity' | 'otb_management' | 'shuffle_asm' | 'shuffle_hub' | 'lookalike_new_model' | 'lookalike_new_store' | 'lookalike_sparse' | 'asm' | 'lookalike';
 const DEFAULT: Filters = { branch:'', brand:'', model:'', priceRange:'', days:41, festivalMultiplier:1.0 };
 
 export default function Dashboard() {
@@ -122,8 +144,11 @@ export default function Dashboard() {
   
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [filtersOpen, setFiltersOpen] = useState(true);
-  const [analyticsExpanded, setAnalyticsExpanded] = useState(true);
+  const [analyticsExpanded, setAnalyticsExpanded] = useState(false);
   const [affinityExpanded, setAffinityExpanded] = useState(false);
+  const [operationsExpanded, setOperationsExpanded] = useState(false);
+  const [shuffleExpanded, setShuffleExpanded] = useState(false);
+  const [lookalikExpanded, setLookalikExpanded] = useState(false);
 
   const fetchPred = useCallback(async (f:Filters, mn:string) => {
     setLoadingPred(true); setError(null);
@@ -244,41 +269,50 @@ export default function Dashboard() {
           </div>
         )}
 
-        <div className="flex-1 overflow-y-auto py-4 px-3 flex flex-col gap-1 hide-scrollbar">
-          {sidebarOpen && <div className="px-3 mb-2 text-[10px] font-semibold text-neutral-500 uppercase tracking-widest mt-2">Core</div>}
+        {/* ── MAIN MENU ── */}
+          {sidebarOpen && <div className="px-3 mb-2 text-[10px] font-semibold text-neutral-500 uppercase tracking-widest mt-2">Main Menu</div>}
           <NavItem icon={LayoutDashboard} label="Prediction" id="prediction" isActive={activeTab === 'prediction'} onClick={() => handleTabChange('prediction')} />
-          
+          <NavItem icon={Crosshair} label="MSP" id="curated_accuracy" isActive={activeTab === 'curated_accuracy'} onClick={() => handleTabChange('curated_accuracy')} />
+          <NavItem icon={Layers} label="OTB Management" id="otb_management" isActive={activeTab === 'otb_management'} onClick={() => handleTabChange('otb_management')} />
+          {sidebarOpen && <button onClick={() => setShuffleExpanded(!shuffleExpanded)} className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg transition-all duration-200 group text-neutral-400 hover:bg-white/5 hover:text-white mt-2`}>
+            <div className="flex items-center gap-3"><RefreshCw size={18} className="text-neutral-500 group-hover:text-white shrink-0 transition-colors" /><span className="text-sm font-medium">Shuffle Engine</span></div>
+            <ChevronDown size={14} className={`transition-transform ${shuffleExpanded ? '' : '-rotate-90'}`} />
+          </button>}
+          {!sidebarOpen && <NavItem icon={RefreshCw} label="Shuffle" id="shuffle_asm" isActive={activeTab === 'shuffle_asm' || activeTab === 'shuffle_hub'} onClick={() => handleTabChange('shuffle_asm')} />}
+          {(shuffleExpanded && sidebarOpen) && (
+            <div className="flex flex-col gap-1 ml-3">
+              <NavItem icon={BarChart3} label="ASM-Level Shuffle" id="shuffle_asm" isActive={activeTab === 'shuffle_asm'} onClick={() => handleTabChange('shuffle_asm')} />
+              <NavItem icon={MapPin} label="Hub-Level Shuffle" id="shuffle_hub" isActive={activeTab === 'shuffle_hub'} onClick={() => handleTabChange('shuffle_hub')} />
+            </div>
+          )}
+
+          {sidebarOpen && <button onClick={() => setLookalikExpanded(!lookalikExpanded)} className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg transition-all duration-200 group text-neutral-400 hover:bg-white/5 hover:text-white mt-2`}>
+            <div className="flex items-center gap-3"><Link size={18} className="text-neutral-500 group-hover:text-white shrink-0 transition-colors" /><span className="text-sm font-medium">Lookalike</span></div>
+            <ChevronDown size={14} className={`transition-transform ${lookalikExpanded ? '' : '-rotate-90'}`} />
+          </button>}
+          {!sidebarOpen && <NavItem icon={Link} label="Lookalike" id="lookalike_new_model" isActive={activeTab === 'lookalike_new_model' || activeTab === 'lookalike_new_store' || activeTab === 'lookalike_sparse'} onClick={() => handleTabChange('lookalike_new_model')} />}
+          {(lookalikExpanded && sidebarOpen) && (
+            <div className="flex flex-col gap-1 ml-3">
+              <NavItem icon={Rocket} label="New Model Launch" id="lookalike_new_model" isActive={activeTab === 'lookalike_new_model'} onClick={() => handleTabChange('lookalike_new_model')} />
+              <NavItem icon={Store} label="New Store Opening" id="lookalike_new_store" isActive={activeTab === 'lookalike_new_store'} onClick={() => handleTabChange('lookalike_new_store')} />
+              <NavItem icon={BarChart3} label="Sparse Data" id="lookalike_sparse" isActive={activeTab === 'lookalike_sparse'} onClick={() => handleTabChange('lookalike_sparse')} />
+            </div>
+          )}
+
+          {/* ── ANALYTICS & SETTINGS ── */}
           {sidebarOpen && <div className="px-3 mb-2 text-[10px] font-semibold text-neutral-500 uppercase tracking-widest mt-6 flex justify-between items-center cursor-pointer group" onClick={() => setAnalyticsExpanded(!analyticsExpanded)}>
-            <span>Analytics</span>
+            <span>Others </span>
             <ChevronDown size={14} className={`transition-transform ${analyticsExpanded ? '' : '-rotate-90'} group-hover:text-white`} />
           </div>}
-          
           {(analyticsExpanded || !sidebarOpen) && (
             <div className="flex flex-col gap-1">
               <NavItem icon={BarChart3} label="Model Comparison" id="comparison" isActive={activeTab === 'comparison'} onClick={() => handleTabChange('comparison')} badge="12" />
               <NavItem icon={Target} label="Model Accuracy" id="accuracy" isActive={activeTab === 'accuracy'} onClick={() => handleTabChange('accuracy')} />
-              <NavItem icon={Crosshair} label="MSP" id="curated_accuracy" isActive={activeTab === 'curated_accuracy'} onClick={() => handleTabChange('curated_accuracy')} />
-            </div>
-          )}
-
-          {sidebarOpen && <div className="px-3 mb-2 text-[10px] font-semibold text-neutral-500 uppercase tracking-widest mt-6 flex justify-between items-center cursor-pointer group" onClick={() => setAffinityExpanded(!affinityExpanded)}>
-            <span>Affinity</span>
-            <ChevronDown size={14} className={`transition-transform ${affinityExpanded ? '' : '-rotate-90'} group-hover:text-white`} />
-          </div>}
-          
-          {(affinityExpanded || !sidebarOpen) && (
-            <div className="flex flex-col gap-1">
               <NavItem icon={HeartHandshake} label="Brand Affinity" id="brand_affinity" isActive={activeTab === 'brand_affinity'} onClick={() => handleTabChange('brand_affinity')} />
               <NavItem icon={Tags} label="Price Affinity" id="price_affinity" isActive={activeTab === 'price_affinity'} onClick={() => handleTabChange('price_affinity')} />
+              <NavItem icon={Box} label="ASM Mapping" id="asm" isActive={activeTab === 'asm'} onClick={() => handleTabChange('asm')} />
             </div>
           )}
-
-          {sidebarOpen && <div className="px-3 mb-2 text-[10px] font-semibold text-neutral-500 uppercase tracking-widest mt-6">Operations</div>}
-          <NavItem icon={Layers} label="OTB Management" id="otb_management" isActive={activeTab === 'otb_management'} onClick={() => handleTabChange('otb_management')} />
-          <NavItem icon={RefreshCw} label="Shuffle Engine" id="shuffle_engine" isActive={activeTab === 'shuffle_engine'} onClick={() => handleTabChange('shuffle_engine')} />
-          <NavItem icon={Box} label="ASM Mapping" id="asm" isActive={activeTab === 'asm'} onClick={() => handleTabChange('asm')} />
-          <NavItem icon={Link} label="Lookalike" id="lookalike" isActive={activeTab === 'lookalike'} onClick={() => handleTabChange('lookalike')} />
-        </div>
 
         <div className="p-4 border-t border-white/5 shrink-0">
           <button className="flex items-center gap-3 w-full p-2 rounded-lg hover:bg-white/5 transition-colors group">
@@ -351,7 +385,7 @@ export default function Dashboard() {
         <div className="flex-1 overflow-y-auto">
           
           {/* Full bleed tabs (own scrolling inside components or full height) */}
-          <div className={`h-full ${['accuracy', 'curated_accuracy', 'otb_management', 'shuffle_engine', 'asm', 'lookalike'].includes(activeTab) ? 'block' : 'hidden'}`}>
+          <div className={`h-full ${['accuracy', 'curated_accuracy', 'otb_management', 'shuffle_asm', 'shuffle_hub', 'asm', 'lookalike', 'lookalike_new_model', 'lookalike_new_store', 'lookalike_sparse'].includes(activeTab) ? 'block' : 'hidden'}`}>
             <div className={`h-full ${activeTab === 'accuracy' ? 'block' : 'hidden'}`}>
               <MspAccuracy />
             </div>
@@ -361,14 +395,39 @@ export default function Dashboard() {
             <div className={`h-full ${activeTab === 'otb_management' ? 'block' : 'hidden'}`}>
               <OtbManagement lastShuffleResult={lastShuffleResult} />
             </div>
-            <div className={`h-full ${activeTab === 'shuffle_engine' ? 'block' : 'hidden'}`}>
-              <ShuffleEngine onShuffleComplete={(res) => setLastShuffleResult(res)} />
+            <div className={`h-full ${activeTab === 'shuffle_asm' || activeTab === 'shuffle_hub' ? 'block' : 'hidden'}`}>
+              <ShuffleEngine 
+                initialMode={activeTab === 'shuffle_hub' ? 'hub' : 'asm'}
+                onShuffleComplete={(res) => setLastShuffleResult(res)}
+                onSwitchToOtb={() => handleTabChange('otb_management')}
+              />
             </div>
             <div className={`h-full ${activeTab === 'asm' ? 'block' : 'hidden'}`}>
               <AsmDashboard />
             </div>
-            <div className={`h-full ${activeTab === 'lookalike' ? 'block' : 'hidden'}`}>
-              <LookalikePage onOtbGenerated={(res) => setLastShuffleResult(res)} />
+            <div className={`h-full ${activeTab === 'lookalike_new_model' || activeTab === 'lookalike_new_store' || activeTab === 'lookalike_sparse' || activeTab === 'lookalike' ? 'block' : 'hidden'}`}>
+              <LookalikePage
+                key={activeTab}
+                initialScenario={activeTab === 'lookalike_new_store' ? 'new_store' : activeTab === 'lookalike_sparse' ? 'sparse_data' : 'new_model'}
+                onOtbGenerated={(res) => {
+                  const mapped = {
+                    asm_name: res.asm_name,
+                    brand: res.brand,
+                    im_code: res.im_code,
+                    item_model: res.item_model,
+                    prediction_date: res.prediction_date,
+                    closing_stock_date_used: res.closing_stock_date_used,
+                    branches_in_asm: res.branches_in_asm,
+                    msp_by_branch: res.msp_by_branch,
+                    closing_stocks: res.closing_stocks,
+                    positions: res.positions,
+                    shuffle_result: res.shuffle_result,
+                    otb_summary: res.otb_summary,
+                  };
+                  setLastShuffleResult(mapped);
+                  handleTabChange('otb_management');
+                  }} 
+                />
             </div>
           </div>
 
