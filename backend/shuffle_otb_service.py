@@ -64,80 +64,53 @@ def compute_msp_for_branches(
     apply_dow: bool = False,
     apply_festival: bool = False,
 ) -> dict[str, float]:
-
+    
     msp_by_branch = {}
     from data_processing import _extract_model
-    from lookalike_service import get_sales_window, compute_wma_base, get_brand_affinity_multiplier, get_price_affinity_multiplier, get_price_band
-
+    
+    # If "ALL" models, model is None. Else, extract from item_model.
     if im_code.strip().lower() == "all":
         model_str = None
     else:
         model_str = _extract_model(item_model) if item_model and item_model != "Unknown Model" else None
-
-    if not model_str:
-        return {b: 0.0 for b in branches}
-
-    # Step 1: compute a base WMA from whichever branch has sales for this model
-    # Try each branch, use the first one that has data, or aggregate across all
-    base_avg7 = 0.0
-    base_avg7_28 = 0.0
-    base_avg30_60 = 0.0
-    found_data = False
-
-    for b in branches:
-        w_dict = get_sales_window(sales_df, b, model_str, prediction_date)
-        if w_dict["has_data"]:
-            base_avg7 += w_dict["avg7"]
-            base_avg7_28 += w_dict["avg7_28"]
-            base_avg30_60 += w_dict["avg30_60"]
-            found_data = True
-
-    # If no branch in this ASM has sales, try all branches in sales_df
-    if not found_data:
-        all_branches = sales_df["Branch"].unique()
-        count = 0
-        for b in all_branches:
-            w_dict = get_sales_window(sales_df, b, model_str, prediction_date)
-            if w_dict["has_data"]:
-                base_avg7 += w_dict["avg7"]
-                base_avg7_28 += w_dict["avg7_28"]
-                base_avg30_60 += w_dict["avg30_60"]
-                count += 1
-        if count > 0:
-            # use average across all branches that have data
-            base_avg7 /= count
-            base_avg7_28 /= count
-            base_avg30_60 /= count
-            found_data = True
-
-    if not found_data:
-        return {b: 0.0 for b in branches}
-
-    # Step 2: compute per-branch MSP using base WMA + branch-specific affinity
-    from festival_calendar import get_festival_multiplier
-    from datetime import timedelta
-
+    
     for branch in branches:
         try:
-            brand_aff = get_brand_affinity_multiplier(branch, brand) if apply_brand_affinity else 1.0
-            price_aff = get_price_affinity_multiplier(branch, price_range) if apply_price_affinity else 1.0
-
-            base = compute_wma_base(base_avg7, base_avg7_28, base_avg30_60, w1, w2, w3)
-
-            total = 0.0
-            for day in range(1, 21):
-                d = prediction_date + timedelta(days=day)
-                fest_m, _ = get_festival_multiplier(d)
-                if not apply_festival:
-                    fest_m = 1.0
-                total += base * brand_aff * price_aff * fest_m
-
-            msp_by_branch[branch] = safe(total)
-
+            res = run_curated_msp_window(
+                branch=branch,
+                brand=brand,
+                model=model_str,
+                price_range=price_range,
+                enable_dow=apply_dow,
+                enable_festival=apply_festival,
+                enable_price_affinity=apply_price_affinity,
+                enable_brand_affinity=apply_brand_affinity,
+                w1=w1, w2=w2, w3=w3
+            )
+            
+            # Extract 20 days
+            # res["future_daily_data"] contains {"date", "predicted"}
+            if "future_daily_data" in res:
+                table = res["future_daily_data"]
+                # filter starting from prediction_date
+                pred_date_str = prediction_date.isoformat()
+                future_preds = [row["predicted"] for row in table if str(row["date"]) >= pred_date_str]
+                msp_20d = sum(future_preds[:20])
+                msp_by_branch[branch] = safe(msp_20d)
+            elif "daily_data" in res:
+                # fallback just in case
+                table = res["daily_data"]
+                pred_date_str = prediction_date.isoformat()
+                future_preds = [row.get("predicted", 0) for row in table if str(row["date"]) >= pred_date_str]
+                msp_20d = sum(future_preds[:20])
+                msp_by_branch[branch] = safe(msp_20d)
+            else:
+                msp_by_branch[branch] = 0.0
+                
         except Exception as e:
             logger.warning(f"Failed to compute MSP for {branch}: {e}")
             msp_by_branch[branch] = 0.0
-
+            
     return msp_by_branch
 
 def compute_positions(
@@ -155,7 +128,7 @@ def compute_positions(
         
         pos = stock - msp
         excess = max(0.0, pos)
-        shortage = max(0.0, math.ceil(-pos) if -pos > 0 else 0.0)
+        shortage = max(0.0, -pos)
         
         if excess > 0:
             status = "EXCESS"
@@ -328,20 +301,7 @@ def build_full_asm_report(
     closing_stock_date_used = used_date.isoformat()
     
     item_price = get_item_price(brand, im_code)
-
-# Fallback: search MOP cache by im_code only if price not found
-    if item_price == 0.0:
-        global _mop_prices_cache
-        if _mop_prices_cache is None:
-            _mop_prices_cache = load_mop_prices()
-        for (b, code), price in _mop_prices_cache.items():
-            if code == im_code.strip().lower():
-                item_price = price
-                print(f">>> MOP fallback found: {item_price} for im_code={im_code}")
-                break
-
     computed_price_range = get_price_range_from_price(item_price)
-    
     
     msp_by_branch = compute_msp_for_branches(
         price_range=computed_price_range,
@@ -359,8 +319,6 @@ def build_full_asm_report(
         apply_dow=multiplier_flags.get("apply_dow", True),
         apply_festival=multiplier_flags.get("apply_festival", True),
     )
-
-
     
     positions = compute_positions(branches_in_asm, brand, im_code, msp_by_branch, closing_stocks)
     

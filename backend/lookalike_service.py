@@ -196,34 +196,30 @@ def get_model_catalog(sales_df: pd.DataFrame, mop_df: pd.DataFrame) -> List[Dict
     return catalog
 
 def auto_suggest_lookalikes(target_im_code: str, target_brand: str, target_mop: float, model_catalog: List[Dict[str, Any]], top_n: int = 3) -> List[Dict[str, Any]]:
+    # find target model name from im_code
     target_item_model = target_im_code
     for c in model_catalog:
         if c["im_code"] == target_im_code:
             target_item_model = c["item_model"]
             break
-
+            
     suggestions = []
+    
+    # regex for series
     match_target = re.search(r'([A-Za-z\s]+?)(\d+)$', target_item_model.strip())
-
+    
     for c in model_catalog:
         if c["im_code"] == target_im_code or c["item_model"] == target_item_model:
             continue
-        if c["days_of_data"] < 30:
-            continue
-
-        # Price filter — must be within 30% of target MOP
-        # Price filter — same brand gets 50% tolerance, cross-brand gets 30%
-        if target_mop > 0 and c["mop"] > 0:
-            price_ratio = abs(c["mop"] - target_mop) / target_mop
-            same_brand = target_brand and c["brand"].lower() == target_brand.lower()
-            max_ratio = 0.50 if same_brand else 0.30
-            if price_ratio > max_ratio:
-                continue
-
+            
+        if c["days_of_data"] < 14:
+            continue # Need enough data
+            
         score = 0
         match_reason = []
         is_succ = False
-
+        
+        # Series match
         if match_target:
             target_prefix, target_num = match_target.groups()
             match_c = re.search(r'([A-Za-z\s]+?)(\d+)$', c["item_model"].strip())
@@ -236,25 +232,24 @@ def auto_suggest_lookalikes(target_im_code: str, target_brand: str, target_mop: 
                     score -= (5 * gen_diff)
                     if gen_diff > 0:
                         match_reason.append(f"{gen_diff} generation(s) apart")
+                        
                     if int(target_num) == int(c_num) + 1:
                         is_succ = True
                         score += 20
-
+        
+        # Brand match
         if target_brand and c["brand"].lower() == target_brand.lower():
             score += 30
             if not any("Same series" in r for r in match_reason):
                 match_reason.append("Same brand")
-        else:
-            # Heavy penalty for cross-brand matches
-            score -= 40
-
-
+                
+        # Price band match
         mop_diff = abs(target_mop - c["mop"])
         price_score = max(0, 20 - (mop_diff / 1000.0))
         score += price_score
         if price_score > 10:
             match_reason.append(f"Similar price (±₹{mop_diff:,.0f})")
-
+            
         suggestions.append({
             "im_code": c["im_code"],
             "item_model": c["item_model"],
@@ -266,111 +261,9 @@ def auto_suggest_lookalikes(target_im_code: str, target_brand: str, target_mop: 
             "days_of_data": c["days_of_data"],
             "is_direct_successor": is_succ
         })
-
+        
     suggestions.sort(key=lambda x: x["lookalike_score"], reverse=True)
-
-    # Deduplicate by item_model
-    seen_models = set()
-    unique_suggestions = []
-    for s in suggestions:
-        if s["item_model"] not in seen_models:
-            seen_models.add(s["item_model"])
-            unique_suggestions.append(s)
-
-   
-    # Fallback 1: same brand, relax price filter to 50%
-    if not unique_suggestions:
-        for c in model_catalog:
-            if c["im_code"] == target_im_code or c["item_model"] == target_item_model:
-                continue
-            if c["days_of_data"] < 7:
-                continue
-            if target_brand and c["brand"].lower() != target_brand.lower():
-                continue
-            mop_diff = abs(target_mop - c["mop"])
-            if target_mop > 0 and c["mop"] > 0:
-                price_ratio = mop_diff / target_mop
-                if price_ratio > 0.50:
-                    continue
-            unique_suggestions.append({
-                "im_code": c["im_code"],
-                "item_model": c["item_model"],
-                "brand": c["brand"],
-                "mop": c["mop"],
-                "price_band": c["price_band"],
-                "lookalike_score": max(0, min(100, int(30 + max(0, 20 - mop_diff / 1000.0)))),
-                "match_reason": f"Same brand, ±₹{mop_diff:,.0f} price diff",
-                "days_of_data": c["days_of_data"],
-                "is_direct_successor": False
-            })
-        unique_suggestions.sort(key=lambda x: x["lookalike_score"], reverse=True)
-        seen = set()
-        deduped = []
-        for s in unique_suggestions:
-            if s["item_model"] not in seen:
-                seen.add(s["item_model"])
-                deduped.append(s)
-        unique_suggestions = deduped
-
-    # Fallback 2: same brand, any price
-    if not unique_suggestions:
-        for c in model_catalog:
-            if c["im_code"] == target_im_code or c["item_model"] == target_item_model:
-                continue
-            if c["days_of_data"] < 7:
-                continue
-            if target_brand and c["brand"].lower() != target_brand.lower():
-                continue
-            mop_diff = abs(target_mop - c["mop"])
-            unique_suggestions.append({
-                "im_code": c["im_code"],
-                "item_model": c["item_model"],
-                "brand": c["brand"],
-                "mop": c["mop"],
-                "price_band": c["price_band"],
-                "lookalike_score": max(0, min(100, int(20 + max(0, 20 - mop_diff / 1000.0)))),
-                "match_reason": f"Same brand fallback, ±₹{mop_diff:,.0f} price diff",
-                "days_of_data": c["days_of_data"],
-                "is_direct_successor": False
-            })
-        unique_suggestions.sort(key=lambda x: x["lookalike_score"], reverse=True)
-        seen = set()
-        deduped = []
-        for s in unique_suggestions:
-            if s["item_model"] not in seen:
-                seen.add(s["item_model"])
-                deduped.append(s)
-        unique_suggestions = deduped
-
-    # Fallback 3: any brand, closest price (last resort)
-    if not unique_suggestions:
-        for c in model_catalog:
-            if c["im_code"] == target_im_code or c["item_model"] == target_item_model:
-                continue
-            if c["days_of_data"] < 14:
-                continue
-            mop_diff = abs(target_mop - c["mop"])
-            unique_suggestions.append({
-                "im_code": c["im_code"],
-                "item_model": c["item_model"],
-                "brand": c["brand"],
-                "mop": c["mop"],
-                "price_band": c["price_band"],
-                "lookalike_score": max(0, min(100, int(10 + max(0, 20 - mop_diff / 1000.0)))),
-                "match_reason": f"⚠️ Cross-brand fallback (no same-brand data), ±₹{mop_diff:,.0f} price diff",
-                "days_of_data": c["days_of_data"],
-                "is_direct_successor": False
-            })
-        unique_suggestions.sort(key=lambda x: x["lookalike_score"], reverse=True)
-        seen = set()
-        deduped = []
-        for s in unique_suggestions:
-            if s["item_model"] not in seen:
-                seen.add(s["item_model"])
-                deduped.append(s)
-        unique_suggestions = deduped
-
-    return unique_suggestions[:top_n]
+    return suggestions[:top_n]
 
 def find_store_lookalikes(new_lat: float, new_lon: float, existing_stores_df: pd.DataFrame, top_n: int = 3, max_radius_km: float = 15.0) -> List[Dict[str, Any]]:
     # Haversine
