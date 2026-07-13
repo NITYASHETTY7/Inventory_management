@@ -1,6 +1,6 @@
 # PhoneRetail Analytics — Sales Prediction Dashboard
 
-Production-quality analytics dashboard for phone retail.  
+Production-quality analytics dashboard for phone retail.  A platform that predicts Minimum Stock Position(MSP) required for 179 stores, Open-to-Buy(OTB) alocation, look-alike new models MSP prediction.
 Training window: **Sep 1 – Dec 31 2025** → Predictions: **Jan 1 2026 onwards**
 
 ---
