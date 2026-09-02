@@ -172,7 +172,7 @@ npm run dev
                                         │
                                         ▼
                     ┌────────────────────────────────────────┐
-                    │       Forecasting & MSP Engine          │
+                    │       Forecasting & MSP Engine         │
                     │                                        │
                     │  Statistical Models                    │
                     │  • Median + DOW                        │
