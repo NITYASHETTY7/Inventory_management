@@ -150,6 +150,87 @@ npm run dev
 
 ---
 
+## Architecture
+
+
+                         ┌──────────────────────────────┐
+                         │        Sales Data            │
+                         │      Excel / CSV Files       │
+                         └──────────────┬───────────────┘
+                                        │
+                                        ▼
+                         ┌──────────────────────────────┐
+                         │     Data Processing Layer    │
+                         │     Python + Pandas + NumPy  │
+                         │                              │
+                         │ • Data cleaning              │
+                         │ • Date normalization         │
+                         │ • Daily sales aggregation    │
+                         │ • Store / Brand / Model      │
+                         │   filtering                  │
+                         └──────────────┬───────────────┘
+                                        │
+                                        ▼
+                    ┌────────────────────────────────────────┐
+                    │       Forecasting & MSP Engine          │
+                    │                                        │
+                    │  Statistical Models                    │
+                    │  • Median + DOW                        │
+                    │  • SMA / WMA                           │
+                    │  • ETS / Holt / Holt-Winters           │
+                    │  • Seasonal Naive                      │
+                    │  •Same-Weekday Avg                     │
+                    │                                        │
+                    │                                        │
+                    │  Curated MSP                           │
+                    │  • Avg 7 / 7–28 / 30–60 days           │
+                    │  • Brand Affinity                      │
+                    │  • Price Affinity                      │
+                    │  • DOW & Festival Multipliers          │
+                    └───────────────────┬────────────────────┘
+                                        │
+                                        ▼
+                         ┌──────────────────────────────┐
+                         │     Evaluation Layer         │
+                         │                              │                            
+                         │ • MAE                        │
+                         │ • MAPE                       │
+                         │ • RMSE                       │
+                         │ • Model comparison           │
+                         └──────────────┬───────────────┘
+                                        │
+                                        ▼
+                         ┌──────────────────────────────┐
+                         │       FastAPI Backend        │
+                         │                              │
+                         │ REST APIs                    │
+                         │ • /api/predict               │
+                         │ • /api/compare               │
+                         │ • /api/msp-accuracy         │
+                         │ • /api/branches             │
+                         │ • /api/brands                │
+                         │ • /api/models               │
+                         └──────────────┬───────────────┘
+                                        │
+                                  JSON / REST
+                                        │
+                                        ▼
+                 ┌────────────────────────────────────────────┐
+                 │          React + Vite Frontend              │
+                 │                                            │
+                 │  ┌────────────┐ ┌────────────┐             │
+                 │  │ Prediction │ │    Model   │             │
+                 │  │ Dashboard  │ │ Comparison │             │
+                 │  └────────────┘ └────────────┘             │
+                 │                                            │
+                 │  ┌──────────────────────────────────────┐  │
+                 │  │          MSP Accuracy Dashboard       │  │
+                 │  │  Actual vs Predicted • Error Metrics │  │
+                 │  └──────────────────────────────────────┘  │
+                 │                                            │
+                 │              Chart.js Visualization         │
+                 └────────────────────────────────────────────┘
+
 ## File Priority
 
 The backend searches for a data file in this order:
