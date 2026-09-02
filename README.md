@@ -206,17 +206,17 @@ npm run dev
                          │ REST APIs                    │
                          │ • /api/predict               │
                          │ • /api/compare               │
-                         │ • /api/msp-accuracy         │
-                         │ • /api/branches             │
+                         │ • /api/msp-accuracy          │
+                         │ • /api/branches              │
                          │ • /api/brands                │
-                         │ • /api/models               │
+                         │ • /api/models                │
                          └──────────────┬───────────────┘
                                         │
                                   JSON / REST
                                         │
                                         ▼
                  ┌────────────────────────────────────────────┐
-                 │          React + Vite Frontend              │
+                 │          React + Vite Frontend             │
                  │                                            │
                  │  ┌────────────┐ ┌────────────┐             │
                  │  │ Prediction │ │    Model   │             │
@@ -224,11 +224,11 @@ npm run dev
                  │  └────────────┘ └────────────┘             │
                  │                                            │
                  │  ┌──────────────────────────────────────┐  │
-                 │  │          MSP Accuracy Dashboard       │  │
+                 │  │          MSP Accuracy Dashboard      │  │
                  │  │  Actual vs Predicted • Error Metrics │  │
                  │  └──────────────────────────────────────┘  │
                  │                                            │
-                 │              Chart.js Visualization         │
+                 │              Chart.js Visualization        │
                  └────────────────────────────────────────────┘
 
 ## File Priority
